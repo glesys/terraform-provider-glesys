@@ -1,4 +1,4 @@
-resource "glesys_network" "network-example-ams" {
+resource "glesys_network" "network-example-fbg" {
   count = 1
   datacenter = "Falkenberg"
   description = "tf-test-fbg-${count.index}"
