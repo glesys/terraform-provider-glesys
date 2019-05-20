@@ -2,7 +2,8 @@
 
 ## intro
 
-Use at your own risk. This is a PoC for working with terraform and glesys/glesys-go.
+This is a PoC for working with terraform and glesys/glesys-go.
+Please see https://github.com/glesys/glesys-go and https://github.com/GleSYS/API/wiki/API-Documentation for more information.
 
 ## Installation / Local development
 
