@@ -8,12 +8,12 @@ import (
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
-func resourceGlesysLoadbalancer() *schema.Resource {
+func resourceGlesysLoadBalancer() *schema.Resource {
 	return &schema.Resource{
-		Create: resourceGlesysLoadbalancerCreate,
-		Read:   resourceGlesysLoadbalancerRead,
-		Update: resourceGlesysLoadbalancerUpdate,
-		Delete: resourceGlesysLoadbalancerDelete,
+		Create: resourceGlesysLoadBalancerCreate,
+		Read:   resourceGlesysLoadBalancerRead,
+		Update: resourceGlesysLoadBalancerUpdate,
+		Delete: resourceGlesysLoadBalancerDelete,
 
 		Schema: map[string]*schema.Schema{
 			"datacenter": {
@@ -39,15 +39,15 @@ func resourceGlesysLoadbalancer() *schema.Resource {
 	}
 }
 
-func resourceGlesysLoadbalancerCreate(d *schema.ResourceData, m interface{}) error {
+func resourceGlesysLoadBalancerCreate(d *schema.ResourceData, m interface{}) error {
 	client := m.(*glesys.Client)
 
-	params := glesys.CreateLoadbalancerParams{
+	params := glesys.CreateLoadBalancerParams{
 		DataCenter: d.Get("datacenter").(string),
 		Name:       d.Get("name").(string),
 	}
 
-	loadbalancer, err := client.Loadbalancers.Create(context.Background(), params)
+	loadbalancer, err := client.LoadBalancers.Create(context.Background(), params)
 	if err != nil {
 		return fmt.Errorf("Error creating loadbalancer: %s", err)
 	}
@@ -55,15 +55,15 @@ func resourceGlesysLoadbalancerCreate(d *schema.ResourceData, m interface{}) err
 	// Set the Id to loadbalancer.ID
 	d.SetId((*loadbalancer).ID)
 
-	return resourceGlesysLoadbalancerRead(d, m)
+	return resourceGlesysLoadBalancerRead(d, m)
 }
 
-func resourceGlesysLoadbalancerRead(d *schema.ResourceData, m interface{}) error {
+func resourceGlesysLoadBalancerRead(d *schema.ResourceData, m interface{}) error {
 	client := m.(*glesys.Client)
 
-	loadbalancer, err := client.Loadbalancers.Details(context.Background(), d.Id())
+	loadbalancer, err := client.LoadBalancers.Details(context.Background(), d.Id())
 	if err != nil {
-		fmt.Errorf("Loadbalancer not found: %s\n", err)
+		fmt.Errorf("LoadBalancer not found: %s\n", err)
 		d.SetId("")
 		return nil
 	}
@@ -87,27 +87,27 @@ func resourceGlesysLoadbalancerRead(d *schema.ResourceData, m interface{}) error
 	return nil
 }
 
-func resourceGlesysLoadbalancerUpdate(d *schema.ResourceData, m interface{}) error {
+func resourceGlesysLoadBalancerUpdate(d *schema.ResourceData, m interface{}) error {
 	client := m.(*glesys.Client)
 
-	params := glesys.EditLoadbalancerParams{}
+	params := glesys.EditLoadBalancerParams{}
 
 	if d.HasChange("name") {
 		params.Name = d.Get("name").(string)
 	}
 
-	_, err := client.Loadbalancers.Edit(context.Background(), d.Id(), params)
+	_, err := client.LoadBalancers.Edit(context.Background(), d.Id(), params)
 	if err != nil {
 		return fmt.Errorf("Error updating loadbalancer: %s", err)
 	}
 
-	return resourceGlesysLoadbalancerRead(d, m)
+	return resourceGlesysLoadBalancerRead(d, m)
 }
 
-func resourceGlesysLoadbalancerDelete(d *schema.ResourceData, m interface{}) error {
+func resourceGlesysLoadBalancerDelete(d *schema.ResourceData, m interface{}) error {
 	client := m.(*glesys.Client)
 
-	err := client.Loadbalancers.Destroy(context.Background(), d.Id())
+	err := client.LoadBalancers.Destroy(context.Background(), d.Id())
 	if err != nil {
 		return fmt.Errorf("Error deleting loadbalancer: %s", err)
 	}
