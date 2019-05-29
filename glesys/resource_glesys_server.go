@@ -149,6 +149,11 @@ func resourceGlesysServerRead(d *schema.ResourceData, m interface{}) error {
 	d.Set("storage", srv.Storage)
 	d.Set("template", srv.Template)
 
+	d.SetConnInfo(map[string]string{
+                "type": "ssh",
+                "host": d.Get("ipv4_address").(string),
+        })
+	
 	return nil
 }
 
