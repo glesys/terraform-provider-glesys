@@ -117,7 +117,7 @@ func resourceGlesysServerCreate(d *schema.ResourceData, m interface{}) error {
 
 	// Set the resource Id to server ID
 	d.SetId((*host).ID)
-	return nil
+	return resourceGlesysServerRead(d, m)
 }
 
 func resourceGlesysServerRead(d *schema.ResourceData, m interface{}) error {
