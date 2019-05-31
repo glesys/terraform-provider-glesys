@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/norrland/terraform-provider-glesys.svg?branch=master)](https://travis-ci.org/norrland/terraform-provider-glesys)
+
 # terraform-provider-glesys
 
 ## intro
