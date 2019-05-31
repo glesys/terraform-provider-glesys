@@ -48,7 +48,7 @@ func resourceGlesysNetworkCreate(d *schema.ResourceData, m interface{}) error {
 
 	// Set the Id to network.ID
 	d.SetId((*network).ID)
-	return nil
+	return resourceGlesysNetworkRead(d, m)
 }
 
 func resourceGlesysNetworkRead(d *schema.ResourceData, m interface{}) error {
@@ -81,7 +81,7 @@ func resourceGlesysNetworkUpdate(d *schema.ResourceData, m interface{}) error {
 	if err != nil {
 		return fmt.Errorf("Error updating network: %s", err)
 	}
-	return nil
+	return resourceGlesysNetworkRead(d, m)
 }
 
 func resourceGlesysNetworkDelete(d *schema.ResourceData, m interface{}) error {

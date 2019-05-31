@@ -60,7 +60,7 @@ func resourceGlesysNetworkAdapterCreate(d *schema.ResourceData, m interface{}) e
 	}
 
 	d.SetId(networkadapter.ID)
-	return nil
+	return resourceGlesysNetworkAdapterRead(d, m)
 }
 
 func resourceGlesysNetworkAdapterRead(d *schema.ResourceData, m interface{}) error {
@@ -101,7 +101,7 @@ func resourceGlesysNetworkAdapterUpdate(d *schema.ResourceData, m interface{}) e
 	if err != nil {
 		return fmt.Errorf("Error updating adapter: %s", err)
 	}
-	return nil
+	return resourceGlesysNetworkAdapterRead(d, m)
 }
 
 func resourceGlesysNetworkAdapterDelete(d *schema.ResourceData, m interface{}) error {
