@@ -9,24 +9,24 @@ variable "description" {
 }
 
 variable "bw" {
-  default = 100
+  default     = 100
   description = "Default bandwidth"
 }
 
 variable "mem" {
-  default = 2048
+  default     = 2048
   description = "Default memory"
 }
 
 variable "storage" {
-  default = 20
+  default     = 20
   description = "Default storage"
 }
 
 variable "platform" {
   default = {
     Falkenberg = "OpenVZ"
-    Stockholm = "VMware"
+    Stockholm  = "VMware"
   }
 }
 
@@ -47,7 +47,7 @@ variable "region_short" {
 variable "region_os" {
   default = {
     Falkenberg = "debian9"
-    Stockholm = "debian9"
+    Stockholm  = "debian9"
   }
 }
 
@@ -60,18 +60,22 @@ variable "template" {
 
 # Create the server resource
 resource "glesys_server" "deb_64" {
-  count = 1
-  bandwidth = "${var.bw}"
-  cpu = 2
+  count     = 1
+  bandwidth = var.bw
+  cpu       = 2
+
   #datacenter = "${var.datacenter}"
-  datacenter = "${lookup(var.region, count.index)}"
+  datacenter  = var.region[count.index]
   description = "${var.description}deb Host terraform"
+
   #hostname = "${var.description}deb8-${count.index}" # hostname with count index only
-  hostname = "${var.description}deb-${lookup(var.region_short, count.index)}-${count.index}" # hostname with short regionname and count
-  memory = "${var.mem}"
-  platform = "${lookup(var.platform,var.datacenter)}"
-  storage = "${var.storage}"
+  hostname = "${var.description}deb-${var.region_short[count.index]}-${count.index}" # hostname with short regionname and count
+  memory   = var.mem
+  platform = var.platform[var.datacenter]
+  storage  = var.storage
+
   #template = "${lookup(var.template, lookup(var.region_os, lookup()var.datacenter))}"
-  template = "${lookup(var.template, lookup(var.region_os, lookup(var.region, count.index) ) )}"
-  password = "hunter2!"
+  template = var.template[var.region_os[var.region[count.index]]]
+  password = "2hunter2!"
 }
+
