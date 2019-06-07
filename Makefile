@@ -21,4 +21,4 @@ fmtcheck:
 
 test: fmt vet
 
-.PHONY: build vet fmt test
+.PHONY: build vet fmt fmtcheck test
