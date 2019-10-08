@@ -3,10 +3,12 @@ language: go
 go:
   - 1.x
 
+env:
+  - GO111MODULE=on
+
 install:
-  - go get -u github.com/hashicorp/terraform
   - go get -u github.com/glesys/glesys-go
 
 script:
-  - make build
   - make test
+  - make build
