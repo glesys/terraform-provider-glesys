@@ -3,7 +3,6 @@ package glesys
 import (
 	"context"
 	"fmt"
-
 	"github.com/glesys/glesys-go/v2"
 	"github.com/hashicorp/terraform/helper/schema"
 )
@@ -59,6 +58,10 @@ func resourceGlesysServer() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
+			"username": {
+				Type:     schema.TypeString,
+				Optional: true,
+			},
 			"platform": {
 				Type:     schema.TypeString,
 				Optional: true,
@@ -97,7 +100,11 @@ func buildServerParamStruct(d *schema.ResourceData) *glesys.CreateServerParams {
 		PublicKey:    d.Get("publickey").(string),
 		Storage:      d.Get("storage").(int),
 		Template:     d.Get("template").(string),
-	}.WithDefaults()
+	}.WithUser(
+		d.Get("username").(string),
+		[]string{d.Get("publickey").(string)},
+		d.Get("password").(string),
+	).WithDefaults()
 
 	return &opts
 }
