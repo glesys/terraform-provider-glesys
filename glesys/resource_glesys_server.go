@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/glesys/glesys-go"
+	"github.com/glesys/glesys-go/v2"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
@@ -137,10 +137,10 @@ func resourceGlesysServerRead(d *schema.ResourceData, m interface{}) error {
 	d.Set("description", srv.Description)
 	d.Set("hostname", srv.Hostname)
 	for i := range srv.IPList {
-		if srv.IPList[i].IsIPv4() {
+		if srv.IPList[i].Version == 4 {
 			d.Set("ipv4_address", srv.IPList[i].Address)
 		}
-		if srv.IPList[i].IsIPv6() {
+		if srv.IPList[i].Version == 6 {
 			d.Set("ipv6_address", srv.IPList[i].Address)
 		}
 	}

@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/glesys/glesys-go"
+	"github.com/glesys/glesys-go/v2"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 

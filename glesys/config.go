@@ -1,7 +1,7 @@
 package glesys
 
 import (
-	"github.com/glesys/glesys-go"
+	"github.com/glesys/glesys-go/v2"
 )
 
 type Config struct {
