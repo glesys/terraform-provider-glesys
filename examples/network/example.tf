@@ -1,11 +1,12 @@
 resource "glesys_network" "network-example-fbg" {
-  count = 1
-  datacenter = "Falkenberg"
+  count       = 1
+  datacenter  = "Falkenberg"
   description = "tf-test-fbg-${count.index}"
 }
+
 resource "glesys_network" "network-example-ams" {
-  count = 1
-  datacenter = "Amsterdam"
+  count       = 1
+  datacenter  = "Amsterdam"
   description = "tf-test-ams-${count.index}"
 }
 
