@@ -63,26 +63,26 @@ func resourceGlesysLoadBalancerRead(d *schema.ResourceData, m interface{}) error
 
 	loadbalancer, err := client.LoadBalancers.Details(context.Background(), d.Id())
 	if err != nil {
-		fmt.Errorf("LoadBalancer not found: %s\n", err)
+		fmt.Errorf("loadbalancer not found: %s", err)
 		d.SetId("")
 		return nil
 	}
 
-	var ip_addresses []string
-	var blacklist_ips []string
+	var ipAddresses []string
+	var blacklistIps []string
 	for i := range (*loadbalancer).IPList {
-		ip_addresses = append(ip_addresses, (*loadbalancer).IPList[i].Address)
+		ipAddresses = append(ipAddresses, (*loadbalancer).IPList[i].Address)
 
 	}
 
 	for i := range (*loadbalancer).Blacklists {
-		blacklist_ips = append(blacklist_ips, (*loadbalancer).Blacklists[i])
+		blacklistIps = append(blacklistIps, (*loadbalancer).Blacklists[i])
 	}
 
 	d.Set("datacenter", loadbalancer.DataCenter)
 	d.Set("name", loadbalancer.Name)
-	d.Set("iplist", ip_addresses)
-	d.Set("blacklist", blacklist_ips)
+	d.Set("iplist", ipAddresses)
+	d.Set("blacklist", blacklistIps)
 
 	return nil
 }

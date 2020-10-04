@@ -112,7 +112,7 @@ func resourceGlesysServerCreate(d *schema.ResourceData, m interface{}) error {
 	host, err := client.Servers.Create(context.Background(), *srv)
 
 	if err != nil {
-		return fmt.Errorf("Error creating server: %+v\n", err)
+		return fmt.Errorf("error creating server: %+v", err)
 	}
 
 	// Set the resource Id to server ID
@@ -126,7 +126,7 @@ func resourceGlesysServerRead(d *schema.ResourceData, m interface{}) error {
 	// fetch updates about the resource
 	srv, err := client.Servers.Details(context.Background(), d.Id())
 	if err != nil {
-		fmt.Errorf("Server not found: %s\n", err)
+		fmt.Errorf("server not found: %s", err)
 		d.SetId("")
 		return nil
 	}

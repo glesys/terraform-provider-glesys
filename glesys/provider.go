@@ -5,6 +5,7 @@ import (
 	"github.com/hashicorp/terraform/terraform"
 )
 
+// Provider - Setup new Terraform Provider resource
 func Provider() terraform.ResourceProvider {
 	return &schema.Provider{
 		Schema: map[string]*schema.Schema{
@@ -38,7 +39,7 @@ func Provider() terraform.ResourceProvider {
 
 func providerConfigure(d *schema.ResourceData) (interface{}, error) {
 	config := Config{
-		UserId: d.Get("userid").(string),
+		UserID: d.Get("userid").(string),
 		Token:  d.Get("token").(string),
 	}
 	return config.Client()

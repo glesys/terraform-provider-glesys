@@ -88,7 +88,7 @@ func resourceGlesysLoadBalancerTargetCreate(d *schema.ResourceData, m interface{
 		_, err := client.LoadBalancers.DisableTarget(context.Background(), loadbalancerID, targetParams)
 
 		if err != nil {
-			return fmt.Errorf("Could not disable Target during creation: %s\n", err)
+			return fmt.Errorf("could not disable Target during creation: %s", err)
 		}
 	}
 
@@ -103,7 +103,7 @@ func resourceGlesysLoadBalancerTargetRead(d *schema.ResourceData, m interface{})
 	loadbalancerid := d.Get("loadbalancerid").(string)
 	lb, err := client.LoadBalancers.Details(context.Background(), loadbalancerid)
 	if err != nil {
-		fmt.Errorf("Loadbalancer not found: %s\n", err)
+		fmt.Errorf("loadbalancer not found: %s", err)
 		d.SetId("")
 		return nil
 	}
@@ -121,7 +121,7 @@ func resourceGlesysLoadBalancerTargetRead(d *schema.ResourceData, m interface{})
 				}
 			}
 		} else {
-			fmt.Errorf("LoadBalancer Target not found: %s\n", d.Get("name").(string))
+			fmt.Errorf("loadbalancer Target not found: %s", d.Get("name").(string))
 			d.SetId("")
 			return nil
 		}
@@ -156,12 +156,12 @@ func resourceGlesysLoadBalancerTargetUpdate(d *schema.ResourceData, m interface{
 		if currentState == true {
 			_, err := client.LoadBalancers.DisableTarget(context.Background(), loadbalancerid, toggleParams)
 			if err != nil {
-				return fmt.Errorf("Error toggling LoadBalancer Target from: %s - %s\n", currentState, err)
+				return fmt.Errorf("error toggling LoadBalancer Target from: %s - %s", currentState, err)
 			}
 		} else {
 			_, err := client.LoadBalancers.EnableTarget(context.Background(), loadbalancerid, toggleParams)
 			if err != nil {
-				return fmt.Errorf("Error toggling LoadBalancer Target from: %s - %s\n", currentState, err)
+				return fmt.Errorf("error toggling LoadBalancer Target from: %s - %s", currentState, err)
 			}
 		}
 	}
