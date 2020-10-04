@@ -68,7 +68,7 @@ func resourceGlesysNetworkAdapterRead(d *schema.ResourceData, m interface{}) err
 
 	networkadapter, err := client.NetworkAdapters.Details(context.Background(), d.Id())
 	if err != nil {
-		fmt.Errorf("Adapter not found: %s\n", err)
+		fmt.Errorf("adapter not found: %s", err)
 		d.SetId("")
 		return nil
 	}

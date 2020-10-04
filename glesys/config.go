@@ -4,14 +4,16 @@ import (
 	"github.com/glesys/glesys-go/v2"
 )
 
+// Config - Provider configuration
 type Config struct {
-	UserId    string
+	UserID    string
 	Token     string
 	UserAgent string
 }
 
+// Client - Setup new glesys client
 func (c *Config) Client() (*glesys.Client, error) {
-	client := glesys.NewClient(c.UserId, c.Token, "tf-glesys/0.0.1")
+	client := glesys.NewClient(c.UserID, c.Token, "tf-glesys/0.0.1")
 
 	return client, nil
 }

@@ -56,7 +56,7 @@ func resourceGlesysNetworkRead(d *schema.ResourceData, m interface{}) error {
 
 	network, err := client.Networks.Details(context.Background(), d.Id())
 	if err != nil {
-		fmt.Errorf("Network not found: %s\n", err)
+		fmt.Errorf("network not found: %s", err)
 		d.SetId("")
 		return nil
 	}
