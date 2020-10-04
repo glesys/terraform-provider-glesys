@@ -1,0 +1,17 @@
+---
+name: static check
+on: pull_request
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: check
+        uses: grandcolline/golang-github-actions@v1.1.0
+        with:
+          run: lint
+          working-directory: glesys
+          token: ${{ secrets.GITHUB_TOKEN }}
