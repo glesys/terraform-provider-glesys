@@ -100,12 +100,15 @@ func buildServerParamStruct(d *schema.ResourceData) *glesys.CreateServerParams {
 		PublicKey:    d.Get("publickey").(string),
 		Storage:      d.Get("storage").(int),
 		Template:     d.Get("template").(string),
-	}.WithUser(
-		d.Get("username").(string),
-		[]string{d.Get("publickey").(string)},
-		d.Get("password").(string),
-	).WithDefaults()
+	}.WithDefaults()
 
+	if opts.Platform == "KVM" {
+		opts.WithUser(
+			d.Get("username").(string),
+			[]string{d.Get("publickey").(string)},
+			d.Get("password").(string),
+		)
+	}
 	return &opts
 }
 
