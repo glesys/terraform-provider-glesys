@@ -8,9 +8,13 @@ import (
 )
 
 var testGlesysProvider *schema.Provider
+var testGlesysProviders map[string]terraform.ResourceProvider
 
 func init() {
 	testGlesysProvider = Provider().(*schema.Provider)
+	testGlesysProviders = map[string]terraform.ResourceProvider{
+		"glesys": testGlesysProvider,
+	}
 }
 
 func TestProvider(t *testing.T) {
