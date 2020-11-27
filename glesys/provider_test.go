@@ -1,6 +1,7 @@
 package glesys
 
 import (
+	"os"
 	"testing"
 
 	"github.com/hashicorp/terraform/helper/schema"
@@ -25,4 +26,13 @@ func TestProvider(t *testing.T) {
 
 func TestProvider_impl(t *testing.T) {
 	var _ terraform.ResourceProvider = Provider()
+}
+
+func testAccPreCheck(t *testing.T) {
+	if v := os.Getenv("GLESYS_USERID"); v == "" {
+		t.Fatal("GLESYS_USERID must be set for acceptance tests")
+	}
+	if v := os.Getenv("GLESYS_TOKEN"); v == "" {
+		t.Fatal("GLESYS_TOKEN must be set for acceptance tests")
+	}
 }
