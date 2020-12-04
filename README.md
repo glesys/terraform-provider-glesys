@@ -9,19 +9,39 @@ Please see https://github.com/glesys/glesys-go and https://github.com/GleSYS/API
 
 ## Installation / Local development
 
+### Debian requirements
+
+- golang >= 1.11
+- git
+- make
+- terraform 0.12.x # Fetch the latest 0.12 version from https://releases.hashicorp.com/terraform/
+
+#### install terraform
+
+```
+$ curl -O https://releases.hashicorp.com/terraform/0.12.29/terraform_0.12.29_linux_amd64.zip
+$ unzip terraform_0.12.29_linux_amd64.zip
+$ mv terraform ~/bin
+```
+
+### Setup terraform-provider-glesys
+
 Clone the repo into a folder of your liking.
 
-### Link the terraform-provider-glesys to your GOPATH.
+`$ git clone https://github.com/norrland/terraform-provider-glesys.git`
 
-`ln -s terraform-provider-glesys $GOPATH/src/github.com/norrland/terraform-provider-glesys`
+### Install the plugin
 
-### Fetch the dependencies
-
-`cd terraform-provider-glesys && go get -d`
-
-### build and use the provider
-
-`terraform-provider-glesys$ go build -o terraform-provider-glesys . `
+```
+$ cd terraform-provider-glesys
+$ make
+==> Checking that code complies with gofmt requirements...
+go install
+go: finding github.com/hashicorp/terraform v0.12.9
+...
+$ mkdir -p ~/.terraform.d/plugins
+$ ln -s ~s ~/go/bin/terraform-provider-glesys ~/.terraform.d/plugins/
+```
 
 ### Run terraform
 
