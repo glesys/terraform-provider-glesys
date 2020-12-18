@@ -29,6 +29,10 @@ func TestProvider_impl(t *testing.T) {
 }
 
 func testAccPreCheck(t *testing.T) {
+	if v := os.Getenv("TF_ACC"); v == "" {
+		t.Skip("TF_ACC not set, skipping acceptance tests")
+	}
+
 	if v := os.Getenv("GLESYS_USERID"); v == "" {
 		t.Fatal("GLESYS_USERID must be set for acceptance tests")
 	}
