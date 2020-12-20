@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/glesys/glesys-go/v2"
-	"github.com/hashicorp/terraform/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
 func resourceGlesysDNSDomainRecord() *schema.Resource {
