@@ -77,8 +77,54 @@ func resourceGlesysServer() *schema.Resource {
 				Optional: true,
 				ForceNew: true,
 			},
+
+			"users": {
+				Type:     schema.TypeSet,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"username": {
+							Type:     schema.TypeString,
+							Required: true,
+						},
+						"password": {
+							Type:     schema.TypeString,
+							Required: true,
+						},
+						"publickeys": {
+							Type:     schema.TypeList,
+							Elem:     &schema.Schema{Type: schema.TypeString},
+							Required: true,
+						},
+					},
+				},
+			},
 		},
 	}
+}
+
+func expandUsers(config []interface{}) ([]glesys.User, error) {
+	users := make([]glesys.User, 0, len(config))
+
+	for _, rawUser := range config {
+		user := rawUser.(map[string]interface{})
+		var pks []string
+
+		u := glesys.User{
+			Username: user["username"].(string),
+			Password: user["password"].(string),
+		}
+
+		// Append publickeys to the slice for PublicKeys
+		for _, pk := range user["publickeys"].([]interface{}) {
+			pks = append(pks, pk.(string))
+		}
+		u.PublicKeys = pks
+
+		users = append(users, u)
+	}
+
+	return users, nil
 }
 
 func buildServerParamStruct(d *schema.ResourceData) *glesys.CreateServerParams {
@@ -108,6 +154,14 @@ func resourceGlesysServerCreate(d *schema.ResourceData, m interface{}) error {
 
 	// Setup server parameters
 	srv := buildServerParamStruct(d)
+
+	if srv.Platform == "KVM" {
+		usersList, err := expandUsers(d.Get("users").(*schema.Set).List())
+		if err != nil {
+			return err
+		}
+		srv.Users = usersList
+	}
 
 	host, err := client.Servers.Create(context.Background(), *srv)
 
