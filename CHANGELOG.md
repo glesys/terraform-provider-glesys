@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - resource `glesys_objectstorage_credential` @xevz (#13)
 - resource `glesys_objectstorage_instance` @xevz (#13)
 - Acceptance testing for `glesys_objectstorage_*` @xevz (#13)
+- KVM servers in `glesys_server` now can be created with multiple users,
+and multiple keys per user. @norrland (#20)
 ### Changed
 - Moved Makefile to GNUMakefile @xevz (#13)
 
