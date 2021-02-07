@@ -11,7 +11,7 @@ resource "glesys_server" "kvm" {
   platform = "KVM"
   template = "debian-10"
 
-  users {
+  user {
         username = "alice"
         publickeys = [
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINOCh8br7CwZDMGmINyJgBip943QXgkf7XdXrDMJf5Dl alice@example.com",
@@ -19,7 +19,7 @@ resource "glesys_server" "kvm" {
         ]
         password = "hunter3!"
   }
-  users {
+  user {
         username = "bob"
         publickeys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINOCh8br7CwZDMGmINyJgBip943QXgkf7XdXrDMJf5Dl bob@example.com"]
         password = "hunter333!"
