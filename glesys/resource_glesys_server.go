@@ -78,7 +78,7 @@ func resourceGlesysServer() *schema.Resource {
 				ForceNew: true,
 			},
 
-			"users": {
+			"user": {
 				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
@@ -156,7 +156,7 @@ func resourceGlesysServerCreate(d *schema.ResourceData, m interface{}) error {
 	srv := buildServerParamStruct(d)
 
 	if srv.Platform == "KVM" {
-		usersList, err := expandUsers(d.Get("users").(*schema.Set).List())
+		usersList, err := expandUsers(d.Get("user").(*schema.Set).List())
 		if err != nil {
 			return err
 		}
