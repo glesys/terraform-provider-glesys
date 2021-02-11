@@ -38,8 +38,9 @@ func resourceGlesysServer() *schema.Resource {
 				Optional: true,
 			},
 			"hostname": {
-				Type:     schema.TypeString,
-				Required: true,
+				Type:             schema.TypeString,
+				Required:         true,
+				DiffSuppressFunc: IgnoreCase,
 			},
 			"ipv4_address": {
 				Type:     schema.TypeString,
