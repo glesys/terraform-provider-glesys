@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
-## [0.2.0] - yyyy-mm-dd
+## [0.2.0] - 2021-02-15
 ### Added
 - resource `glesys_objectstorage_credential` @xevz (#13)
 - resource `glesys_objectstorage_instance` @xevz (#13)
@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 and multiple keys per user. @norrland (#20)
 ### Changed
 - Moved Makefile to GNUMakefile @xevz (#13)
+- server: Ignore case sensitivity on hostname (#22)
 
 ## [0.1.0] - 2020-12-18
 ### Added
