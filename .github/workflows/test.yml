@@ -5,9 +5,11 @@ name: Tests
 on:
   pull_request:
     paths-ignore:
+      - 'CHANGELOG.md'
       - 'README.md'
   push:
     paths-ignore:
+      - 'CHANGELOG.md'
       - 'README.md'
   # For systems with an upstream API that could drift unexpectedly (like most SaaS systems, etc.),
   # we recommend testing at a regular interval not necessarily tied to code changes. This will
