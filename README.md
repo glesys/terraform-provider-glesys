@@ -2,14 +2,14 @@
 
 ## intro
 
-This is a PoC for working with terraform and glesys/glesys-go.
+This is a early stage implementation for using Terraform and the GleSYS API.
 Please see https://github.com/glesys/glesys-go and https://github.com/GleSYS/API/wiki/API-Documentation for more information.
 
 ## Installation / Local development
 
 ### Debian requirements
 
-- golang >= 1.11
+- golang >= 1.14
 - git
 - make
 - terraform 0.12.x # Fetch the latest 0.12 version from https://releases.hashicorp.com/terraform/
