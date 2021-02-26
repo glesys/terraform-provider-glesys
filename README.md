@@ -26,7 +26,7 @@ $ mv terraform ~/bin
 
 Clone the repo into a folder of your liking.
 
-`$ git clone https://github.com/norrland/terraform-provider-glesys.git`
+`$ git clone https://github.com/glesys/terraform-provider-glesys.git`
 
 ### Install the plugin
 

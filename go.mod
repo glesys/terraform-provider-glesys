@@ -1,4 +1,4 @@
-module github.com/norrland/terraform-provider-glesys
+module github.com/glesys/terraform-provider-glesys
 
 go 1.15
 

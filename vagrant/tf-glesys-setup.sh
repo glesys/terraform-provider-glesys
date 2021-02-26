@@ -6,7 +6,7 @@ code_dir="$HOME/code/"
 project="terraform-provider-glesys"
 tf_version="0.12.29"
 tf_url="https://releases.hashicorp.com/terraform/${tf_version}/terraform_${tf_version}_linux_amd64.zip"
-repo_url="https://github.com/norrland/terraform-provider-glesys.git"
+repo_url="https://github.com/glesys/terraform-provider-glesys.git"
 
 
 echo "Install dependencies"
