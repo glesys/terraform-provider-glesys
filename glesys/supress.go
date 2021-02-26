@@ -3,7 +3,7 @@ package glesys
 import (
 	"strings"
 
-	"github.com/hashicorp/terraform/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
 // IgnoreCase check if the strings match when both are in lowercase

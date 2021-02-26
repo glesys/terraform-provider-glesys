@@ -4,28 +4,27 @@ import (
 	"os"
 	"testing"
 
-	"github.com/hashicorp/terraform/helper/schema"
-	"github.com/hashicorp/terraform/terraform"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
 var testGlesysProvider *schema.Provider
-var testGlesysProviders map[string]terraform.ResourceProvider
+var testGlesysProviders map[string]*schema.Provider
 
 func init() {
-	testGlesysProvider = Provider().(*schema.Provider)
-	testGlesysProviders = map[string]terraform.ResourceProvider{
+	testGlesysProvider = Provider()
+	testGlesysProviders = map[string]*schema.Provider{
 		"glesys": testGlesysProvider,
 	}
 }
 
 func TestProvider(t *testing.T) {
-	if err := Provider().(*schema.Provider).InternalValidate(); err != nil {
+	if err := Provider().InternalValidate(); err != nil {
 		t.Fatalf("err: %s", err)
 	}
 }
 
 func TestProvider_impl(t *testing.T) {
-	var _ terraform.ResourceProvider = Provider()
+	var _ *schema.Provider = Provider()
 }
 
 func testAccPreCheck(t *testing.T) {
