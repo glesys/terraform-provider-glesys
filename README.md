@@ -47,3 +47,14 @@ Instead of hardcoding credentials into your terraform templates.
 Use environment variables for example.
 
 `GLESYS_USERID="CL12345" GLESYS_TOKEN="ABC12345678" terraform plan`
+
+## Contribute
+
+#### We love Pull Requests ♥
+
+1. Fork the repo.
+2. Make sure to run the tests to verify that you're starting with a clean slate.
+3. Add a test for your change, make sure it fails. Refactoring existing code or
+   improving documentation does not require new tests.
+4. Make the changes and ensure the test pass.
+5. Commit your changes, push to your fork and submit a Pull Request.
