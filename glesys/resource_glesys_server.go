@@ -175,6 +175,15 @@ func resourceGlesysServerCreate(d *schema.ResourceData, m interface{}) error {
 	return resourceGlesysServerRead(d, m)
 }
 
+func getTemplate(original string, srv *glesys.ServerDetails) string {
+	for _, tag := range srv.InitialTemplate.CurrentTags {
+		if tag == original {
+			return original
+		}
+	}
+	return srv.Template
+}
+
 func resourceGlesysServerRead(d *schema.ResourceData, m interface{}) error {
 	client := m.(*glesys.Client)
 
@@ -202,7 +211,7 @@ func resourceGlesysServerRead(d *schema.ResourceData, m interface{}) error {
 	d.Set("memory", srv.Memory)
 	d.Set("platform", srv.Platform)
 	d.Set("storage", srv.Storage)
-	d.Set("template", srv.Template)
+	d.Set("template", getTemplate(d.Get("template").(string), srv))
 
 	d.SetConnInfo(map[string]string{
 		"type": "ssh",
