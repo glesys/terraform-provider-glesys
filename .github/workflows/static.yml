@@ -1,9 +1,10 @@
 ---
 name: static check
-on: pull_request
-paths-ignore:
-  - 'CHANGELOG.md'
-  - 'README.md'
+on:
+  pull_request:
+    paths-ignore:
+      - 'CHANGELOG.md'
+      - 'README.md'
 
 jobs:
   lint:
