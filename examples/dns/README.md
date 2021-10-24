@@ -7,14 +7,14 @@ a placeholder resource for the domain.
 
 ```
 $ cat domain.tf
-resource "glesys_domain" "mydomain" {
+resource "glesys_dnsdomain" "mydomain" {
   name = "example.com"
 }
 ```
 
 ```
 $ terraform plan  # to verify that it looks correct
-$ terraform import glesys_domain.mydomain 'example.com'
+$ terraform import glesys_dnsdomain.mydomain 'example.com'
 
 glesys_dnsdomain.mydomain: Importing from ID "example.com"...
 glesys_dnsdomain.mydomain: Import prepared!
