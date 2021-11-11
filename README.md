@@ -9,7 +9,7 @@ Please see https://github.com/glesys/glesys-go and https://github.com/GleSYS/API
 
 ### Debian requirements
 
-- golang >= 1.14
+- golang >= 1.15
 - git
 - make
 - terraform 0.12.x # Fetch the latest 0.12 version from https://releases.hashicorp.com/terraform/
