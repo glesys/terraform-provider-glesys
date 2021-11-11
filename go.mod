@@ -5,7 +5,7 @@ go 1.15
 require (
 	github.com/agext/levenshtein v1.2.3 // indirect
 	github.com/fatih/color v1.13.0 // indirect
-	github.com/glesys/glesys-go/v2 v2.5.0
+	github.com/glesys/glesys-go/v3 v3.0.0
 	github.com/hashicorp/errwrap v1.1.0 // indirect
 	github.com/hashicorp/go-hclog v1.0.0 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
