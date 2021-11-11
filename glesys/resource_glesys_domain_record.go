@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/glesys/glesys-go/v2"
+	"github.com/glesys/glesys-go/v3"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
