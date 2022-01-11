@@ -75,11 +75,14 @@ func resourceGlesysObjectStorageInstanceRead(d *schema.ResourceData, m interface
 	d.Set("datacenter", instance.DataCenter)
 	d.Set("description", instance.Description)
 	d.Set("created", instance.Created)
-	d.Set("accesskey", instance.Credentials[0].AccessKey)
 
-	_, secretkeyIsSet := d.GetOk("secretkey")
-	if !secretkeyIsSet {
-		d.Set("secretkey", instance.Credentials[0].SecretKey)
+	creds := instance.Credentials
+	if len(creds) > 0 {
+		d.Set("accesskey", creds[0].AccessKey)
+		_, secretkeyIsSet := d.GetOk("secretkey")
+		if !secretkeyIsSet {
+			d.Set("secretkey", creds[0].SecretKey)
+		}
 	}
 
 	return nil
