@@ -38,7 +38,7 @@ go install
 go: finding github.com/hashicorp/terraform v0.12.9
 ...
 $ mkdir -p ~/.terraform.d/plugins
-$ ln -s ~s ~/go/bin/terraform-provider-glesys ~/.terraform.d/plugins/
+$ ln -s ~/go/bin/terraform-provider-glesys ~/.terraform.d/plugins/
 ```
 
 ### Run terraform
