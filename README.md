@@ -19,7 +19,8 @@ Please see https://github.com/glesys/glesys-go and https://github.com/GleSYS/API
 ```
 $ curl -O https://releases.hashicorp.com/terraform/0.12.29/terraform_0.12.29_linux_amd64.zip
 $ unzip terraform_0.12.29_linux_amd64.zip
-$ mv terraform ~/bin
+$ chmod +x terraform
+$ mv terraform /usr/local/bin/
 ```
 
 ### Setup terraform-provider-glesys
