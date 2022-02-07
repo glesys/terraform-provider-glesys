@@ -3,9 +3,9 @@ package glesys
 import (
 	"context"
 	"fmt"
-
 	"github.com/glesys/glesys-go/v3"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"strings"
 )
 
 func resourceGlesysLoadBalancerFrontend() *schema.Resource {
@@ -81,6 +81,20 @@ func resourceGlesysLoadBalancerFrontendCreate(d *schema.ResourceData, m interfac
 	loadbalancerID := d.Get("loadbalancerid").(string)
 
 	_, err := client.LoadBalancers.AddFrontend(context.Background(), loadbalancerID, params)
+
+	if err != nil { //TODO: In the long run, this is probably better fixed in the API
+
+		//This is because the API is inconsistent with types. loadbalancer is sometimes a struct and sometimes false
+		if strings.Contains(err.Error(), "json: cannot unmarshal bool into Go struct field .Response.LoadBalancer") {
+			err = nil
+		}
+
+		//This is because the API is inconsistent with types. loadbalancer.*.enabled is sometimes an int and sometimes bool
+		if err != nil && strings.Contains(err.Error(), "json: cannot unmarshal number into Go struct") && strings.Contains(err.Error(), ".enabled") {
+			err = nil
+		}
+	}
+
 	if err != nil {
 		return fmt.Errorf("Error creating LoadBalancer Frontend: %s", err)
 	}
@@ -145,6 +159,7 @@ func resourceGlesysLoadBalancerFrontendUpdate(d *schema.ResourceData, m interfac
 	}
 
 	_, err := client.LoadBalancers.EditFrontend(context.Background(), loadbalancerid, params)
+
 	if err != nil {
 		return fmt.Errorf("Error updating LoadBalancer Frontend: %s", err)
 	}
