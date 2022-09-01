@@ -8,5 +8,5 @@ import (
 
 // IgnoreCase check if the strings match when both are in lowercase
 func IgnoreCase(_, old, new string, _ *schema.ResourceData) bool {
-	return strings.ToLower(old) == strings.ToLower(new)
+	return strings.EqualFold(old, new)
 }
