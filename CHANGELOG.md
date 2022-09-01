@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 
+## [0.4.0] - 2022-09-01
+### Added
+- Support for IP resources @alxbse
+### Changed
+- Moved to golangci-lint for static analysis
+- Updated test and build versions of Go
 ## [0.3.2] - 2022-01-11
 ### Changed
 - Added check for empty Object Storage Instance credentials list @norrland (#36)
