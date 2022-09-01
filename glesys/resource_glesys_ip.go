@@ -29,6 +29,10 @@ func resourceGlesysIP() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"gateway": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"cost": {
 				Type:     schema.TypeList,
 				Computed: true,
@@ -149,6 +153,7 @@ func resourceGlesysIPRead(d *schema.ResourceData, m interface{}) error {
 	d.Set("address", ip.Address)
 	d.Set("broadcast", ip.Broadcast)
 	d.Set("datacenter", ip.DataCenter)
+	d.Set("gateway", ip.Gateway)
 	d.Set("locked_to_account", ip.LockedToAccount)
 	d.Set("name_servers", ip.NameServers)
 	d.Set("netmask", ip.Netmask)

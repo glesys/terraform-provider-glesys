@@ -31,6 +31,7 @@ func TestAccIP_basic(t *testing.T) {
 					resource.TestCheckResourceAttr(name, "version", "4"),
 					resource.TestCheckResourceAttrSet(name, "address"),
 					resource.TestCheckResourceAttrSet(name, "broadcast"),
+					resource.TestCheckResourceAttrSet(name, "gateway"),
 					resource.TestCheckResourceAttrSet(name, "cost.0.amount"),
 					resource.TestCheckResourceAttrSet(name, "cost.0.currency"),
 					resource.TestCheckResourceAttrSet(name, "cost.0.time_period"),
