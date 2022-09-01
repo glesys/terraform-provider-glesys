@@ -134,6 +134,15 @@ func resourceGlesysIPCreate(d *schema.ResourceData, m interface{}) error {
 		return err
 	}
 
+	ptr := d.Get("ptr").(string)
+	if ptr != "" {
+		_, err := client.IPs.SetPTR(context.Background(), address, ptr)
+
+		if err != nil {
+			return err
+		}
+	}
+
 	// Set the resource Id to IP address
 	d.SetId((*ip).Address)
 	return resourceGlesysIPRead(d, m)
