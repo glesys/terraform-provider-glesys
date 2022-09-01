@@ -1,0 +1,11 @@
+linters:
+  disable-all: true
+  enable:
+    - staticcheck
+
+linters-settings:
+  staticcheck:
+    checks:
+      - all
+      - '-SA1019'  # Disable rule SA1019
+      - '-SA4017'  # Disable rule SA4017
