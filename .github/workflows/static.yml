@@ -12,10 +12,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-      - name: check
-        uses: grandcolline/golang-github-actions@v1.1.0
+      - uses: actions/setup-go@v3
         with:
-          run: lint
-          directory: glesys
-          token: ${{ secrets.GITHUB_TOKEN }}
+          go-version: 1.18
+      - uses: actions/checkout@v3
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v3
