@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 
+## [0.4.1] - 2022-09-02
+### Added
+- Setup goreleaser for Terraform Registry releases
 ## [0.4.0] - 2022-09-01
 ### Added
 - Support for IP resources @alxbse
