@@ -13,7 +13,7 @@ type Config struct {
 
 // Client - Setup new glesys client
 func (c *Config) Client() (*glesys.Client, error) {
-	client := glesys.NewClient(c.UserID, c.Token, "tf-glesys/0.4.1")
+	client := glesys.NewClient(c.UserID, c.Token, "tf-glesys/0.4.2")
 
 	return client, nil
 }
