@@ -1,6 +1,6 @@
 module github.com/glesys/terraform-provider-glesys
 
-go 1.18
+go 1.17
 
 require (
 	github.com/agext/levenshtein v1.2.3 // indirect
