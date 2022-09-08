@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 
+## [0.4.4] - 2022-09-09
+### Changed
+- Skip tests on docs changes
+- Fix typo in docs for provider version constraint
 ## [0.4.3] - 2022-09-08
 ### Added
 - Updated documentation @norrland #51
