@@ -5,10 +5,12 @@ name: Tests
 on:
   pull_request:
     paths-ignore:
+      - 'docs/'
       - 'CHANGELOG.md'
       - 'README.md'
   push:
     paths-ignore:
+      - 'docs/'
       - 'CHANGELOG.md'
       - 'README.md'
   # For systems with an upstream API that could drift unexpectedly (like most SaaS systems, etc.),
