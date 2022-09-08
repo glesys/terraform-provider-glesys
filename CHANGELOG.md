@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 
+## [0.4.3] - 2022-09-08
+### Added
+- Updated documentation @norrland #51
+### Changed
+- glesys_servers: Skip updating bandwidth for KVM platform #50
 ## [0.4.2] - 2022-09-06
 ### Changed
 - Changed the go version in go.mod #47
