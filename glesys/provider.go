@@ -13,13 +13,13 @@ func Provider() *schema.Provider {
 				Type:        schema.TypeString,
 				Required:    true,
 				DefaultFunc: schema.EnvDefaultFunc("GLESYS_USERID", nil),
-				Description: "UserId for the Glesys API.",
+				Description: "UserId for the Glesys API. Alternatively, this can be set using the `GLESYS_USERID` environment variable",
 			},
 			"token": {
 				Type:        schema.TypeString,
 				Required:    true,
 				DefaultFunc: schema.EnvDefaultFunc("GLESYS_TOKEN", nil),
-				Description: "User token for the Glesys API.",
+				Description: "User token for the Glesys API. Alternatively, this can be set using the `GLESYS_TOKEN` environment variable",
 			},
 		},
 		ResourcesMap: map[string]*schema.Resource{
