@@ -48,7 +48,8 @@ resource "glesys_dnsdomain_record" "www" {
 - `registrarinfo_state` (String)
 - `registrarinfo_statedescr` (String)
 - `registrarinfo_tld` (String)
-- `usingglesysnameserver` (String)## Import
+- `usingglesysnameserver` (String)
+## Import
 Import is supported using the following syntax:
 ```shell
 # Domain import.

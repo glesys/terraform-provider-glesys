@@ -23,7 +23,8 @@ description: |-
 ### Read-Only
 
 - `id` (String) The ID of this resource.
-- `recordid` (Number)## Import
+- `recordid` (Number)
+## Import
 Import is supported using the following syntax:
 ```shell
 # Domain import.
