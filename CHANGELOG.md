@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 
+## [0.4.5] - 2022-09-12
+### Added
+- Documentation for glesys_server, glesys_dnsdomain(_record)
+- Templates for provider and resources docs
 ## [0.4.4] - 2022-09-09
 ### Changed
 - Skip tests on docs changes
