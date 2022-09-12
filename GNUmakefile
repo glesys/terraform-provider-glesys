@@ -1,11 +1,16 @@
 TEST?=$$(go list ./... |grep -v 'vendor')
 GOFMT_FILES?=$$(find . -name '*.go' |grep -v vendor)
 PKG_NAME=glesys
+PROVIDER_RENDER_NAME="GleSYS"
 
 default: build
 
 build: fmtcheck
 	go install
+
+tfdocs:
+	@echo "Running tfplugindocs"
+	@tfplugindocs generate --rendered-provider-name $(PROVIDER_RENDER_NAME)
 
 test: fmtcheck
 	go test $(TEST) || exit 1
