@@ -20,19 +20,22 @@ func resourceGlesysDNSDomain() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": {
-				Type:     schema.TypeString,
-				Required: true,
-				ForceNew: true,
+				Description: "Domain name",
+				Type:        schema.TypeString,
+				Required:    true,
+				ForceNew:    true,
 			},
 
 			"createrecords": {
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: "Create default set of records when creating the domain. `0/1, yes/no, true/false`",
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 
 			"createtime": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Description: "Domain create time",
+				Type:        schema.TypeString,
+				Computed:    true,
 			},
 
 			"displayname": {
@@ -41,44 +44,51 @@ func resourceGlesysDNSDomain() *schema.Resource {
 			},
 
 			"expire": {
-				Type:     schema.TypeInt,
-				Computed: true,
-				Optional: true,
+				Description: "Domain expire TTL",
+				Type:        schema.TypeInt,
+				Computed:    true,
+				Optional:    true,
 			},
 
 			"minimum": {
-				Type:     schema.TypeInt,
-				Computed: true,
-				Optional: true,
+				Description: "Domain minimum TTL",
+				Type:        schema.TypeInt,
+				Computed:    true,
+				Optional:    true,
 			},
 
 			"refresh": {
-				Type:     schema.TypeInt,
-				Computed: true,
-				Optional: true,
+				Description: "Domain refresh TTL",
+				Type:        schema.TypeInt,
+				Computed:    true,
+				Optional:    true,
 			},
 
 			"retry": {
-				Type:     schema.TypeInt,
-				Computed: true,
-				Optional: true,
+				Description: "Domain retry TTL",
+				Type:        schema.TypeInt,
+				Computed:    true,
+				Optional:    true,
 			},
 
 			"ttl": {
-				Type:     schema.TypeInt,
-				Computed: true,
-				Optional: true,
+				Description: "Domain default TTL",
+				Type:        schema.TypeInt,
+				Computed:    true,
+				Optional:    true,
 			},
 
 			"primarynameserver": {
-				Type:     schema.TypeString,
-				Computed: true,
-				Optional: true,
+				Description: "Domain primary nameserver",
+				Type:        schema.TypeString,
+				Computed:    true,
+				Optional:    true,
 			},
 
 			"recordcount": {
-				Type:     schema.TypeInt,
-				Computed: true,
+				Description: "Number of records for the domain",
+				Type:        schema.TypeInt,
+				Computed:    true,
 			},
 
 			"registrarinfo_state": {
