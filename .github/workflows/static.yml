@@ -4,6 +4,7 @@ on:
   pull_request:
     paths-ignore:
       - 'docs/'
+      - 'templates/'
       - 'CHANGELOG.md'
       - 'README.md'
 
