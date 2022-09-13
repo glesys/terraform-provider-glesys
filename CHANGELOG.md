@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 
+## [0.4.6] - 2022-09-13
+### Added
+- Extended documentation for glesys_dnsdomain_record)
+### Changed
+- Build on Go 1.18, 1.19. Bump terraform-plugin-sdk/v2 to v2.22.0 (#54)
 ## [0.4.5] - 2022-09-12
 ### Added
 - Documentation for glesys_server, glesys_dnsdomain(_record)
