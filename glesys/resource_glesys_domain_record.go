@@ -22,36 +22,42 @@ func resourceGlesysDNSDomainRecord() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"data": {
-				Type:     schema.TypeString,
-				Required: true,
+				Description: "Record data field. Ex. `127.0.0.1`",
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 
 			"domain": {
-				Type:     schema.TypeString,
-				Required: true,
-				ForceNew: true,
+				Description: "Domain name",
+				Type:        schema.TypeString,
+				Required:    true,
+				ForceNew:    true,
 			},
 
 			"host": {
-				Type:     schema.TypeString,
-				Required: true,
+				Description: "Record host field. Ex. `www`",
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 
 			"recordid": {
-				Type:     schema.TypeInt,
-				Computed: true,
+				Description: "Record internal id",
+				Type:        schema.TypeInt,
+				Computed:    true,
 			},
 
 			"type": {
-				Type:     schema.TypeString,
-				Optional: true,
-				ForceNew: true,
+				Description: "Record type. Ex. `A`, `AAAA`...",
+				Type:        schema.TypeString,
+				Optional:    true,
+				ForceNew:    true,
 			},
 
 			"ttl": {
-				Type:     schema.TypeInt,
-				Computed: true,
-				Optional: true,
+				Description: "Record TTL field",
+				Type:        schema.TypeInt,
+				Computed:    true,
+				Optional:    true,
 			},
 		},
 	}
