@@ -1,3 +1,4 @@
+---
 page_title: "glesys_dnsdomain Resource - terraform-provider-glesys"
 subcategory: ""
 description: |-
