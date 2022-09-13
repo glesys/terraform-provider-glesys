@@ -11,19 +11,19 @@ description: |-
 
 ### Required
 
-- `data` (String)
-- `domain` (String)
-- `host` (String)
+- `data` (String) Record data field. Ex. `127.0.0.1`
+- `domain` (String) Domain name
+- `host` (String) Record host field. Ex. `www`
 
 ### Optional
 
-- `ttl` (Number)
-- `type` (String)
+- `ttl` (Number) Record TTL field
+- `type` (String) Record type. Ex. `A`, `AAAA`...
 
 ### Read-Only
 
 - `id` (String) The ID of this resource.
-- `recordid` (Number)
+- `recordid` (Number) Record internal id
 ## Import
 Import is supported using the following syntax:
 ```shell
