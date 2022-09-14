@@ -2,9 +2,14 @@ package glesys
 
 import (
 	"context"
+	"fmt"
+	"log"
+	"strconv"
+	"time"
 
 	"github.com/glesys/glesys-go/v4"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
@@ -16,6 +21,11 @@ func resourceGlesysServer() *schema.Resource {
 		DeleteContext: resourceGlesysServerDelete,
 
 		Description: "Create a new GleSYS virtual server.",
+
+		Timeouts: &schema.ResourceTimeout{
+			Create: schema.DefaultTimeout(20 * time.Minute),
+			Delete: schema.DefaultTimeout(60 * time.Second),
+		},
 
 		Schema: map[string]*schema.Schema{
 			"bandwidth": {
@@ -82,6 +92,16 @@ func resourceGlesysServer() *schema.Resource {
 				Description: "",
 				Type:        schema.TypeString,
 				Optional:    true,
+			},
+			"islocked": {
+				Description: "Server locked state",
+				Type:        schema.TypeBool,
+				Computed:    true,
+			},
+			"isrunning": {
+				Description: "Server running state",
+				Type:        schema.TypeBool,
+				Computed:    true,
 			},
 			"storage": {
 				Description: "Server disk space",
@@ -190,6 +210,12 @@ func resourceGlesysServerCreate(ctx context.Context, d *schema.ResourceData, m i
 	// Set the resource Id to server ID
 	d.SetId((*host).ID)
 
+	if _, err = waitForServerAttribute(ctx, d, "true", []string{"false"}, "isrunning", m); err != nil {
+		return diag.Errorf("error while waiting for Server (%s) to be started: %s", d.Id(), err)
+	}
+	if _, err = waitForServerAttribute(ctx, d, "false", []string{"true"}, "islocked", m); err != nil {
+		return diag.Errorf("error while waiting for Server (%s) to be completed: %s", d.Id(), err)
+	}
 	return resourceGlesysServerRead(ctx, d, m)
 }
 
@@ -232,6 +258,8 @@ func resourceGlesysServerRead(ctx context.Context, d *schema.ResourceData, m int
 	}
 	d.Set("memory", srv.Memory)
 	d.Set("platform", srv.Platform)
+	d.Set("islocked", srv.IsLocked)
+	d.Set("isrunning", srv.IsRunning)
 	d.Set("storage", srv.Storage)
 	d.Set("template", getTemplate(d.Get("template").(string), srv))
 
@@ -282,4 +310,43 @@ func resourceGlesysServerDelete(ctx context.Context, d *schema.ResourceData, m i
 	}
 
 	return nil
+}
+
+// waitForServerAttribute
+func waitForServerAttribute(
+	ctx context.Context, d *schema.ResourceData, target string, pending []string, attribute string, m interface{}) (interface{}, error) {
+
+	stateConf := &resource.StateChangeConf{
+		Pending:    pending,
+		Target:     []string{target},
+		Refresh:    serverStateRefresh(ctx, d, m, attribute),
+		Timeout:    20 * time.Minute,
+		Delay:      6 * time.Second,
+		MinTimeout: 3 * time.Second,
+	}
+	return stateConf.WaitForState()
+}
+
+func serverStateRefresh(ctx context.Context, d *schema.ResourceData, m interface{}, attr string) resource.StateRefreshFunc {
+	client := m.(*glesys.Client)
+	return func() (interface{}, string, error) {
+
+		// check state of server
+		server, err := client.Servers.Details(ctx, d.Id())
+		if err != nil {
+			return nil, "", fmt.Errorf("error retrieving Server (%s): %s", d.Id(), err)
+		}
+
+		// depending on attribute, check if locked or running
+		if attr == "islocked" {
+			log.Printf("[INFO] Still locked %s", d.Id())
+			return server, strconv.FormatBool(server.IsLocked), nil
+		} else if attr == "isrunning" {
+			running := strconv.FormatBool(server.IsRunning)
+			log.Printf("[INFO] Server (%s) started: %s", d.Id(), running)
+			return server, running, nil
+		} else {
+			return nil, "", nil
+		}
+	}
 }
