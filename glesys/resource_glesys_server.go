@@ -2,18 +2,18 @@ package glesys
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/glesys/glesys-go/v4"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
 func resourceGlesysServer() *schema.Resource {
 	return &schema.Resource{
-		Create: resourceGlesysServerCreate,
-		Read:   resourceGlesysServerRead,
-		Update: resourceGlesysServerUpdate,
-		Delete: resourceGlesysServerDelete,
+		CreateContext: resourceGlesysServerCreate,
+		ReadContext:   resourceGlesysServerRead,
+		UpdateContext: resourceGlesysServerUpdate,
+		DeleteContext: resourceGlesysServerDelete,
 
 		Description: "Create a new GleSYS virtual server.",
 
@@ -166,7 +166,7 @@ func buildServerParamStruct(d *schema.ResourceData) *glesys.CreateServerParams {
 	return &opts
 }
 
-func resourceGlesysServerCreate(d *schema.ResourceData, m interface{}) error {
+func resourceGlesysServerCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	// Setup client to the API
 	client := m.(*glesys.Client)
 
@@ -176,20 +176,21 @@ func resourceGlesysServerCreate(d *schema.ResourceData, m interface{}) error {
 	if srv.Platform == "KVM" {
 		usersList, err := expandUsers(d.Get("user").(*schema.Set).List())
 		if err != nil {
-			return err
+			return diag.Errorf("Error when expanding users: %s", err)
 		}
 		srv.Users = usersList
 	}
 
-	host, err := client.Servers.Create(context.Background(), *srv)
+	host, err := client.Servers.Create(ctx, *srv)
 
 	if err != nil {
-		return fmt.Errorf("error creating server: %+v", err)
+		return diag.Errorf("error creating server: %+v", err)
 	}
 
 	// Set the resource Id to server ID
 	d.SetId((*host).ID)
-	return resourceGlesysServerRead(d, m)
+
+	return resourceGlesysServerRead(ctx, d, m)
 }
 
 func getTemplate(original string, srv *glesys.ServerDetails) string {
@@ -201,13 +202,13 @@ func getTemplate(original string, srv *glesys.ServerDetails) string {
 	return srv.Template
 }
 
-func resourceGlesysServerRead(d *schema.ResourceData, m interface{}) error {
+func resourceGlesysServerRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*glesys.Client)
 
 	// fetch updates about the resource
 	srv, err := client.Servers.Details(context.Background(), d.Id())
 	if err != nil {
-		fmt.Errorf("server not found: %s", err)
+		diag.Errorf("server not found: %s", err)
 		d.SetId("")
 		return nil
 	}
@@ -242,7 +243,7 @@ func resourceGlesysServerRead(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-func resourceGlesysServerUpdate(d *schema.ResourceData, m interface{}) error {
+func resourceGlesysServerUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*glesys.Client)
 
 	opts := glesys.EditServerParams{}
@@ -264,20 +265,20 @@ func resourceGlesysServerUpdate(d *schema.ResourceData, m interface{}) error {
 	}
 	_, err := client.Servers.Edit(context.Background(), d.Id(), opts)
 	if err != nil {
-		return fmt.Errorf("Error updating instance: %s", err)
+		return diag.Errorf("Error updating instance: %s", err)
 	}
 
 	return nil
 }
 
-func resourceGlesysServerDelete(d *schema.ResourceData, m interface{}) error {
+func resourceGlesysServerDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*glesys.Client)
 
 	// destroy the server, don't keep the ip.
-	err := client.Servers.Destroy(context.Background(), d.Id(), glesys.DestroyServerParams{KeepIP: false})
+	err := client.Servers.Destroy(ctx, d.Id(), glesys.DestroyServerParams{KeepIP: false})
 
 	if err != nil {
-		return fmt.Errorf("Error deleting instance: %s", err)
+		return diag.Errorf("Error deleting instance (%s): %s", d.Id(), err)
 	}
 
 	return nil
