@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/glesys/glesys-go/v3"
+	"github.com/glesys/glesys-go/v4"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 )
