@@ -49,6 +49,8 @@ github.com/flynn/go-shlex v0.0.0-20150515145356-3f9db97f8568/go.mod h1:xEzjJPgXI
 github.com/ghodss/yaml v1.0.0/go.mod h1:4dBDuWmgqj2HViK6kFavaiC9ZROes6MMH2rRYeMEF04=
 github.com/glesys/glesys-go/v3 v3.0.0 h1:L/sjZclA4qVjdaozFmttb2B0vB+IKLlB56uEwMurba4=
 github.com/glesys/glesys-go/v3 v3.0.0/go.mod h1:MApgtN5oDM8bI1AEAXDatdz4uwgc3liudna50Nap8lc=
+github.com/glesys/glesys-go/v4 v4.0.1 h1:+wMV8i6BZQhuVkP8UlVMBvCIdEZFpQ1tRpxCdWDuwDo=
+github.com/glesys/glesys-go/v4 v4.0.1/go.mod h1:7+z7DAF1/xEkxxM5dE0cdV1VNnCEVJy7J+FQyYOjiQU=
 github.com/gliderlabs/ssh v0.2.2/go.mod h1:U7qILu1NlMHj9FlMhZLlkCdDnU1DBEAqr0aevW3Awn0=
 github.com/go-git/gcfg v1.5.0 h1:Q5ViNfGF8zFgyJWPqYwA7qGFoMTEiBmdlkcfRmpIMa4=
 github.com/go-git/gcfg v1.5.0/go.mod h1:5m20vg6GwYabIxaOonVkTdrILxQMpEShl1xiMF4ua+E=
