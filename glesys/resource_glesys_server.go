@@ -24,7 +24,7 @@ func resourceGlesysServer() *schema.Resource {
 
 		Timeouts: &schema.ResourceTimeout{
 			Create: schema.DefaultTimeout(20 * time.Minute),
-			Delete: schema.DefaultTimeout(60 * time.Second),
+			Delete: schema.DefaultTimeout(10 * time.Minute),
 		},
 
 		Schema: map[string]*schema.Schema{
@@ -302,8 +302,14 @@ func resourceGlesysServerUpdate(ctx context.Context, d *schema.ResourceData, m i
 func resourceGlesysServerDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*glesys.Client)
 
+	// Call waitForServerAttribute to make sure the server isn't locked before deleting it.
+	_, err := waitForServerAttribute(ctx, d, "false", []string{"true"}, "islocked", m)
+
+	if err != nil {
+		return diag.Errorf("Error waiting for server to be unlocked for destroy (%s): %s", d.Id(), err)
+	}
 	// destroy the server, don't keep the ip.
-	err := client.Servers.Destroy(ctx, d.Id(), glesys.DestroyServerParams{KeepIP: false})
+	err = client.Servers.Destroy(ctx, d.Id(), glesys.DestroyServerParams{KeepIP: false})
 
 	if err != nil {
 		return diag.Errorf("Error deleting instance (%s): %s", d.Id(), err)
