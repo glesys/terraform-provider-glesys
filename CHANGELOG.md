@@ -5,9 +5,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 
-## [0.4.7] - YYYY-MM-DD
+## [0.5.0] - YYYY-MM-DD
 ### Changed
 - Update to glesys-go/v4 @norrland #59
+- Refactor `glesys_server` Create and Delete to wait for attribute.
+- Fix typo in resource_glesys_server @norrland
 
 ## [0.4.6] - 2022-09-13
 ### Added
