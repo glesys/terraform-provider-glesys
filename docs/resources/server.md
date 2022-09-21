@@ -141,8 +141,8 @@ resource "glesys_server" "vmware" {
 
 - `campaigncode` (String) Campaigncode used during creation for possible discount
 - `description` (String) Server description
-- `ipv4_address` (String) Server IPv4 address, set `None` to disable IP allocation
-- `ipv6_address` (String) Server IPv6 address, set `None` to disable IP allocation
+- `ipv4_address` (String) Server IPv4 address, set `none` to disable IP allocation
+- `ipv6_address` (String) Server IPv6 address, set `none` to disable IP allocation
 - `password` (String) Server root password, VMware only
 - `platform` (String) Server virtualisation platform, `KVM` or `VMware`
 - `publickey` (String)
