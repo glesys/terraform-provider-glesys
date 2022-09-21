@@ -61,13 +61,13 @@ func resourceGlesysServer() *schema.Resource {
 				DiffSuppressFunc: IgnoreCase,
 			},
 			"ipv4_address": {
-				Description: "Server IPv4 address, set `None` to disable IP allocation",
+				Description: "Server IPv4 address, set `none` to disable IP allocation",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
 			},
 			"ipv6_address": {
-				Description: "Server IPv6 address, set `None` to disable IP allocation",
+				Description: "Server IPv6 address, set `none` to disable IP allocation",
 				Type:        schema.TypeString,
 				Optional:    true,
 				Computed:    true,
