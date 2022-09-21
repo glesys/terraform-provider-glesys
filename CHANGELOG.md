@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Update to glesys-go/v4 @norrland #59
 - Refactor `glesys_server` Create and Delete to wait for attribute.
 - Fix typo in resource_glesys_server @norrland
+- Fix wrong header in docs/index.md @norrland
 
 ## [0.4.6] - 2022-09-13
 ### Added
