@@ -49,7 +49,7 @@ func resourceGlesysDNSDomainRecord() *schema.Resource {
 			"type": {
 				Description: "Record type. Ex. `A`, `AAAA`...",
 				Type:        schema.TypeString,
-				Optional:    true,
+				Required:    true,
 				ForceNew:    true,
 			},
 
