@@ -16,7 +16,7 @@ terraform {
   required_providers {
     glesys = {
       source = "glesys/glesys"
-      # version = "0.4.6" # If you want to specify a certain release.
+      # version = "0.5.0" # If you want to specify a certain release.
     }
   }
 }
