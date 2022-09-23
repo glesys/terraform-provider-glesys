@@ -25,6 +25,7 @@ func Provider() *schema.Provider {
 		ResourcesMap: map[string]*schema.Resource{
 			"glesys_dnsdomain":                resourceGlesysDNSDomain(),
 			"glesys_dnsdomain_record":         resourceGlesysDNSDomainRecord(),
+			"glesys_emailaccount":             resourceGlesysEmailAccount(),
 			"glesys_loadbalancer":             resourceGlesysLoadBalancer(),
 			"glesys_loadbalancer_backend":     resourceGlesysLoadBalancerBackend(),
 			"glesys_loadbalancer_frontend":    resourceGlesysLoadBalancerFrontend(),
