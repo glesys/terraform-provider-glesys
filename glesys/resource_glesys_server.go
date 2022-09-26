@@ -22,6 +22,10 @@ func resourceGlesysServer() *schema.Resource {
 
 		Description: "Create a new GleSYS virtual server.",
 
+		Importer: &schema.ResourceImporter{
+			State: schema.ImportStatePassthrough,
+		},
+
 		Timeouts: &schema.ResourceTimeout{
 			Create: schema.DefaultTimeout(20 * time.Minute),
 			Delete: schema.DefaultTimeout(10 * time.Minute),
