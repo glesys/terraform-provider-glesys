@@ -161,4 +161,9 @@ Required:
 - `password` (String)
 - `publickeys` (List of String) User SSH key(s), as a list. '["ssh-rsa abc...", "ssh-rsa foo..."]'
 - `username` (String)
-
+## Import
+Import is supported using the following syntax:
+```shell
+# glesys_server Import
+$ terraform import glesys_server.example kvm123456
+```
