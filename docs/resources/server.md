@@ -152,6 +152,8 @@ resource "glesys_server" "vmware" {
 ### Read-Only
 
 - `id` (String) The ID of this resource.
+- `islocked` (Boolean) Server locked state
+- `isrunning` (Boolean) Server running state
 
 <a id="nestedblock--user"></a>
 ### Nested Schema for `user`
