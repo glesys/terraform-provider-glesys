@@ -15,20 +15,25 @@ func resourceGlesysLoadBalancer() *schema.Resource {
 		Update: resourceGlesysLoadBalancerUpdate,
 		Delete: resourceGlesysLoadBalancerDelete,
 
+		Description: "Create a LoadBalancer",
+
 		Schema: map[string]*schema.Schema{
 			"datacenter": {
-				Type:     schema.TypeString,
-				Required: true,
-				ForceNew: true,
+				Description: "LoadBalancer datacenter. `Falkenberg`, `Stockholm`",
+				Type:        schema.TypeString,
+				Required:    true,
+				ForceNew:    true,
 			},
 			"name": {
-				Type:     schema.TypeString,
-				Required: true,
+				Description: "LoadBalancer name.",
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 			"iplist": {
-				Type:     schema.TypeList,
-				Computed: true,
-				Elem:     &schema.Schema{Type: schema.TypeString},
+				Description: "IPs set on the LoadBalancer.",
+				Type:        schema.TypeList,
+				Computed:    true,
+				Elem:        &schema.Schema{Type: schema.TypeString},
 			},
 			"blacklist": {
 				Description: "**DEPRECATED** Use blocklist instead.",
@@ -38,7 +43,7 @@ func resourceGlesysLoadBalancer() *schema.Resource {
 				Deprecated:  "use blocklist instead",
 			},
 			"blocklist": {
-				Description: "blocklist - list of prefixes blocked from access in the loadbalancer",
+				Description: "LoadBalancer blocklist. List of IPs: `[\"a.b.c.d\",\"x.y.z.w\"]`",
 				Type:        schema.TypeList,
 				Optional:    true,
 				Elem:        &schema.Schema{Type: schema.TypeString},

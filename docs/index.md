@@ -19,8 +19,8 @@ Use the navigation to the left to read about the available resources.
 terraform {
   required_providers {
     glesys = {
-      source = "glesys/glesys"
-      version = "~> 0.4.4"
+      source  = "glesys/glesys"
+      version = "~> 0.6.0"
     }
   }
 }

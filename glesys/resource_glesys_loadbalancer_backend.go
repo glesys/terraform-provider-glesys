@@ -15,50 +15,60 @@ func resourceGlesysLoadBalancerBackend() *schema.Resource {
 		Update: resourceGlesysLoadBalancerBackendUpdate,
 		Delete: resourceGlesysLoadBalancerBackendDelete,
 
+		Description: "LoadBalancer Backend for a glesys_loadbalancer",
+
 		Schema: map[string]*schema.Schema{
 			"connecttimeout": {
-				Type:     schema.TypeInt,
-				Computed: true,
-				Optional: true,
+				Description: "Connection timeout to backend target. `milliseconds`",
+				Type:        schema.TypeInt,
+				Computed:    true,
+				Optional:    true,
 			},
 
 			"loadbalancerid": {
-				Type:     schema.TypeString,
-				Required: true,
-				ForceNew: true,
+				Description: "LoadBalancer ID.",
+				Type:        schema.TypeString,
+				Required:    true,
+				ForceNew:    true,
 			},
 
 			"responsetimeout": {
-				Type:     schema.TypeInt,
-				Computed: true,
-				Optional: true,
+				Description: "Connection response timeout. `milliseconds`",
+				Type:        schema.TypeInt,
+				Computed:    true,
+				Optional:    true,
 			},
 
 			"name": {
-				Type:     schema.TypeString,
-				Required: true,
-				ForceNew: true,
+				Description: "Backend name.",
+				Type:        schema.TypeString,
+				Required:    true,
+				ForceNew:    true,
 			},
 
 			"mode": {
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: "Backend mode. `TCP`, `HTTP`.",
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 
 			"stickysessions": {
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: "Enable backend sticky sessions. `true`, `false`, `yes`, `no`.",
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 
 			"status": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Description: "Backend status. `UP` when targets are reachable and `DOWN` when no targets are reachable.",
+				Type:        schema.TypeString,
+				Computed:    true,
 			},
 
 			"targets": {
-				Type:     schema.TypeList,
-				Computed: true,
-				Elem:     &schema.Schema{Type: schema.TypeString},
+				Description: "Backend targets. Computed by LoadBalancer Targets setting the `backend` parameter.",
+				Type:        schema.TypeList,
+				Computed:    true,
+				Elem:        &schema.Schema{Type: schema.TypeString},
 			},
 		},
 	}

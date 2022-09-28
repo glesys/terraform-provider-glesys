@@ -15,51 +15,61 @@ func resourceGlesysLoadBalancerFrontend() *schema.Resource {
 		Update: resourceGlesysLoadBalancerFrontendUpdate,
 		Delete: resourceGlesysLoadBalancerFrontendDelete,
 
+		Description: "Create a LoadBalancer Frontend for a `glesys_loadbalancer`.",
+
 		Schema: map[string]*schema.Schema{
 			"backend": {
-				Type:     schema.TypeString,
-				Required: true,
-				ForceNew: true,
+				Description: "LoadBalancer Backend name.",
+				Type:        schema.TypeString,
+				Required:    true,
+				ForceNew:    true,
 			},
 
 			"clienttimeout": {
-				Type:     schema.TypeInt,
-				Computed: true,
-				Optional: true,
+				Description: "Client connection timeout. `milliseconds`",
+				Type:        schema.TypeInt,
+				Computed:    true,
+				Optional:    true,
 			},
 
 			"loadbalancerid": {
-				Type:     schema.TypeString,
-				Required: true,
-				ForceNew: true,
+				Description: "LoadBalancer to associate the Frontend to.",
+				Type:        schema.TypeString,
+				Required:    true,
+				ForceNew:    true,
 			},
 
 			"maxconnections": {
-				Type:     schema.TypeInt,
-				Computed: true,
-				Optional: true,
+				Description: "Maximum number of connections allowed.",
+				Type:        schema.TypeInt,
+				Computed:    true,
+				Optional:    true,
 			},
 
 			"name": {
-				Type:     schema.TypeString,
-				Required: true,
-				ForceNew: true,
+				Description: "Frontend name.",
+				Type:        schema.TypeString,
+				Required:    true,
+				ForceNew:    true,
 			},
 
 			"port": {
-				Type:     schema.TypeInt,
-				Required: true,
+				Description: "Listen port.",
+				Type:        schema.TypeInt,
+				Required:    true,
 			},
 
 			"sslcertificate": {
-				Type:     schema.TypeString,
-				Optional: true,
-				ForceNew: true,
+				Description: "Certificate bundle to use for terminating TLS connections.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				ForceNew:    true,
 			},
 
 			"status": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Description: "Frontend status.",
+				Type:        schema.TypeString,
+				Computed:    true,
 			},
 		},
 	}
