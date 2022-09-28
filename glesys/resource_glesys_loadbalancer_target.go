@@ -15,49 +15,59 @@ func resourceGlesysLoadBalancerTarget() *schema.Resource {
 		Update: resourceGlesysLoadBalancerTargetUpdate,
 		Delete: resourceGlesysLoadBalancerTargetDelete,
 
+		Description: "Create a LoadBalancer Target for a `glesys_loadbalancer_backend`.",
+
 		Schema: map[string]*schema.Schema{
 			"backend": {
-				Type:     schema.TypeString,
-				Required: true,
-				ForceNew: true,
+				Description: "Backend to associate with.",
+				Type:        schema.TypeString,
+				Required:    true,
+				ForceNew:    true,
 			},
 
 			"enabled": {
-				Type:     schema.TypeBool,
-				Computed: true,
-				Optional: true,
+				Description: "Enable or disable Target. `true`, `false`",
+				Type:        schema.TypeBool,
+				Computed:    true,
+				Optional:    true,
 			},
 
 			"loadbalancerid": {
-				Type:     schema.TypeString,
-				Required: true,
-				ForceNew: true,
+				Description: "LoadBalancer ID.",
+				Type:        schema.TypeString,
+				Required:    true,
+				ForceNew:    true,
 			},
 
 			"name": {
-				Type:     schema.TypeString,
-				Required: true,
-				ForceNew: true,
+				Description: "Target name.",
+				Type:        schema.TypeString,
+				Required:    true,
+				ForceNew:    true,
 			},
 
 			"port": {
-				Type:     schema.TypeInt,
-				Required: true,
+				Description: "Target port to connect to.",
+				Type:        schema.TypeInt,
+				Required:    true,
 			},
 
 			"status": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Description: "Target status. `UP`, `DOWN`",
+				Type:        schema.TypeString,
+				Computed:    true,
 			},
 
 			"targetip": {
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: "Target IP.",
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 
 			"weight": {
-				Type:     schema.TypeInt,
-				Required: true,
+				Description: "Target weight. `1-256`. Higher weight gets more requests.",
+				Type:        schema.TypeInt,
+				Required:    true,
 			},
 		},
 	}
