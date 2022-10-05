@@ -140,6 +140,8 @@ resource "glesys_server" "vmware" {
 ### Optional
 
 - `campaigncode` (String) Campaigncode used during creation for possible discount
+- `cloudconfig` (String) Cloudconfig used to provision server using a provided cloud-config mustache template.
+- `cloudconfigparams` (String) Cloudconfigparams is used to provide additional parameters to the template in `cloudconfig`. Ex: `{"foo": "bar"}`
 - `description` (String) Server description
 - `ipv4_address` (String) Server IPv4 address, set `none` to disable IP allocation
 - `ipv6_address` (String) Server IPv6 address, set `none` to disable IP allocation

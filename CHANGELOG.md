@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 ### Changed
 - Support import in `glesys_server` @norrland (#66)
+- Support `cloudconfig` and `cloudconfigparams` in `glesys_server`
 
 ## [0.5.0] - 2022-09-21
 ### Changed
