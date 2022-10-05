@@ -31,9 +31,17 @@ func resourceGlesysLoadBalancer() *schema.Resource {
 				Elem:     &schema.Schema{Type: schema.TypeString},
 			},
 			"blacklist": {
-				Type:     schema.TypeList,
-				Optional: true,
-				Elem:     &schema.Schema{Type: schema.TypeString},
+				Description: "**DEPRECATED** Use blocklist instead.",
+				Type:        schema.TypeList,
+				Optional:    true,
+				Elem:        &schema.Schema{Type: schema.TypeString},
+				Deprecated:  "use blocklist instead",
+			},
+			"blocklist": {
+				Description: "blocklist - list of prefixes blocked from access in the loadbalancer",
+				Type:        schema.TypeList,
+				Optional:    true,
+				Elem:        &schema.Schema{Type: schema.TypeString},
 			},
 		},
 	}
@@ -69,20 +77,21 @@ func resourceGlesysLoadBalancerRead(d *schema.ResourceData, m interface{}) error
 	}
 
 	var ipAddresses []string
-	var blacklistIps []string
+	var blocklistIps []string
 	for i := range (*loadbalancer).IPList {
 		ipAddresses = append(ipAddresses, (*loadbalancer).IPList[i].Address)
 
 	}
 
 	for i := range (*loadbalancer).Blocklists {
-		blacklistIps = append(blacklistIps, (*loadbalancer).Blocklists[i])
+		blocklistIps = append(blocklistIps, (*loadbalancer).Blocklists[i])
 	}
 
 	d.Set("datacenter", loadbalancer.DataCenter)
 	d.Set("name", loadbalancer.Name)
 	d.Set("iplist", ipAddresses)
-	d.Set("blacklist", blacklistIps)
+	d.Set("blacklist", blocklistIps)
+	d.Set("blocklist", blocklistIps)
 
 	return nil
 }
