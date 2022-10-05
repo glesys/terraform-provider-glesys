@@ -42,6 +42,16 @@ func resourceGlesysServer() *schema.Resource {
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
+			"cloudconfig": {
+				Description: "Cloudconfig used to provision server using a provided cloud-config mustache template.",
+				Type:        schema.TypeString,
+				Optional:    true,
+			},
+			"cloudconfigparams": {
+				Description: "Cloudconfigparams is used to provide additional parameters to the template in `cloudconfig`. Ex: `{\"foo\": \"bar\"}`",
+				Type:        schema.TypeString,
+				Optional:    true,
+			},
 			"cpu": {
 				Description: "Server CPU cores count",
 				Type:        schema.TypeInt,
@@ -171,20 +181,22 @@ func expandUsers(config []interface{}) ([]glesys.User, error) {
 
 func buildServerParamStruct(d *schema.ResourceData) *glesys.CreateServerParams {
 	opts := glesys.CreateServerParams{
-		Bandwidth:    d.Get("bandwidth").(int),
-		CampaignCode: d.Get("campaigncode").(string),
-		CPU:          d.Get("cpu").(int),
-		DataCenter:   d.Get("datacenter").(string),
-		Description:  d.Get("description").(string),
-		Hostname:     d.Get("hostname").(string),
-		IPv4:         d.Get("ipv4_address").(string),
-		IPv6:         d.Get("ipv6_address").(string),
-		Memory:       d.Get("memory").(int),
-		Password:     d.Get("password").(string),
-		Platform:     d.Get("platform").(string),
-		PublicKey:    d.Get("publickey").(string),
-		Storage:      d.Get("storage").(int),
-		Template:     d.Get("template").(string),
+		Bandwidth:         d.Get("bandwidth").(int),
+		CampaignCode:      d.Get("campaigncode").(string),
+		CloudConfig:       d.Get("cloudconfig").(string),
+		CloudConfigParams: d.Get("cloudconfigparams").(string),
+		CPU:               d.Get("cpu").(int),
+		DataCenter:        d.Get("datacenter").(string),
+		Description:       d.Get("description").(string),
+		Hostname:          d.Get("hostname").(string),
+		IPv4:              d.Get("ipv4_address").(string),
+		IPv6:              d.Get("ipv6_address").(string),
+		Memory:            d.Get("memory").(int),
+		Password:          d.Get("password").(string),
+		Platform:          d.Get("platform").(string),
+		PublicKey:         d.Get("publickey").(string),
+		Storage:           d.Get("storage").(int),
+		Template:          d.Get("template").(string),
 	}.WithDefaults()
 
 	return &opts
