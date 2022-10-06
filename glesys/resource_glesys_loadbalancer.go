@@ -75,8 +75,8 @@ func resourceGlesysLoadBalancerRead(d *schema.ResourceData, m interface{}) error
 
 	}
 
-	for i := range (*loadbalancer).Blacklists {
-		blacklistIps = append(blacklistIps, (*loadbalancer).Blacklists[i])
+	for i := range (*loadbalancer).Blocklists {
+		blacklistIps = append(blacklistIps, (*loadbalancer).Blocklists[i])
 	}
 
 	d.Set("datacenter", loadbalancer.DataCenter)
