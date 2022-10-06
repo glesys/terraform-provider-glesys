@@ -3,8 +3,8 @@
 terraform {
   required_providers {
     glesys = {
-      source = "glesys/glesys"
-      version = "~> 0.4.4"
+      source  = "glesys/glesys"
+      version = "~> 0.6.0"
     }
   }
 }
