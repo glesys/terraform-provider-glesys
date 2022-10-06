@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/glesys/glesys-go/v4"
+	"github.com/glesys/glesys-go/v5"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"

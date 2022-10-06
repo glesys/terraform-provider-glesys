@@ -3,7 +3,7 @@ package glesys
 import (
 	"testing"
 
-	"github.com/glesys/glesys-go/v4"
+	"github.com/glesys/glesys-go/v5"
 )
 
 func Test_getTemplate(t *testing.T) {
