@@ -4,9 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
+
+## [0.6.0] - 2022-10-06
+### Added
+- Implement `glesys_emailaccount` @norrland (#75)
 ### Changed
+- Loadbalancer deprecate `blacklist` @norrland (#73)
 - Support import in `glesys_server` @norrland (#66)
 - Support `cloudconfig` and `cloudconfigparams` in `glesys_server`
+- Update glesys-go to v5
 
 ## [0.5.0] - 2022-09-21
 ### Changed
