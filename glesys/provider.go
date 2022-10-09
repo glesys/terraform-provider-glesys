@@ -22,6 +22,11 @@ func Provider() *schema.Provider {
 				Description: "User token for the Glesys API. Alternatively, this can be set using the `GLESYS_TOKEN` environment variable",
 			},
 		},
+
+		DataSourcesMap: map[string]*schema.Resource{
+			"glesys_dnsdomain": dataSourceGlesysDNSDomain(),
+		},
+
 		ResourcesMap: map[string]*schema.Resource{
 			"glesys_dnsdomain":                resourceGlesysDNSDomain(),
 			"glesys_dnsdomain_record":         resourceGlesysDNSDomainRecord(),

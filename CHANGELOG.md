@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 
+## [0.x.x] - yyyy-mm-dd
+### Added
+- Implement DataSource for `glesys_dnsdomain`
+
 ## [0.6.0] - 2022-10-06
 ### Added
 - Implement `glesys_emailaccount` @norrland (#75)
