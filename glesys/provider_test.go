@@ -1,14 +1,20 @@
 package glesys
 
 import (
+	"fmt"
 	"os"
+	"strings"
 	"testing"
 
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+const testNamePrefix = "tf-acc-test-"
+
 var testGlesysProvider *schema.Provider
 var testGlesysProviders map[string]*schema.Provider
+var testGlesysProviderFactories map[string]func() (*schema.Provider, error)
 
 func init() {
 	testGlesysProvider = Provider()
@@ -38,4 +44,16 @@ func testAccPreCheck(t *testing.T) {
 	if v := os.Getenv("GLESYS_TOKEN"); v == "" {
 		t.Fatal("GLESYS_TOKEN must be set for acceptance tests")
 	}
+}
+
+func randomTestName(additionalNames ...string) string {
+	prefix := testNamePrefix
+	for _, n := range additionalNames {
+		prefix += "-" + strings.Replace(n, " ", "_", -1)
+	}
+	return randomName(prefix, 10)
+}
+
+func randomName(prefix string, length int) string {
+	return fmt.Sprintf("%s%s", prefix, acctest.RandString(length))
 }
