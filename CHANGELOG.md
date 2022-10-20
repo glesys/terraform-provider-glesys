@@ -5,9 +5,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 
-## [0.x.x] - yyyy-mm-dd
+## [0.7.0] - 2022-10-20
 ### Added
 - Implement DataSource for `glesys_dnsdomain`
+### Changed
+- Bump dependencies (#80)
 
 ## [0.6.0] - 2022-10-06
 ### Added
