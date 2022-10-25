@@ -87,9 +87,9 @@ func resourceGlesysNetworkAdapterUpdate(d *schema.ResourceData, m interface{}) e
 
 	params := glesys.EditNetworkAdapterParams{}
 
-	//if d.HasChange("adaptertype") {
-	//	params.AdapterType = d.Get("adaptertype").(string)
-	//}
+	// if d.HasChange("adaptertype") {
+	//  	params.AdapterType = d.Get("adaptertype").(string)
+	// }
 	if d.HasChange("bandwidth") {
 		params.Bandwidth = d.Get("bandwidth").(int)
 	}

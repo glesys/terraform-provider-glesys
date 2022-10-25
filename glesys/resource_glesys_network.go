@@ -47,7 +47,7 @@ func resourceGlesysNetworkCreate(d *schema.ResourceData, m interface{}) error {
 	}
 
 	// Set the Id to network.ID
-	d.SetId((*network).ID)
+	d.SetId(network.ID)
 	return resourceGlesysNetworkRead(d, m)
 }
 

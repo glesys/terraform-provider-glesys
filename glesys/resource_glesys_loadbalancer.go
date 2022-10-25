@@ -66,7 +66,7 @@ func resourceGlesysLoadBalancerCreate(d *schema.ResourceData, m interface{}) err
 	}
 
 	// Set the Id to loadbalancer.ID
-	d.SetId((*loadbalancer).ID)
+	d.SetId(loadbalancer.ID)
 
 	return resourceGlesysLoadBalancerRead(d, m)
 }
@@ -83,12 +83,12 @@ func resourceGlesysLoadBalancerRead(d *schema.ResourceData, m interface{}) error
 
 	var ipAddresses []string
 	var blocklistIps []string
-	for i := range (*loadbalancer).IPList {
-		ipAddresses = append(ipAddresses, (*loadbalancer).IPList[i].Address)
+	for i := range loadbalancer.IPList {
+		ipAddresses = append(ipAddresses, loadbalancer.IPList[i].Address)
 	}
 
-	for i := range (*loadbalancer).Blocklists {
-		blocklistIps = append(blocklistIps, (*loadbalancer).Blocklists[i])
+	for i := range loadbalancer.Blocklists {
+		blocklistIps = append(blocklistIps, loadbalancer.Blocklists[i])
 	}
 
 	d.Set("datacenter", loadbalancer.DataCenter)

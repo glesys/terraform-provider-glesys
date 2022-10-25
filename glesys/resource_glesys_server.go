@@ -224,7 +224,7 @@ func resourceGlesysServerCreate(ctx context.Context, d *schema.ResourceData, m i
 	}
 
 	// Set the resource Id to server ID
-	d.SetId((*host).ID)
+	d.SetId(host.ID)
 
 	if _, err = waitForServerAttribute(ctx, d, "true", []string{"false"}, "isrunning", m); err != nil {
 		return diag.Errorf("error while waiting for Server (%s) to be started: %s", d.Id(), err)
@@ -358,14 +358,15 @@ func serverStateRefresh(ctx context.Context, d *schema.ResourceData, m interface
 		}
 
 		// depending on attribute, check if locked or running
-		if attr == "islocked" {
+		switch attr {
+		case "islocked":
 			log.Printf("[INFO] Still locked %s", d.Id())
 			return server, strconv.FormatBool(server.IsLocked), nil
-		} else if attr == "isrunning" {
+		case "isrunning":
 			running := strconv.FormatBool(server.IsRunning)
 			log.Printf("[INFO] Server (%s) started: %s", d.Id(), running)
 			return server, running, nil
-		} else {
+		default:
 			return nil, "", nil
 		}
 	}
