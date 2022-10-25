@@ -337,7 +337,6 @@ func resourceGlesysServerDelete(ctx context.Context, d *schema.ResourceData, m i
 // waitForServerAttribute
 func waitForServerAttribute(
 	ctx context.Context, d *schema.ResourceData, target string, pending []string, attribute string, m interface{}) (interface{}, error) {
-
 	stateConf := &resource.StateChangeConf{
 		Pending:    pending,
 		Target:     []string{target},
@@ -352,7 +351,6 @@ func waitForServerAttribute(
 func serverStateRefresh(ctx context.Context, d *schema.ResourceData, m interface{}, attr string) resource.StateRefreshFunc {
 	client := m.(*glesys.Client)
 	return func() (interface{}, string, error) {
-
 		// check state of server
 		server, err := client.Servers.Details(ctx, d.Id())
 		if err != nil {

@@ -85,7 +85,6 @@ func resourceGlesysLoadBalancerRead(d *schema.ResourceData, m interface{}) error
 	var blocklistIps []string
 	for i := range (*loadbalancer).IPList {
 		ipAddresses = append(ipAddresses, (*loadbalancer).IPList[i].Address)
-
 	}
 
 	for i := range (*loadbalancer).Blocklists {

@@ -44,5 +44,4 @@ func glesysDataSourceDNSDomainSkeleton() string {
 	return `data "glesys_dnsdomain" "exampledata" {
             name  = glesys_dnsdomain.example.name
          }`
-
 }
