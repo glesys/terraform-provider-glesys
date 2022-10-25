@@ -2,21 +2,21 @@ package glesys
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/glesys/glesys-go/v5"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
 func resourceGlesysObjectStorageInstance() *schema.Resource {
 	return &schema.Resource{
-		Create: resourceGlesysObjectStorageInstanceCreate,
-		Read:   resourceGlesysObjectStorageInstanceRead,
-		Update: resourceGlesysObjectStorageInstanceUpdate,
-		Delete: resourceGlesysObjectStorageInstanceDelete,
+		CreateContext: resourceGlesysObjectStorageInstanceCreate,
+		ReadContext:   resourceGlesysObjectStorageInstanceRead,
+		UpdateContext: resourceGlesysObjectStorageInstanceUpdate,
+		DeleteContext: resourceGlesysObjectStorageInstanceDelete,
 
 		Importer: &schema.ResourceImporter{
-			State: schema.ImportStatePassthrough,
+			StateContext: schema.ImportStatePassthroughContext,
 		},
 
 		Schema: map[string]*schema.Schema{
@@ -44,7 +44,7 @@ func resourceGlesysObjectStorageInstance() *schema.Resource {
 	}
 }
 
-func resourceGlesysObjectStorageInstanceCreate(d *schema.ResourceData, m interface{}) error {
+func resourceGlesysObjectStorageInstanceCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*glesys.Client)
 
 	params := glesys.CreateObjectStorageInstanceParams{
@@ -54,22 +54,22 @@ func resourceGlesysObjectStorageInstanceCreate(d *schema.ResourceData, m interfa
 
 	instance, err := client.ObjectStorages.CreateInstance(context.Background(), params)
 	if err != nil {
-		return fmt.Errorf("Error creating object storage: %s", err)
+		return diag.Errorf("Error creating object storage: %s", err)
 	}
 
 	d.SetId(instance.InstanceID)
 	d.Set("secretkey", instance.Credentials[0].SecretKey)
 
-	return resourceGlesysObjectStorageInstanceRead(d, m)
+	return resourceGlesysObjectStorageInstanceRead(ctx, d, m)
 }
 
-func resourceGlesysObjectStorageInstanceRead(d *schema.ResourceData, m interface{}) error {
+func resourceGlesysObjectStorageInstanceRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*glesys.Client)
 
 	instance, err := client.ObjectStorages.InstanceDetails(context.Background(), d.Id())
 	if err != nil {
 		d.SetId("")
-		return fmt.Errorf("object storage not found: %s", err)
+		return diag.Errorf("object storage not found: %s", err)
 	}
 
 	d.Set("datacenter", instance.DataCenter)
@@ -88,7 +88,7 @@ func resourceGlesysObjectStorageInstanceRead(d *schema.ResourceData, m interface
 	return nil
 }
 
-func resourceGlesysObjectStorageInstanceUpdate(d *schema.ResourceData, m interface{}) error {
+func resourceGlesysObjectStorageInstanceUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*glesys.Client)
 
 	params := glesys.EditObjectStorageInstanceParams{
@@ -101,17 +101,17 @@ func resourceGlesysObjectStorageInstanceUpdate(d *schema.ResourceData, m interfa
 
 	_, err := client.ObjectStorages.EditInstance(context.Background(), params)
 	if err != nil {
-		return fmt.Errorf("Error updating object storage: %s", err)
+		return diag.Errorf("Error updating object storage: %s", err)
 	}
-	return resourceGlesysObjectStorageInstanceRead(d, m)
+	return resourceGlesysObjectStorageInstanceRead(ctx, d, m)
 }
 
-func resourceGlesysObjectStorageInstanceDelete(d *schema.ResourceData, m interface{}) error {
+func resourceGlesysObjectStorageInstanceDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*glesys.Client)
 
 	err := client.ObjectStorages.DeleteInstance(context.Background(), d.Id())
 	if err != nil {
-		return fmt.Errorf("Error deleting object storage: %s", err)
+		return diag.Errorf("Error deleting object storage: %s", err)
 	}
 
 	return nil

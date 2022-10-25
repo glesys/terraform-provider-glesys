@@ -2,20 +2,20 @@ package glesys
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/glesys/glesys-go/v5"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
 func resourceGlesysIP() *schema.Resource {
 	return &schema.Resource{
-		Create: resourceGlesysIPCreate,
-		Read:   resourceGlesysIPRead,
-		Update: resourceGlesysIPUpdate,
-		Delete: resourceGlesysIPDelete,
+		CreateContext: resourceGlesysIPCreate,
+		ReadContext:   resourceGlesysIPRead,
+		UpdateContext: resourceGlesysIPUpdate,
+		DeleteContext: resourceGlesysIPDelete,
 		Importer: &schema.ResourceImporter{
-			State: schema.ImportStatePassthrough,
+			StateContext: schema.ImportStatePassthroughContext,
 		},
 
 		Schema: map[string]*schema.Schema{
@@ -106,7 +106,7 @@ func resourceGlesysIP() *schema.Resource {
 	}
 }
 
-func resourceGlesysIPCreate(d *schema.ResourceData, m interface{}) error {
+func resourceGlesysIPCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	// Setup client to the API
 	client := m.(*glesys.Client)
 
@@ -122,7 +122,7 @@ func resourceGlesysIPCreate(d *schema.ResourceData, m interface{}) error {
 		// Get available ip addresses
 		ips, err := client.IPs.Available(context.Background(), params)
 		if err != nil {
-			return err
+			return diag.Errorf("Error listing available IPs: %v", err)
 		}
 
 		// Select the first available ip address for reservation
@@ -131,7 +131,7 @@ func resourceGlesysIPCreate(d *schema.ResourceData, m interface{}) error {
 
 	ip, err := client.IPs.Reserve(context.Background(), address)
 	if err != nil {
-		return err
+		return diag.Errorf("Error reserving IP %s: %v", address, err)
 	}
 
 	ptr := d.Get("ptr").(string)
@@ -139,22 +139,22 @@ func resourceGlesysIPCreate(d *schema.ResourceData, m interface{}) error {
 		_, err := client.IPs.SetPTR(context.Background(), address, ptr)
 
 		if err != nil {
-			return err
+			return diag.Errorf("Error setting PTR %s: %v", ptr, err)
 		}
 	}
 
 	// Set the resource Id to IP address
 	d.SetId(ip.Address)
-	return resourceGlesysIPRead(d, m)
+	return resourceGlesysIPRead(ctx, d, m)
 }
 
-func resourceGlesysIPRead(d *schema.ResourceData, m interface{}) error {
+func resourceGlesysIPRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*glesys.Client)
 
 	// Fetch updates about the IP
 	ip, err := client.IPs.Details(context.Background(), d.Id())
 	if err != nil {
-		fmt.Errorf("IP not found: %s", err)
+		diag.Errorf("IP not found: %s", err)
 		d.SetId("")
 		return nil
 	}
@@ -179,13 +179,13 @@ func resourceGlesysIPRead(d *schema.ResourceData, m interface{}) error {
 	}
 	err = d.Set("cost", []map[string]interface{}{cost})
 	if err != nil {
-		return err
+		return diag.Errorf("Error setting cost: %v", err)
 	}
 
 	return nil
 }
 
-func resourceGlesysIPUpdate(d *schema.ResourceData, m interface{}) error {
+func resourceGlesysIPUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*glesys.Client)
 
 	if d.HasChange("ptr") {
@@ -196,19 +196,19 @@ func resourceGlesysIPUpdate(d *schema.ResourceData, m interface{}) error {
 		ptr := d.Get("ptr").(string)
 		_, err := client.IPs.SetPTR(context.Background(), d.Id(), ptr)
 		if err != nil {
-			return fmt.Errorf("Error updating reverse pointer on IP: %s", err)
+			return diag.Errorf("Error updating reverse pointer on IP: %s", err)
 		}
 	}
 
 	return nil
 }
 
-func resourceGlesysIPDelete(d *schema.ResourceData, m interface{}) error {
+func resourceGlesysIPDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*glesys.Client)
 
 	err := client.IPs.Release(context.Background(), d.Id())
 	if err != nil {
-		return err
+		return diag.Errorf("Error releasing IP %s: %v", d.Id(), err)
 	}
 
 	d.SetId("")

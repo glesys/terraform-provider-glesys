@@ -18,7 +18,7 @@ func resourceGlesysEmailAccount() *schema.Resource {
 		UpdateContext: resourceGlesysEmailAccountUpdate,
 		DeleteContext: resourceGlesysEmailAccountDelete,
 		Importer: &schema.ResourceImporter{
-			State: schema.ImportStatePassthrough,
+			StateContext: schema.ImportStatePassthroughContext,
 		},
 
 		Description: "Create a GleSYS Email Account.",
