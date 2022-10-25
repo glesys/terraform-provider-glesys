@@ -2,20 +2,20 @@ package glesys
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/glesys/glesys-go/v5"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
 func resourceGlesysDNSDomain() *schema.Resource {
 	return &schema.Resource{
-		Create: resourceGlesysDNSDomainCreate,
-		Read:   resourceGlesysDNSDomainRead,
-		Update: resourceGlesysDNSDomainUpdate,
-		Delete: resourceGlesysDNSDomainDelete,
+		CreateContext: resourceGlesysDNSDomainCreate,
+		ReadContext:   resourceGlesysDNSDomainRead,
+		UpdateContext: resourceGlesysDNSDomainUpdate,
+		DeleteContext: resourceGlesysDNSDomainDelete,
 		Importer: &schema.ResourceImporter{
-			State: schema.ImportStatePassthrough,
+			StateContext: schema.ImportStatePassthroughContext,
 		},
 
 		Schema: map[string]*schema.Schema{
@@ -135,7 +135,7 @@ func resourceGlesysDNSDomain() *schema.Resource {
 	}
 }
 
-func resourceGlesysDNSDomainCreate(d *schema.ResourceData, m interface{}) error {
+func resourceGlesysDNSDomainCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*glesys.Client)
 
 	// Add a domain in the glesys platform. Do not register new domains right now.
@@ -151,24 +151,24 @@ func resourceGlesysDNSDomainCreate(d *schema.ResourceData, m interface{}) error 
 		ResponsiblePerson: d.Get("responsibleperson").(string),
 	}
 
-	domain, err := client.DNSDomains.AddDNSDomain(context.Background(), params)
+	domain, err := client.DNSDomains.AddDNSDomain(ctx, params)
 	if err != nil {
-		return fmt.Errorf("Error adding domain %s: %v", params.Name, err)
+		return diag.Errorf("Error adding domain %s: %v", params.Name, err)
 	}
 
 	// Set the Id to domain.ID
 	d.SetId(domain.Name)
 
-	return resourceGlesysDNSDomainRead(d, m)
+	return resourceGlesysDNSDomainRead(ctx, d, m)
 }
 
-func resourceGlesysDNSDomainRead(d *schema.ResourceData, m interface{}) error {
+func resourceGlesysDNSDomainRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*glesys.Client)
 
-	domain, err := client.DNSDomains.Details(context.Background(), d.Id())
+	domain, err := client.DNSDomains.Details(ctx, d.Id())
 
 	if err != nil {
-		fmt.Errorf("domain not found: %v", err)
+		diag.Errorf("domain not found: %v", err)
 		d.SetId("")
 		return nil
 	}
@@ -196,7 +196,7 @@ func resourceGlesysDNSDomainRead(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-func resourceGlesysDNSDomainUpdate(d *schema.ResourceData, m interface{}) error {
+func resourceGlesysDNSDomainUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*glesys.Client)
 
 	params := glesys.EditDNSDomainParams{Name: d.Id()}
@@ -229,24 +229,24 @@ func resourceGlesysDNSDomainUpdate(d *schema.ResourceData, m interface{}) error 
 		params.ResponsiblePerson = d.Get("responsibleperson").(string)
 	}
 
-	_, err := client.DNSDomains.Edit(context.Background(), params)
+	_, err := client.DNSDomains.Edit(ctx, params)
 	if err != nil {
-		return fmt.Errorf("Error updating domain: %v", err)
+		return diag.Errorf("Error updating domain: %v", err)
 	}
 
-	return resourceGlesysDNSDomainRead(d, m)
+	return resourceGlesysDNSDomainRead(ctx, d, m)
 }
 
-func resourceGlesysDNSDomainDelete(d *schema.ResourceData, m interface{}) error {
+func resourceGlesysDNSDomainDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*glesys.Client)
 
 	params := glesys.DeleteDNSDomainParams{
 		Name: d.Id(),
 	}
 
-	err := client.DNSDomains.Delete(context.Background(), params)
+	err := client.DNSDomains.Delete(ctx, params)
 	if err != nil {
-		return fmt.Errorf("Error deleting domain: %v", err)
+		return diag.Errorf("Error deleting domain: %v", err)
 	}
 	d.SetId("")
 	return nil

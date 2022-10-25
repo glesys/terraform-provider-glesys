@@ -23,7 +23,7 @@ func resourceGlesysServer() *schema.Resource {
 		Description: "Create a new GleSYS virtual server.",
 
 		Importer: &schema.ResourceImporter{
-			State: schema.ImportStatePassthrough,
+			StateContext: schema.ImportStatePassthroughContext,
 		},
 
 		Timeouts: &schema.ResourceTimeout{
@@ -345,7 +345,7 @@ func waitForServerAttribute(
 		Delay:      6 * time.Second,
 		MinTimeout: 3 * time.Second,
 	}
-	return stateConf.WaitForState()
+	return stateConf.WaitForStateContext(ctx)
 }
 
 func serverStateRefresh(ctx context.Context, d *schema.ResourceData, m interface{}, attr string) resource.StateRefreshFunc {
