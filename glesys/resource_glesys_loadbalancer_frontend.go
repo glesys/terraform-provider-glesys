@@ -2,18 +2,18 @@ package glesys
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/glesys/glesys-go/v5"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
 func resourceGlesysLoadBalancerFrontend() *schema.Resource {
 	return &schema.Resource{
-		Create: resourceGlesysLoadBalancerFrontendCreate,
-		Read:   resourceGlesysLoadBalancerFrontendRead,
-		Update: resourceGlesysLoadBalancerFrontendUpdate,
-		Delete: resourceGlesysLoadBalancerFrontendDelete,
+		CreateContext: resourceGlesysLoadBalancerFrontendCreate,
+		ReadContext:   resourceGlesysLoadBalancerFrontendRead,
+		UpdateContext: resourceGlesysLoadBalancerFrontendUpdate,
+		DeleteContext: resourceGlesysLoadBalancerFrontendDelete,
 
 		Description: "Create a LoadBalancer Frontend for a `glesys_loadbalancer`.",
 
@@ -75,7 +75,7 @@ func resourceGlesysLoadBalancerFrontend() *schema.Resource {
 	}
 }
 
-func resourceGlesysLoadBalancerFrontendCreate(d *schema.ResourceData, m interface{}) error {
+func resourceGlesysLoadBalancerFrontendCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	// Add frontend to glesys_loadbalancer resource
 	client := m.(*glesys.Client)
 
@@ -92,21 +92,21 @@ func resourceGlesysLoadBalancerFrontendCreate(d *schema.ResourceData, m interfac
 
 	_, err := client.LoadBalancers.AddFrontend(context.Background(), loadbalancerID, params)
 	if err != nil {
-		return fmt.Errorf("Error creating LoadBalancer Frontend: %s", err)
+		return diag.Errorf("Error creating LoadBalancer Frontend: %s", err)
 	}
 
 	d.SetId(d.Get("name").(string))
 
-	return resourceGlesysLoadBalancerFrontendRead(d, m)
+	return resourceGlesysLoadBalancerFrontendRead(ctx, d, m)
 }
 
-func resourceGlesysLoadBalancerFrontendRead(d *schema.ResourceData, m interface{}) error {
+func resourceGlesysLoadBalancerFrontendRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*glesys.Client)
 
 	loadbalancerid := d.Get("loadbalancerid").(string)
 	lb, err := client.LoadBalancers.Details(context.Background(), loadbalancerid)
 	if err != nil {
-		fmt.Errorf("loadbalancer not found: %s", err)
+		diag.Errorf("loadbalancer not found: %s", err)
 		d.SetId("")
 		return nil
 	}
@@ -125,7 +125,7 @@ func resourceGlesysLoadBalancerFrontendRead(d *schema.ResourceData, m interface{
 	return nil
 }
 
-func resourceGlesysLoadBalancerFrontendUpdate(d *schema.ResourceData, m interface{}) error {
+func resourceGlesysLoadBalancerFrontendUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*glesys.Client)
 
 	loadbalancerid := d.Get("loadbalancerid").(string)
@@ -156,13 +156,13 @@ func resourceGlesysLoadBalancerFrontendUpdate(d *schema.ResourceData, m interfac
 
 	_, err := client.LoadBalancers.EditFrontend(context.Background(), loadbalancerid, params)
 	if err != nil {
-		return fmt.Errorf("Error updating LoadBalancer Frontend: %s", err)
+		return diag.Errorf("Error updating LoadBalancer Frontend: %s", err)
 	}
 
-	return resourceGlesysLoadBalancerFrontendRead(d, m)
+	return resourceGlesysLoadBalancerFrontendRead(ctx, d, m)
 }
 
-func resourceGlesysLoadBalancerFrontendDelete(d *schema.ResourceData, m interface{}) error {
+func resourceGlesysLoadBalancerFrontendDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*glesys.Client)
 
 	loadbalancerid := d.Get("loadbalancerid").(string)
@@ -173,7 +173,7 @@ func resourceGlesysLoadBalancerFrontendDelete(d *schema.ResourceData, m interfac
 
 	err := client.LoadBalancers.RemoveFrontend(context.Background(), loadbalancerid, params)
 	if err != nil {
-		return fmt.Errorf("Error deleting LoadBalancer Frontend: %s", err)
+		return diag.Errorf("Error deleting LoadBalancer Frontend: %s", err)
 	}
 
 	d.SetId("")
