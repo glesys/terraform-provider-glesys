@@ -144,7 +144,7 @@ func resourceGlesysIPCreate(d *schema.ResourceData, m interface{}) error {
 	}
 
 	// Set the resource Id to IP address
-	d.SetId((*ip).Address)
+	d.SetId(ip.Address)
 	return resourceGlesysIPRead(d, m)
 }
 

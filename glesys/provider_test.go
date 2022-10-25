@@ -49,7 +49,7 @@ func testAccPreCheck(t *testing.T) {
 func randomTestName(additionalNames ...string) string {
 	prefix := testNamePrefix
 	for _, n := range additionalNames {
-		prefix += "-" + strings.Replace(n, " ", "_", -1)
+		prefix += "-" + strings.ReplaceAll(n, " ", "_")
 	}
 	return randomName(prefix, 10)
 }

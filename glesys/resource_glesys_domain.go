@@ -157,7 +157,7 @@ func resourceGlesysDNSDomainCreate(d *schema.ResourceData, m interface{}) error 
 	}
 
 	// Set the Id to domain.ID
-	d.SetId((*domain).Name)
+	d.SetId(domain.Name)
 
 	return resourceGlesysDNSDomainRead(d, m)
 }
