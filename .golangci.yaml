@@ -1,7 +1,9 @@
+---
 linters:
   disable-all: true
   enable:
     - staticcheck
+    - whitespace
 
 linters-settings:
   staticcheck:
