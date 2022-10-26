@@ -7,17 +7,18 @@ import (
 	"strings"
 
 	"github.com/glesys/glesys-go/v5"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
 func resourceGlesysDNSDomainRecord() *schema.Resource {
 	return &schema.Resource{
-		Create: resourceGlesysDNSDomainRecordCreate,
-		Read:   resourceGlesysDNSDomainRecordRead,
-		Update: resourceGlesysDNSDomainRecordUpdate,
-		Delete: resourceGlesysDNSDomainRecordDelete,
+		CreateContext: resourceGlesysDNSDomainRecordCreate,
+		ReadContext:   resourceGlesysDNSDomainRecordRead,
+		UpdateContext: resourceGlesysDNSDomainRecordUpdate,
+		DeleteContext: resourceGlesysDNSDomainRecordDelete,
 		Importer: &schema.ResourceImporter{
-			State: resourceGleSYSRecordImport,
+			StateContext: resourceGleSYSRecordImport,
 		},
 
 		Schema: map[string]*schema.Schema{
@@ -64,7 +65,7 @@ func resourceGlesysDNSDomainRecord() *schema.Resource {
 }
 
 // resourceGleSYSRecordImport - import records "domain.tld,123456"
-func resourceGleSYSRecordImport(d *schema.ResourceData, m interface{}) ([]*schema.ResourceData, error) {
+func resourceGleSYSRecordImport(ctx context.Context, d *schema.ResourceData, m interface{}) ([]*schema.ResourceData, error) {
 	if strings.Contains(d.Id(), ",") {
 		s := strings.Split(d.Id(), ",")
 
@@ -80,7 +81,7 @@ func resourceGleSYSRecordImport(d *schema.ResourceData, m interface{}) ([]*schem
 	return []*schema.ResourceData{d}, nil
 }
 
-func resourceGlesysDNSDomainRecordCreate(d *schema.ResourceData, m interface{}) error {
+func resourceGlesysDNSDomainRecordCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*glesys.Client)
 
 	params := glesys.AddRecordParams{
@@ -93,28 +94,28 @@ func resourceGlesysDNSDomainRecordCreate(d *schema.ResourceData, m interface{}) 
 
 	record, err := client.DNSDomains.AddRecord(context.Background(), params)
 	if err != nil {
-		return fmt.Errorf("Error adding record \"%s\": %v", params.Data, err)
+		return diag.Errorf("Error adding record \"%s\": %v", params.Data, err)
 	}
 
 	// Set the Id to domain.ID
 	id := strconv.Itoa(record.RecordID)
 	d.SetId(id)
 
-	return resourceGlesysDNSDomainRecordRead(d, m)
+	return resourceGlesysDNSDomainRecordRead(ctx, d, m)
 }
 
-func resourceGlesysDNSDomainRecordRead(d *schema.ResourceData, m interface{}) error {
+func resourceGlesysDNSDomainRecordRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*glesys.Client)
 
 	domain := d.Get("domain").(string)
 	myID, err := strconv.Atoi(d.Id())
 	if err != nil {
-		return fmt.Errorf("invalid record id: %v", err)
+		return diag.Errorf("invalid record id: %v", err)
 	}
 	records, err := client.DNSDomains.ListRecords(context.Background(), domain)
 
 	if err != nil {
-		fmt.Errorf("domain not found: %v", err)
+		diag.Errorf("domain not found: %v", err)
 		d.SetId("")
 		return nil
 	}
@@ -133,13 +134,13 @@ func resourceGlesysDNSDomainRecordRead(d *schema.ResourceData, m interface{}) er
 	return nil
 }
 
-func resourceGlesysDNSDomainRecordUpdate(d *schema.ResourceData, m interface{}) error {
+func resourceGlesysDNSDomainRecordUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*glesys.Client)
 
 	myID := d.Id()
 	recordID, errid := strconv.Atoi(myID)
 	if errid != nil {
-		return fmt.Errorf("Id must be converted to integer: %v", errid)
+		return diag.Errorf("Id must be converted to integer: %v", errid)
 	}
 	params := glesys.UpdateRecordParams{RecordID: recordID}
 
@@ -161,23 +162,23 @@ func resourceGlesysDNSDomainRecordUpdate(d *schema.ResourceData, m interface{}) 
 
 	_, err := client.DNSDomains.UpdateRecord(context.Background(), params)
 	if err != nil {
-		return fmt.Errorf("Error updating record: %v", err)
+		return diag.Errorf("Error updating record: %v", err)
 	}
 
-	return resourceGlesysDNSDomainRecordRead(d, m)
+	return resourceGlesysDNSDomainRecordRead(ctx, d, m)
 }
 
-func resourceGlesysDNSDomainRecordDelete(d *schema.ResourceData, m interface{}) error {
+func resourceGlesysDNSDomainRecordDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*glesys.Client)
 
 	recordID, errid := strconv.Atoi(d.Id())
 	if errid != nil {
-		return fmt.Errorf("Id must be converted to integer: %v", errid)
+		return diag.Errorf("Id must be converted to integer: %v", errid)
 	}
 
 	err := client.DNSDomains.DeleteRecord(context.Background(), recordID)
 	if err != nil {
-		return fmt.Errorf("Error deleting domain record: %v", err)
+		return diag.Errorf("Error deleting domain record: %v", err)
 	}
 	d.SetId("")
 	return nil
