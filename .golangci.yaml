@@ -5,7 +5,9 @@ linters:
     - dogsled
     - gocritic
     - gofmt
+    - govet
     - staticcheck
+    - unused
     - whitespace
 
 linters-settings:
