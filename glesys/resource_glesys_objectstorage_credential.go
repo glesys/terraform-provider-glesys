@@ -2,17 +2,17 @@ package glesys
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/glesys/glesys-go/v5"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
 func resourceGlesysObjectStorageCredential() *schema.Resource {
 	return &schema.Resource{
-		Create: resourceGlesysObjectStorageCredentialCreate,
-		Read:   resourceGlesysObjectStorageCredentialRead,
-		Delete: resourceGlesysObjectStorageCredentialDelete,
+		CreateContext: resourceGlesysObjectStorageCredentialCreate,
+		ReadContext:   resourceGlesysObjectStorageCredentialRead,
+		DeleteContext: resourceGlesysObjectStorageCredentialDelete,
 
 		Schema: map[string]*schema.Schema{
 			"instanceid": {
@@ -41,7 +41,7 @@ func resourceGlesysObjectStorageCredential() *schema.Resource {
 	}
 }
 
-func resourceGlesysObjectStorageCredentialCreate(d *schema.ResourceData, m interface{}) error {
+func resourceGlesysObjectStorageCredentialCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*glesys.Client)
 
 	params := glesys.CreateObjectStorageCredentialParams{
@@ -51,7 +51,7 @@ func resourceGlesysObjectStorageCredentialCreate(d *schema.ResourceData, m inter
 
 	credential, err := client.ObjectStorages.CreateCredential(context.Background(), params)
 	if err != nil {
-		return fmt.Errorf("Error creating object storage credential: %s", err)
+		return diag.Errorf("Error creating object storage credential: %s", err)
 	}
 
 	d.SetId(credential.CredentialID)
@@ -63,11 +63,11 @@ func resourceGlesysObjectStorageCredentialCreate(d *schema.ResourceData, m inter
 	return nil
 }
 
-func resourceGlesysObjectStorageCredentialRead(d *schema.ResourceData, m interface{}) error {
+func resourceGlesysObjectStorageCredentialRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	return nil
 }
 
-func resourceGlesysObjectStorageCredentialDelete(d *schema.ResourceData, m interface{}) error {
+func resourceGlesysObjectStorageCredentialDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*glesys.Client)
 
 	params := glesys.DeleteObjectStorageCredentialParams{
@@ -77,7 +77,7 @@ func resourceGlesysObjectStorageCredentialDelete(d *schema.ResourceData, m inter
 
 	err := client.ObjectStorages.DeleteCredential(context.Background(), params)
 	if err != nil {
-		return fmt.Errorf("Error deleting object storage credential: %s", err)
+		return diag.Errorf("Error deleting object storage credential: %s", err)
 	}
 
 	return nil
