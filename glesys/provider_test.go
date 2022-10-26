@@ -14,7 +14,6 @@ const testNamePrefix = "tf-acc-test-"
 
 var testGlesysProvider *schema.Provider
 var testGlesysProviders map[string]*schema.Provider
-var testGlesysProviderFactories map[string]func() (*schema.Provider, error)
 
 func init() {
 	testGlesysProvider = Provider()
