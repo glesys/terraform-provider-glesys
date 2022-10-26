@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 
+## [x.y.z] - yyyy-mm-dd
+### Changed
+- Update workflow releaser to use goreleaser-action v3.2.0
+
 ## [0.7.1] - 2022-10-26
 ### Added
 - Additional linters
