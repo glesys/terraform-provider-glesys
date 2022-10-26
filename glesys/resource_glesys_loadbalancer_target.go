@@ -92,7 +92,7 @@ func resourceGlesysLoadBalancerTargetCreate(ctx context.Context, d *schema.Resou
 		return diag.Errorf("Error creating LoadBalancer Target: %s", err)
 	}
 
-	if d.Get("enabled").(bool) == false {
+	if !d.Get("enabled").(bool) {
 		// Disable the target after creation
 		targetParams := glesys.ToggleTargetParams{Name: d.Get("name").(string), Backend: d.Get("backend").(string)}
 		_, err := client.LoadBalancers.DisableTarget(context.Background(), loadbalancerID, targetParams)

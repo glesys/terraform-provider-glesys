@@ -5,6 +5,7 @@ linters:
     - dogsled
     - gocritic
     - gofmt
+    - gosimple
     - govet
     - misspell
     - staticcheck
