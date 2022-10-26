@@ -255,7 +255,7 @@ func resourceGlesysServerRead(ctx context.Context, d *schema.ResourceData, m int
 		return nil
 	}
 
-	// Workaround for the API not returning the correct Bandwith value for KVM servers
+	// Workaround for the API not returning the correct Bandwidth value for KVM servers
 	if srv.Platform != "KVM" {
 		d.Set("bandwidth", srv.Bandwidth)
 	}
