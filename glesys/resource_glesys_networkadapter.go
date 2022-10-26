@@ -2,18 +2,18 @@ package glesys
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/glesys/glesys-go/v5"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
 func resourceGlesysNetworkAdapter() *schema.Resource {
 	return &schema.Resource{
-		Create: resourceGlesysNetworkAdapterCreate,
-		Read:   resourceGlesysNetworkAdapterRead,
-		Update: resourceGlesysNetworkAdapterUpdate,
-		Delete: resourceGlesysNetworkAdapterDelete,
+		CreateContext: resourceGlesysNetworkAdapterCreate,
+		ReadContext:   resourceGlesysNetworkAdapterRead,
+		UpdateContext: resourceGlesysNetworkAdapterUpdate,
+		DeleteContext: resourceGlesysNetworkAdapterDelete,
 
 		Schema: map[string]*schema.Schema{
 			"adaptertype": {
@@ -44,7 +44,7 @@ func resourceGlesysNetworkAdapter() *schema.Resource {
 	}
 }
 
-func resourceGlesysNetworkAdapterCreate(d *schema.ResourceData, m interface{}) error {
+func resourceGlesysNetworkAdapterCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*glesys.Client)
 
 	params := glesys.CreateNetworkAdapterParams{
@@ -56,19 +56,19 @@ func resourceGlesysNetworkAdapterCreate(d *schema.ResourceData, m interface{}) e
 
 	networkadapter, err := client.NetworkAdapters.Create(context.Background(), params)
 	if err != nil {
-		return fmt.Errorf("Error creating adapter: %s", err)
+		return diag.Errorf("Error creating adapter: %s", err)
 	}
 
 	d.SetId(networkadapter.ID)
-	return resourceGlesysNetworkAdapterRead(d, m)
+	return resourceGlesysNetworkAdapterRead(ctx, d, m)
 }
 
-func resourceGlesysNetworkAdapterRead(d *schema.ResourceData, m interface{}) error {
+func resourceGlesysNetworkAdapterRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*glesys.Client)
 
 	networkadapter, err := client.NetworkAdapters.Details(context.Background(), d.Id())
 	if err != nil {
-		fmt.Errorf("adapter not found: %s", err)
+		diag.Errorf("adapter not found: %s", err)
 		d.SetId("")
 		return nil
 	}
@@ -82,7 +82,7 @@ func resourceGlesysNetworkAdapterRead(d *schema.ResourceData, m interface{}) err
 	return nil
 }
 
-func resourceGlesysNetworkAdapterUpdate(d *schema.ResourceData, m interface{}) error {
+func resourceGlesysNetworkAdapterUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*glesys.Client)
 
 	params := glesys.EditNetworkAdapterParams{}
@@ -99,17 +99,17 @@ func resourceGlesysNetworkAdapterUpdate(d *schema.ResourceData, m interface{}) e
 
 	_, err := client.NetworkAdapters.Edit(context.Background(), d.Id(), params)
 	if err != nil {
-		return fmt.Errorf("Error updating adapter: %s", err)
+		return diag.Errorf("Error updating adapter: %s", err)
 	}
-	return resourceGlesysNetworkAdapterRead(d, m)
+	return resourceGlesysNetworkAdapterRead(ctx, d, m)
 }
 
-func resourceGlesysNetworkAdapterDelete(d *schema.ResourceData, m interface{}) error {
+func resourceGlesysNetworkAdapterDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*glesys.Client)
 
 	err := client.NetworkAdapters.Destroy(context.Background(), d.Id())
 	if err != nil {
-		return fmt.Errorf("Error deleting adapter: %s", err)
+		return diag.Errorf("Error deleting adapter: %s", err)
 	}
 	d.SetId("")
 	return nil

@@ -2,18 +2,18 @@ package glesys
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/glesys/glesys-go/v5"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
 func resourceGlesysNetwork() *schema.Resource {
 	return &schema.Resource{
-		Create: resourceGlesysNetworkCreate,
-		Read:   resourceGlesysNetworkRead,
-		Update: resourceGlesysNetworkUpdate,
-		Delete: resourceGlesysNetworkDelete,
+		CreateContext: resourceGlesysNetworkCreate,
+		ReadContext:   resourceGlesysNetworkRead,
+		UpdateContext: resourceGlesysNetworkUpdate,
+		DeleteContext: resourceGlesysNetworkDelete,
 
 		Schema: map[string]*schema.Schema{
 			"datacenter": {
@@ -33,7 +33,7 @@ func resourceGlesysNetwork() *schema.Resource {
 	}
 }
 
-func resourceGlesysNetworkCreate(d *schema.ResourceData, m interface{}) error {
+func resourceGlesysNetworkCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*glesys.Client)
 
 	params := glesys.CreateNetworkParams{
@@ -43,20 +43,20 @@ func resourceGlesysNetworkCreate(d *schema.ResourceData, m interface{}) error {
 
 	network, err := client.Networks.Create(context.Background(), params)
 	if err != nil {
-		return fmt.Errorf("Error creating network: %s", err)
+		return diag.Errorf("Error creating network: %s", err)
 	}
 
 	// Set the Id to network.ID
 	d.SetId(network.ID)
-	return resourceGlesysNetworkRead(d, m)
+	return resourceGlesysNetworkRead(ctx, d, m)
 }
 
-func resourceGlesysNetworkRead(d *schema.ResourceData, m interface{}) error {
+func resourceGlesysNetworkRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*glesys.Client)
 
 	network, err := client.Networks.Details(context.Background(), d.Id())
 	if err != nil {
-		fmt.Errorf("network not found: %s", err)
+		diag.Errorf("network not found: %s", err)
 		d.SetId("")
 		return nil
 	}
@@ -68,7 +68,7 @@ func resourceGlesysNetworkRead(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-func resourceGlesysNetworkUpdate(d *schema.ResourceData, m interface{}) error {
+func resourceGlesysNetworkUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*glesys.Client)
 
 	params := glesys.EditNetworkParams{}
@@ -79,19 +79,19 @@ func resourceGlesysNetworkUpdate(d *schema.ResourceData, m interface{}) error {
 
 	_, err := client.Networks.Edit(context.Background(), d.Id(), params)
 	if err != nil {
-		return fmt.Errorf("Error updating network: %s", err)
+		return diag.Errorf("Error updating network: %s", err)
 	}
-	return resourceGlesysNetworkRead(d, m)
+	return resourceGlesysNetworkRead(ctx, d, m)
 }
 
-func resourceGlesysNetworkDelete(d *schema.ResourceData, m interface{}) error {
+func resourceGlesysNetworkDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*glesys.Client)
 
 	// TODO: check if network is used before deletion.
 	// remove networkadapter, then network
 	err := client.Networks.Destroy(context.Background(), d.Id())
 	if err != nil {
-		return fmt.Errorf("Error deleting network: %s", err)
+		return diag.Errorf("Error deleting network: %s", err)
 	}
 	d.SetId("")
 	return nil
