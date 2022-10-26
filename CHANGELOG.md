@@ -5,6 +5,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 
+## [0.7.1] - 2022-10-26
+### Added
+- Additional linters
+### Changed
+- Update resources with `CreateContext/ReadContext/UpdateContext/DeleteContext`
+  to support request cancellation and warning diagnostics.
+- Fixing linter errors
 ## [0.7.0] - 2022-10-20
 ### Added
 - Implement DataSource for `glesys_dnsdomain`
