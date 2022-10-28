@@ -49,8 +49,9 @@ func resourceGlesysServer() *schema.Resource {
 			},
 			"cloudconfigparams": {
 				Description: "Cloudconfigparams is used to provide additional parameters to the template in `cloudconfig`. Ex: `{\"foo\": \"bar\"}`",
-				Type:        schema.TypeString,
+				Type:        schema.TypeMap,
 				Optional:    true,
+				Elem:        &schema.Schema{Type: schema.TypeString},
 			},
 			"cpu": {
 				Description: "Server CPU cores count",
@@ -184,7 +185,7 @@ func buildServerParamStruct(d *schema.ResourceData) *glesys.CreateServerParams {
 		Bandwidth:         d.Get("bandwidth").(int),
 		CampaignCode:      d.Get("campaigncode").(string),
 		CloudConfig:       d.Get("cloudconfig").(string),
-		CloudConfigParams: d.Get("cloudconfigparams").(string),
+		CloudConfigParams: d.Get("cloudconfigparams").(map[string]any),
 		CPU:               d.Get("cpu").(int),
 		DataCenter:        d.Get("datacenter").(string),
 		Description:       d.Get("description").(string),
