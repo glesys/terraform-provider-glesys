@@ -48,7 +48,7 @@ func resourceGlesysServer() *schema.Resource {
 				Optional:    true,
 			},
 			"cloudconfigparams": {
-				Description: "Cloudconfigparams is used to provide additional parameters to the template in `cloudconfig`. Ex: `{\"foo\": \"bar\"}`",
+				Description: "Cloudconfigparams is used to provide additional parameters to the template in `cloudconfig` using a map. This can be set using a Terraform Local Value.",
 				Type:        schema.TypeMap,
 				Optional:    true,
 				Elem:        &schema.Schema{Type: schema.TypeString},

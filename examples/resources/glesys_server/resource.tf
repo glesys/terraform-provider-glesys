@@ -1,3 +1,10 @@
+locals {
+  myParams = {
+    name             = "Alice"
+    numberOfBalloons = 99
+  }
+}
+
 resource "glesys_server" "kvm" {
   datacenter = "Stockholm"
   memory     = 1024
@@ -9,6 +16,8 @@ resource "glesys_server" "kvm" {
 
   platform = "KVM"
   template = "debian-11"
+
+  cloudconfigparams = local.myParams
 
   user {
     username = "alice"
