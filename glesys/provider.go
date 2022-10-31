@@ -21,6 +21,12 @@ func Provider() *schema.Provider {
 				DefaultFunc: schema.EnvDefaultFunc("GLESYS_TOKEN", nil),
 				Description: "User token for the Glesys API. Alternatively, this can be set using the `GLESYS_TOKEN` environment variable",
 			},
+			"api_endpoint": {
+				Type:        schema.TypeString,
+				Required:    true,
+				DefaultFunc: schema.EnvDefaultFunc("GLESYS_API_URL", "https://api.glesys.com"),
+				Description: "The base URL to use for the GleSYS API requests. (Defaults to the value of the `GLESYS_API_URL` environment variable or `https://api.glesys.com` if unset.",
+			},
 		},
 
 		DataSourcesMap: map[string]*schema.Resource{
@@ -49,8 +55,9 @@ func Provider() *schema.Provider {
 
 func providerConfigure(d *schema.ResourceData) (interface{}, error) {
 	config := Config{
-		UserID: d.Get("userid").(string),
-		Token:  d.Get("token").(string),
+		UserID:      d.Get("userid").(string),
+		Token:       d.Get("token").(string),
+		APIEndpoint: d.Get("api_endpoint").(string),
 	}
 	return config.Client()
 }

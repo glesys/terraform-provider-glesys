@@ -57,6 +57,10 @@ $ terraform plan
 - `token` (String) User token for the Glesys API. Alternatively, this can be set using the `GLESYS_TOKEN` environment variable
 - `userid` (String) UserId for the Glesys API. Alternatively, this can be set using the `GLESYS_USERID` environment variable
 
+### Optional
+
+- `api_endpoint` (String) The base URL to use for the GleSYS API requests. (Defaults to the value of the `GLESYS_API_URL` environment variable or `https://api.glesys.com` if unset.
+
 ## Authentication
 
 ### Static credentials

@@ -8,8 +8,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [x.y.z] - yyyy-mm-dd
 ### Changed
 - Update workflow releaser to use goreleaser-action v3.2.0
-- Update to glesys-go/v6.
 - Change `glesys_server` `cloudconfigparams` type to TypeMap.
+- Update glesys-go to v6.1.0
+
+### Added
+- `api_endpoint` provider configuration variable for setting base URL for the
+  API requests.
 
 ## [0.7.1] - 2022-10-26
 ### Added
