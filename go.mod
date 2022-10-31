@@ -3,7 +3,7 @@ module github.com/glesys/terraform-provider-glesys
 go 1.18
 
 require (
-	github.com/glesys/glesys-go/v6 v6.0.0
+	github.com/glesys/glesys-go/v6 v6.1.0
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.24.0
 )
 

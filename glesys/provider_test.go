@@ -1,13 +1,17 @@
 package glesys
 
 import (
+	"context"
 	"fmt"
 	"os"
 	"strings"
 	"testing"
 
+	"github.com/glesys/glesys-go/v6"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 )
 
 const testNamePrefix = "tf-acc-test-"
@@ -30,6 +34,32 @@ func TestProvider(t *testing.T) {
 
 func TestProvider_impl(t *testing.T) {
 	var _ *schema.Provider = Provider()
+}
+
+func TestProviderURLOverride(t *testing.T) {
+	apiURL := "https://dev.example.test"
+
+	rawProvider := Provider()
+	raw := map[string]interface{}{
+		"userid":       "cl12345",
+		"token":        "MYTOKEN",
+		"api_endpoint": apiURL,
+	}
+
+	diags := rawProvider.Configure(context.Background(), terraform.NewResourceConfigRaw(raw))
+	if diags.HasError() {
+		t.Fatalf("provider configure failed: %s", diagnosticsToString(diags))
+	}
+
+	meta := rawProvider.Meta()
+	if meta == nil {
+		t.Fatalf("Expected metadata, got nil")
+	}
+
+	client := meta.(*glesys.Client)
+	if client.BaseURL.String() != apiURL {
+		t.Fatalf("Expected %s, got %s", apiURL, client.BaseURL.String())
+	}
 }
 
 func testAccPreCheck(t *testing.T) {
@@ -55,4 +85,13 @@ func randomTestName(additionalNames ...string) string {
 
 func randomName(prefix string, length int) string {
 	return fmt.Sprintf("%s%s", prefix, acctest.RandString(length))
+}
+
+func diagnosticsToString(diags diag.Diagnostics) string {
+	diagsAsStrings := make([]string, len(diags))
+	for i, diag := range diags {
+		diagsAsStrings[i] = diag.Summary
+	}
+
+	return strings.Join(diagsAsStrings, "; ")
 }
