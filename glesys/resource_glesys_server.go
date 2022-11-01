@@ -242,6 +242,9 @@ func getTemplate(original string, srv *glesys.ServerDetails) string {
 			return original
 		}
 	}
+	if original == srv.InitialTemplate.ID {
+		return original
+	}
 	return srv.Template
 }
 
