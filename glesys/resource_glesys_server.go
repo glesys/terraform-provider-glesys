@@ -210,13 +210,12 @@ func resourceGlesysServerCreate(ctx context.Context, d *schema.ResourceData, m i
 	// Setup server parameters
 	srv := buildServerParamStruct(d)
 
-	if srv.Platform == "KVM" {
-		usersList, err := expandUsers(d.Get("user").(*schema.Set).List())
-		if err != nil {
-			return diag.Errorf("Error when expanding users: %s", err)
-		}
-		srv.Users = usersList
+	// Setup users for server creation
+	usersList, err := expandUsers(d.Get("user").(*schema.Set).List())
+	if err != nil {
+		return diag.Errorf("Error when expanding users: %s", err)
 	}
+	srv.Users = usersList
 
 	host, err := client.Servers.Create(ctx, *srv)
 
