@@ -5,7 +5,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 
-## [x.y.z] - yyyy-mm-dd
+## [0.8.0] - 2022-11-01
 ### Changed
 - Update workflow releaser to use goreleaser-action v3.2.0
 - Change `glesys_server` `cloudconfigparams` type to TypeMap.
