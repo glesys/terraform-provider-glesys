@@ -87,6 +87,7 @@ func resourceGlesysLoadBalancerRead(ctx context.Context, d *schema.ResourceData,
 		ipAddresses = append(ipAddresses, loadbalancer.IPList[i].Address)
 	}
 
+	//nolint:gosimple
 	for i := range loadbalancer.Blocklists {
 		blocklistIps = append(blocklistIps, loadbalancer.Blocklists[i])
 	}
