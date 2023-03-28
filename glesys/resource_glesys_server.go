@@ -9,7 +9,7 @@ import (
 
 	"github.com/glesys/glesys-go/v6"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/retry"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
@@ -340,7 +340,7 @@ func resourceGlesysServerDelete(ctx context.Context, d *schema.ResourceData, m i
 // waitForServerAttribute
 func waitForServerAttribute(
 	ctx context.Context, d *schema.ResourceData, target string, pending []string, attribute string, m interface{}) (interface{}, error) {
-	stateConf := &resource.StateChangeConf{
+	stateConf := &retry.StateChangeConf{
 		Pending:    pending,
 		Target:     []string{target},
 		Refresh:    serverStateRefresh(ctx, d, m, attribute),
@@ -351,7 +351,7 @@ func waitForServerAttribute(
 	return stateConf.WaitForStateContext(ctx)
 }
 
-func serverStateRefresh(ctx context.Context, d *schema.ResourceData, m interface{}, attr string) resource.StateRefreshFunc {
+func serverStateRefresh(ctx context.Context, d *schema.ResourceData, m interface{}, attr string) retry.StateRefreshFunc {
 	client := m.(*glesys.Client)
 	return func() (interface{}, string, error) {
 		// check state of server
