@@ -54,7 +54,7 @@ func resourceGlesysNetworkAdapterCreate(ctx context.Context, d *schema.ResourceD
 		ServerID:    d.Get("serverid").(string),
 	}
 
-	networkadapter, err := client.NetworkAdapters.Create(context.Background(), params)
+	networkadapter, err := client.NetworkAdapters.Create(ctx, params)
 	if err != nil {
 		return diag.Errorf("Error creating adapter: %s", err)
 	}
@@ -66,7 +66,7 @@ func resourceGlesysNetworkAdapterCreate(ctx context.Context, d *schema.ResourceD
 func resourceGlesysNetworkAdapterRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*glesys.Client)
 
-	networkadapter, err := client.NetworkAdapters.Details(context.Background(), d.Id())
+	networkadapter, err := client.NetworkAdapters.Details(ctx, d.Id())
 	if err != nil {
 		diag.Errorf("adapter not found: %s", err)
 		d.SetId("")
@@ -97,7 +97,7 @@ func resourceGlesysNetworkAdapterUpdate(ctx context.Context, d *schema.ResourceD
 		params.NetworkID = d.Get("networkid").(string)
 	}
 
-	_, err := client.NetworkAdapters.Edit(context.Background(), d.Id(), params)
+	_, err := client.NetworkAdapters.Edit(ctx, d.Id(), params)
 	if err != nil {
 		return diag.Errorf("Error updating adapter: %s", err)
 	}
@@ -107,7 +107,7 @@ func resourceGlesysNetworkAdapterUpdate(ctx context.Context, d *schema.ResourceD
 func resourceGlesysNetworkAdapterDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*glesys.Client)
 
-	err := client.NetworkAdapters.Destroy(context.Background(), d.Id())
+	err := client.NetworkAdapters.Destroy(ctx, d.Id())
 	if err != nil {
 		return diag.Errorf("Error deleting adapter: %s", err)
 	}
