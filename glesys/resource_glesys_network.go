@@ -54,7 +54,7 @@ func resourceGlesysNetworkCreate(ctx context.Context, d *schema.ResourceData, m 
 func resourceGlesysNetworkRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*glesys.Client)
 
-	network, err := client.Networks.Details(context.Background(), d.Id())
+	network, err := client.Networks.Details(ctx, d.Id())
 	if err != nil {
 		diag.Errorf("network not found: %s", err)
 		d.SetId("")
@@ -77,7 +77,7 @@ func resourceGlesysNetworkUpdate(ctx context.Context, d *schema.ResourceData, m 
 		params.Description = d.Get("description").(string)
 	}
 
-	_, err := client.Networks.Edit(context.Background(), d.Id(), params)
+	_, err := client.Networks.Edit(ctx, d.Id(), params)
 	if err != nil {
 		return diag.Errorf("Error updating network: %s", err)
 	}
@@ -89,7 +89,7 @@ func resourceGlesysNetworkDelete(ctx context.Context, d *schema.ResourceData, m 
 
 	// TODO: check if network is used before deletion.
 	// remove networkadapter, then network
-	err := client.Networks.Destroy(context.Background(), d.Id())
+	err := client.Networks.Destroy(ctx, d.Id())
 	if err != nil {
 		return diag.Errorf("Error deleting network: %s", err)
 	}
