@@ -31,6 +31,7 @@ func Provider() *schema.Provider {
 
 		DataSourcesMap: map[string]*schema.Resource{
 			"glesys_dnsdomain": dataSourceGlesysDNSDomain(),
+			"glesys_network":   dataSourceGlesysNetwork(),
 		},
 
 		ResourcesMap: map[string]*schema.Resource{
