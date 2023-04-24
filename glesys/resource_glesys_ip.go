@@ -120,7 +120,7 @@ func resourceGlesysIPCreate(ctx context.Context, d *schema.ResourceData, m inter
 		}
 
 		// Get available ip addresses
-		ips, err := client.IPs.Available(context.Background(), params)
+		ips, err := client.IPs.Available(ctx, params)
 		if err != nil {
 			return diag.Errorf("Error listing available IPs: %v", err)
 		}
@@ -129,14 +129,14 @@ func resourceGlesysIPCreate(ctx context.Context, d *schema.ResourceData, m inter
 		address = (*ips)[0].Address
 	}
 
-	ip, err := client.IPs.Reserve(context.Background(), address)
+	ip, err := client.IPs.Reserve(ctx, address)
 	if err != nil {
 		return diag.Errorf("Error reserving IP %s: %v", address, err)
 	}
 
 	ptr := d.Get("ptr").(string)
 	if ptr != "" {
-		_, err := client.IPs.SetPTR(context.Background(), address, ptr)
+		_, err := client.IPs.SetPTR(ctx, address, ptr)
 
 		if err != nil {
 			return diag.Errorf("Error setting PTR %s: %v", ptr, err)
@@ -152,7 +152,7 @@ func resourceGlesysIPRead(ctx context.Context, d *schema.ResourceData, m interfa
 	client := m.(*glesys.Client)
 
 	// Fetch updates about the IP
-	ip, err := client.IPs.Details(context.Background(), d.Id())
+	ip, err := client.IPs.Details(ctx, d.Id())
 	if err != nil {
 		diag.Errorf("IP not found: %s", err)
 		d.SetId("")
@@ -194,7 +194,7 @@ func resourceGlesysIPUpdate(ctx context.Context, d *schema.ResourceData, m inter
 		// More info in upstream issue #282: https://github.com/hashicorp/terraform-plugin-sdk/issues/282
 
 		ptr := d.Get("ptr").(string)
-		_, err := client.IPs.SetPTR(context.Background(), d.Id(), ptr)
+		_, err := client.IPs.SetPTR(ctx, d.Id(), ptr)
 		if err != nil {
 			return diag.Errorf("Error updating reverse pointer on IP: %s", err)
 		}
@@ -206,7 +206,7 @@ func resourceGlesysIPUpdate(ctx context.Context, d *schema.ResourceData, m inter
 func resourceGlesysIPDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*glesys.Client)
 
-	err := client.IPs.Release(context.Background(), d.Id())
+	err := client.IPs.Release(ctx, d.Id())
 	if err != nil {
 		return diag.Errorf("Error releasing IP %s: %v", d.Id(), err)
 	}

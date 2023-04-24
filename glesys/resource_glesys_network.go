@@ -41,7 +41,7 @@ func resourceGlesysNetworkCreate(ctx context.Context, d *schema.ResourceData, m 
 		Description: d.Get("description").(string),
 	}
 
-	network, err := client.Networks.Create(context.Background(), params)
+	network, err := client.Networks.Create(ctx, params)
 	if err != nil {
 		return diag.Errorf("Error creating network: %s", err)
 	}

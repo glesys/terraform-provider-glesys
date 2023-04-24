@@ -61,7 +61,7 @@ func dataSourceGlesysDomainRead(ctx context.Context, d *schema.ResourceData, m i
 
 	name := d.Get("name").(string)
 
-	domain, err := client.DNSDomains.Details(context.Background(), name)
+	domain, err := client.DNSDomains.Details(ctx, name)
 
 	if err != nil {
 		diag.Errorf("domain not found: %v", err)

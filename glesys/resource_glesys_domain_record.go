@@ -92,7 +92,7 @@ func resourceGlesysDNSDomainRecordCreate(ctx context.Context, d *schema.Resource
 		TTL:        d.Get("ttl").(int),
 	}
 
-	record, err := client.DNSDomains.AddRecord(context.Background(), params)
+	record, err := client.DNSDomains.AddRecord(ctx, params)
 	if err != nil {
 		return diag.Errorf("Error adding record \"%s\": %v", params.Data, err)
 	}
@@ -112,7 +112,7 @@ func resourceGlesysDNSDomainRecordRead(ctx context.Context, d *schema.ResourceDa
 	if err != nil {
 		return diag.Errorf("invalid record id: %v", err)
 	}
-	records, err := client.DNSDomains.ListRecords(context.Background(), domain)
+	records, err := client.DNSDomains.ListRecords(ctx, domain)
 
 	if err != nil {
 		diag.Errorf("domain not found: %v", err)
@@ -160,7 +160,7 @@ func resourceGlesysDNSDomainRecordUpdate(ctx context.Context, d *schema.Resource
 		params.Type = d.Get("type").(string)
 	}
 
-	_, err := client.DNSDomains.UpdateRecord(context.Background(), params)
+	_, err := client.DNSDomains.UpdateRecord(ctx, params)
 	if err != nil {
 		return diag.Errorf("Error updating record: %v", err)
 	}
@@ -176,7 +176,7 @@ func resourceGlesysDNSDomainRecordDelete(ctx context.Context, d *schema.Resource
 		return diag.Errorf("Id must be converted to integer: %v", errid)
 	}
 
-	err := client.DNSDomains.DeleteRecord(context.Background(), recordID)
+	err := client.DNSDomains.DeleteRecord(ctx, recordID)
 	if err != nil {
 		if strings.Contains(err.Error(), "HTTP error: 404") {
 			d.SetId("")

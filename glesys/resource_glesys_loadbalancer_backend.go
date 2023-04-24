@@ -88,7 +88,7 @@ func resourceGlesysLoadBalancerBackendCreate(ctx context.Context, d *schema.Reso
 
 	loadbalancerID := d.Get("loadbalancerid").(string)
 
-	_, err := client.LoadBalancers.AddBackend(context.Background(), loadbalancerID, params)
+	_, err := client.LoadBalancers.AddBackend(ctx, loadbalancerID, params)
 	if err != nil {
 		return diag.Errorf("Error creating LoadBalancer Backend: %s", err)
 	}
@@ -102,7 +102,7 @@ func resourceGlesysLoadBalancerBackendRead(ctx context.Context, d *schema.Resour
 	client := m.(*glesys.Client)
 
 	loadbalancerid := d.Get("loadbalancerid").(string)
-	lb, err := client.LoadBalancers.Details(context.Background(), loadbalancerid)
+	lb, err := client.LoadBalancers.Details(ctx, loadbalancerid)
 	if err != nil {
 		diag.Errorf("loadbalancer not found: %s", err)
 		d.SetId("")
@@ -156,7 +156,7 @@ func resourceGlesysLoadBalancerBackendUpdate(ctx context.Context, d *schema.Reso
 		params.StickySession = d.Get("stickysessions").(string)
 	}
 
-	_, err := client.LoadBalancers.EditBackend(context.Background(), loadbalancerid, params)
+	_, err := client.LoadBalancers.EditBackend(ctx, loadbalancerid, params)
 	if err != nil {
 		return diag.Errorf("Error updating LoadBalancer Backend: %s", err)
 	}
@@ -173,7 +173,7 @@ func resourceGlesysLoadBalancerBackendDelete(ctx context.Context, d *schema.Reso
 		Name: d.Get("name").(string),
 	}
 
-	err := client.LoadBalancers.RemoveBackend(context.Background(), loadbalancerid, params)
+	err := client.LoadBalancers.RemoveBackend(ctx, loadbalancerid, params)
 	if err != nil {
 		return diag.Errorf("Error deleting LoadBalancer Backend: %s", err)
 	}

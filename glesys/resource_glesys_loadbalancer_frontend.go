@@ -90,7 +90,7 @@ func resourceGlesysLoadBalancerFrontendCreate(ctx context.Context, d *schema.Res
 
 	loadbalancerID := d.Get("loadbalancerid").(string)
 
-	_, err := client.LoadBalancers.AddFrontend(context.Background(), loadbalancerID, params)
+	_, err := client.LoadBalancers.AddFrontend(ctx, loadbalancerID, params)
 	if err != nil {
 		return diag.Errorf("Error creating LoadBalancer Frontend: %s", err)
 	}
@@ -104,7 +104,7 @@ func resourceGlesysLoadBalancerFrontendRead(ctx context.Context, d *schema.Resou
 	client := m.(*glesys.Client)
 
 	loadbalancerid := d.Get("loadbalancerid").(string)
-	lb, err := client.LoadBalancers.Details(context.Background(), loadbalancerid)
+	lb, err := client.LoadBalancers.Details(ctx, loadbalancerid)
 	if err != nil {
 		diag.Errorf("loadbalancer not found: %s", err)
 		d.SetId("")
@@ -154,7 +154,7 @@ func resourceGlesysLoadBalancerFrontendUpdate(ctx context.Context, d *schema.Res
 		params.SSLCertificate = d.Get("sslcertificate").(string)
 	}
 
-	_, err := client.LoadBalancers.EditFrontend(context.Background(), loadbalancerid, params)
+	_, err := client.LoadBalancers.EditFrontend(ctx, loadbalancerid, params)
 	if err != nil {
 		return diag.Errorf("Error updating LoadBalancer Frontend: %s", err)
 	}
@@ -171,7 +171,7 @@ func resourceGlesysLoadBalancerFrontendDelete(ctx context.Context, d *schema.Res
 		Name: d.Get("name").(string),
 	}
 
-	err := client.LoadBalancers.RemoveFrontend(context.Background(), loadbalancerid, params)
+	err := client.LoadBalancers.RemoveFrontend(ctx, loadbalancerid, params)
 	if err != nil {
 		return diag.Errorf("Error deleting LoadBalancer Frontend: %s", err)
 	}

@@ -87,7 +87,7 @@ func resourceGlesysLoadBalancerTargetCreate(ctx context.Context, d *schema.Resou
 
 	loadbalancerID := d.Get("loadbalancerid").(string)
 
-	_, err := client.LoadBalancers.AddTarget(context.Background(), loadbalancerID, params)
+	_, err := client.LoadBalancers.AddTarget(ctx, loadbalancerID, params)
 	if err != nil {
 		return diag.Errorf("Error creating LoadBalancer Target: %s", err)
 	}
@@ -95,7 +95,7 @@ func resourceGlesysLoadBalancerTargetCreate(ctx context.Context, d *schema.Resou
 	if !d.Get("enabled").(bool) {
 		// Disable the target after creation
 		targetParams := glesys.ToggleTargetParams{Name: d.Get("name").(string), Backend: d.Get("backend").(string)}
-		_, err := client.LoadBalancers.DisableTarget(context.Background(), loadbalancerID, targetParams)
+		_, err := client.LoadBalancers.DisableTarget(ctx, loadbalancerID, targetParams)
 
 		if err != nil {
 			return diag.Errorf("could not disable Target during creation: %s", err)
@@ -111,7 +111,7 @@ func resourceGlesysLoadBalancerTargetRead(ctx context.Context, d *schema.Resourc
 	client := m.(*glesys.Client)
 
 	loadbalancerid := d.Get("loadbalancerid").(string)
-	lb, err := client.LoadBalancers.Details(context.Background(), loadbalancerid)
+	lb, err := client.LoadBalancers.Details(ctx, loadbalancerid)
 	if err != nil {
 		diag.Errorf("loadbalancer not found: %s", err)
 		d.SetId("")
@@ -164,12 +164,12 @@ func resourceGlesysLoadBalancerTargetUpdate(ctx context.Context, d *schema.Resou
 		}
 
 		if currentState == true {
-			_, err := client.LoadBalancers.DisableTarget(context.Background(), loadbalancerid, toggleParams)
+			_, err := client.LoadBalancers.DisableTarget(ctx, loadbalancerid, toggleParams)
 			if err != nil {
 				return diag.Errorf("error toggling LoadBalancer Target from: %s - %s", currentState, err)
 			}
 		} else {
-			_, err := client.LoadBalancers.EnableTarget(context.Background(), loadbalancerid, toggleParams)
+			_, err := client.LoadBalancers.EnableTarget(ctx, loadbalancerid, toggleParams)
 			if err != nil {
 				return diag.Errorf("error toggling LoadBalancer Target from: %s - %s", currentState, err)
 			}
@@ -188,7 +188,7 @@ func resourceGlesysLoadBalancerTargetUpdate(ctx context.Context, d *schema.Resou
 		params.Weight = d.Get("weight").(int)
 	}
 
-	_, err := client.LoadBalancers.EditTarget(context.Background(), loadbalancerid, params)
+	_, err := client.LoadBalancers.EditTarget(ctx, loadbalancerid, params)
 
 	if err != nil {
 		return diag.Errorf("Error updating LoadBalancer Target: %s", err)
@@ -207,7 +207,7 @@ func resourceGlesysLoadBalancerTargetDelete(ctx context.Context, d *schema.Resou
 		Name:    d.Get("name").(string),
 	}
 
-	err := client.LoadBalancers.RemoveTarget(context.Background(), loadbalancerid, params)
+	err := client.LoadBalancers.RemoveTarget(ctx, loadbalancerid, params)
 	if err != nil {
 		return diag.Errorf("Error deleting LoadBalancer Target: %s", err)
 	}
