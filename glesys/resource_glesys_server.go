@@ -251,7 +251,7 @@ func resourceGlesysServerRead(ctx context.Context, d *schema.ResourceData, m int
 	client := m.(*glesys.Client)
 
 	// fetch updates about the resource
-	srv, err := client.Servers.Details(context.Background(), d.Id())
+	srv, err := client.Servers.Details(ctx, d.Id())
 	if err != nil {
 		diag.Errorf("server not found: %s", err)
 		d.SetId("")
@@ -310,7 +310,7 @@ func resourceGlesysServerUpdate(ctx context.Context, d *schema.ResourceData, m i
 	if d.HasChange("storage") {
 		opts.Storage = d.Get("storage").(int)
 	}
-	_, err := client.Servers.Edit(context.Background(), d.Id(), opts)
+	_, err := client.Servers.Edit(ctx, d.Id(), opts)
 	if err != nil {
 		return diag.Errorf("Error updating instance: %s", err)
 	}

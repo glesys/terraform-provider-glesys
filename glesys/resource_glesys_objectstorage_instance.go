@@ -52,7 +52,7 @@ func resourceGlesysObjectStorageInstanceCreate(ctx context.Context, d *schema.Re
 		Description: d.Get("description").(string),
 	}
 
-	instance, err := client.ObjectStorages.CreateInstance(context.Background(), params)
+	instance, err := client.ObjectStorages.CreateInstance(ctx, params)
 	if err != nil {
 		return diag.Errorf("Error creating object storage: %s", err)
 	}
@@ -66,7 +66,7 @@ func resourceGlesysObjectStorageInstanceCreate(ctx context.Context, d *schema.Re
 func resourceGlesysObjectStorageInstanceRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*glesys.Client)
 
-	instance, err := client.ObjectStorages.InstanceDetails(context.Background(), d.Id())
+	instance, err := client.ObjectStorages.InstanceDetails(ctx, d.Id())
 	if err != nil {
 		d.SetId("")
 		return diag.Errorf("object storage not found: %s", err)
@@ -99,7 +99,7 @@ func resourceGlesysObjectStorageInstanceUpdate(ctx context.Context, d *schema.Re
 		params.Description = d.Get("description").(string)
 	}
 
-	_, err := client.ObjectStorages.EditInstance(context.Background(), params)
+	_, err := client.ObjectStorages.EditInstance(ctx, params)
 	if err != nil {
 		return diag.Errorf("Error updating object storage: %s", err)
 	}
@@ -109,7 +109,7 @@ func resourceGlesysObjectStorageInstanceUpdate(ctx context.Context, d *schema.Re
 func resourceGlesysObjectStorageInstanceDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*glesys.Client)
 
-	err := client.ObjectStorages.DeleteInstance(context.Background(), d.Id())
+	err := client.ObjectStorages.DeleteInstance(ctx, d.Id())
 	if err != nil {
 		return diag.Errorf("Error deleting object storage: %s", err)
 	}

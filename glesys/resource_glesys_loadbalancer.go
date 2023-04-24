@@ -60,7 +60,7 @@ func resourceGlesysLoadBalancerCreate(ctx context.Context, d *schema.ResourceDat
 		Name:       d.Get("name").(string),
 	}
 
-	loadbalancer, err := client.LoadBalancers.Create(context.Background(), params)
+	loadbalancer, err := client.LoadBalancers.Create(ctx, params)
 	if err != nil {
 		return diag.Errorf("Error creating loadbalancer: %s", err)
 	}
@@ -74,7 +74,7 @@ func resourceGlesysLoadBalancerCreate(ctx context.Context, d *schema.ResourceDat
 func resourceGlesysLoadBalancerRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*glesys.Client)
 
-	loadbalancer, err := client.LoadBalancers.Details(context.Background(), d.Id())
+	loadbalancer, err := client.LoadBalancers.Details(ctx, d.Id())
 	if err != nil {
 		diag.Errorf("loadbalancer not found: %s", err)
 		d.SetId("")
@@ -110,7 +110,7 @@ func resourceGlesysLoadBalancerUpdate(ctx context.Context, d *schema.ResourceDat
 		params.Name = d.Get("name").(string)
 	}
 
-	_, err := client.LoadBalancers.Edit(context.Background(), d.Id(), params)
+	_, err := client.LoadBalancers.Edit(ctx, d.Id(), params)
 	if err != nil {
 		return diag.Errorf("Error updating loadbalancer: %s", err)
 	}
@@ -121,7 +121,7 @@ func resourceGlesysLoadBalancerUpdate(ctx context.Context, d *schema.ResourceDat
 func resourceGlesysLoadBalancerDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*glesys.Client)
 
-	err := client.LoadBalancers.Destroy(context.Background(), d.Id())
+	err := client.LoadBalancers.Destroy(ctx, d.Id())
 	if err != nil {
 		return diag.Errorf("Error deleting loadbalancer: %s", err)
 	}

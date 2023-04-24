@@ -49,7 +49,7 @@ func resourceGlesysObjectStorageCredentialCreate(ctx context.Context, d *schema.
 		Description: d.Get("description").(string),
 	}
 
-	credential, err := client.ObjectStorages.CreateCredential(context.Background(), params)
+	credential, err := client.ObjectStorages.CreateCredential(ctx, params)
 	if err != nil {
 		return diag.Errorf("Error creating object storage credential: %s", err)
 	}
@@ -75,7 +75,7 @@ func resourceGlesysObjectStorageCredentialDelete(ctx context.Context, d *schema.
 		CredentialID: d.Id(),
 	}
 
-	err := client.ObjectStorages.DeleteCredential(context.Background(), params)
+	err := client.ObjectStorages.DeleteCredential(ctx, params)
 	if err != nil {
 		return diag.Errorf("Error deleting object storage credential: %s", err)
 	}
