@@ -2,6 +2,7 @@ package glesys
 
 import (
 	"context"
+	"strings"
 
 	"github.com/glesys/glesys-go/v6"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -208,7 +209,11 @@ func resourceGlesysIPDelete(ctx context.Context, d *schema.ResourceData, m inter
 
 	err := client.IPs.Release(ctx, d.Id())
 	if err != nil {
-		return diag.Errorf("Error releasing IP %s: %v", d.Id(), err)
+		if strings.Contains(err.Error(), "HTTP error: 404") {
+			return nil
+		} else {
+			return diag.Errorf("Error releasing IP %s: %v", d.Id(), err)
+		}
 	}
 
 	d.SetId("")
