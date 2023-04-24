@@ -48,7 +48,7 @@ func resourceGlesysDNSDomainRecord() *schema.Resource {
 			},
 
 			"type": {
-				Description: "Record type. Must be one of `SOA`, `A`, `AAAA`, `CNAME`, `MX`, `NS`, `TXT`, `SRV`, `URL` or `PTR`",
+				Description: "Record type. Must be one of `SOA`, `A`, `AAAA`, `CAA`, `CNAME`, `MX`, `NS`, `TXT`, `SRV`, `URL` or `PTR`",
 				Type:        schema.TypeString,
 				Required:    true,
 				ForceNew:    true,

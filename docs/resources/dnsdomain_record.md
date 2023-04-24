@@ -15,7 +15,7 @@ description: |-
 - `data` (String) Record data field. Ex. `127.0.0.1`
 - `domain` (String) Domain name
 - `host` (String) Record host field. Ex. `www`
-- `type` (String) Record type. Must be one of `SOA`, `A`, `AAAA`, `CNAME`, `MX`, `NS`, `TXT`, `SRV`, `URL` or `PTR`
+- `type` (String) Record type. Must be one of `SOA`, `A`, `AAAA`, `CAA`, `CNAME`, `MX`, `NS`, `TXT`, `SRV`, `URL` or `PTR`
 
 ### Optional
 
