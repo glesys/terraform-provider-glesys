@@ -178,7 +178,12 @@ func resourceGlesysDNSDomainRecordDelete(ctx context.Context, d *schema.Resource
 
 	err := client.DNSDomains.DeleteRecord(context.Background(), recordID)
 	if err != nil {
-		return diag.Errorf("Error deleting domain record: %v", err)
+		if strings.Contains(err.Error(), "HTTP error: 404") {
+			d.SetId("")
+			return nil
+		} else {
+			return diag.Errorf("Error deleting domain record: %v", err)
+		}
 	}
 	d.SetId("")
 	return nil
