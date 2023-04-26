@@ -15,7 +15,7 @@ Get information about a Network associated with your GleSYS Project.
 ```terraform
 # glesys_dnsdomain datasource
 data "glesys_network" "examplenet" {
-  name = "vl12345"
+  id = "vl12345"
 }
 
 output "network_dc" {
