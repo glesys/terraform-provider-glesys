@@ -5,6 +5,18 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 
+## [0.9.0] - 2023-05-03
+### Changed
+- Update context in API calls.
+- Handle error when deleting an already deleted DNSDomain Record.
+- Update tests to use Go 1.20.
+- Various dependency updates.
+- Fixed issue when using UUID templates in KVM.
+- Fixed issue with missing DNS Records not being recreated. (#126)
+
+### Added
+- Implemented `datasource_glesys_network`.
+
 ## [0.8.0] - 2022-11-01
 ### Changed
 - Update workflow releaser to use goreleaser-action v3.2.0
