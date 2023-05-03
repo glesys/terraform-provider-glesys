@@ -112,24 +112,19 @@ func resourceGlesysDNSDomainRecordRead(ctx context.Context, d *schema.ResourceDa
 	if err != nil {
 		return diag.Errorf("invalid record id: %v", err)
 	}
-	records, err := client.DNSDomains.ListRecords(ctx, domain)
 
+	record, err := findRecordByID(client, domain, myID)
 	if err != nil {
-		diag.Errorf("domain not found: %v", err)
 		d.SetId("")
 		return nil
 	}
 
-	for _, record := range *records {
-		if record.RecordID == myID {
-			d.Set("domain", record.DomainName)
-			d.Set("data", record.Data)
-			d.Set("host", record.Host)
-			d.Set("recordid", record.RecordID)
-			d.Set("ttl", record.TTL)
-			d.Set("type", record.Type)
-		}
-	}
+	d.Set("domain", record.DomainName)
+	d.Set("data", record.Data)
+	d.Set("host", record.Host)
+	d.Set("recordid", record.RecordID)
+	d.Set("ttl", record.TTL)
+	d.Set("type", record.Type)
 
 	return nil
 }
@@ -187,4 +182,19 @@ func resourceGlesysDNSDomainRecordDelete(ctx context.Context, d *schema.Resource
 	}
 	d.SetId("")
 	return nil
+}
+
+func findRecordByID(client *glesys.Client, domain string, id int) (*glesys.DNSDomainRecord, error) {
+	records, err := client.DNSDomains.ListRecords(context.Background(), domain)
+	if err != nil {
+		return nil, fmt.Errorf("domain not found: %s", err)
+	}
+
+	for _, rec := range *records {
+		if rec.RecordID == id {
+			return &rec, nil
+		}
+	}
+
+	return nil, fmt.Errorf("no record found for ID %d", id)
 }
