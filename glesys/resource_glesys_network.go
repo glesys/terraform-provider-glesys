@@ -15,19 +15,23 @@ func resourceGlesysNetwork() *schema.Resource {
 		UpdateContext: resourceGlesysNetworkUpdate,
 		DeleteContext: resourceGlesysNetworkDelete,
 
+		Description: "Create a private network in the VMware environment.",
+
 		Schema: map[string]*schema.Schema{
 			"datacenter": {
-				Type:     schema.TypeString,
-				Required: true,
+				Description: "Datacenter, `Falkenberg`, `Stockholm`, `Amsterdam`, `London`, `Oslo`",
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 			"description": {
-				Type:     schema.TypeString,
-				Required: true,
+				Description: "Network description",
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 			"public": {
-				Type:     schema.TypeString,
-				Required: false,
-				Computed: true,
+				Description: "Public determines if the network is externally routed",
+				Type:        schema.TypeString,
+				Computed:    true,
 			},
 		},
 	}

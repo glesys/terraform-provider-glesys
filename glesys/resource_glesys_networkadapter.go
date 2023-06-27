@@ -15,30 +15,36 @@ func resourceGlesysNetworkAdapter() *schema.Resource {
 		UpdateContext: resourceGlesysNetworkAdapterUpdate,
 		DeleteContext: resourceGlesysNetworkAdapterDelete,
 
+		Description: "Create a networkadapter attached to a VMware server.",
+
 		Schema: map[string]*schema.Schema{
 			"adaptertype": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "`VMXNET 3` (default) or `E1000`",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"bandwidth": {
-				Type:     schema.TypeInt,
-				Optional: true,
-				Computed: true,
+				Description: "adapter bandwidth",
+				Type:        schema.TypeInt,
+				Optional:    true,
+				Computed:    true,
 			},
 			"name": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "Network Adapter name",
+				Type:        schema.TypeString,
+				Computed:    true,
 			},
 			"networkid": {
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Description: "Network ID to connect to. Defaults to `internet`.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
 			},
 			"serverid": {
-				Type:     schema.TypeString,
-				Required: true,
+				Description: "Server ID to connect the adapter to",
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 		},
 	}
