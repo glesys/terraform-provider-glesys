@@ -32,7 +32,7 @@ func resourceGlesysEmailAccount() *schema.Resource {
 			"password": {
 				Description: "Email Account password",
 				Type:        schema.TypeString,
-				Optional:    true,
+				Computed:    true,
 			},
 			"antispamlevel": {
 				Description: "Email Account antispam level. `0-5`",
@@ -105,7 +105,6 @@ func resourceGlesysEmailAccountCreate(ctx context.Context, d *schema.ResourceDat
 
 	params := glesys.CreateAccountParams{
 		EmailAccount:       d.Get("emailaccount").(string),
-		Password:           d.Get("password").(string),
 		AntiVirus:          d.Get("antivirus").(string),
 		AntiSpamLevel:      d.Get("antispamlevel").(int),
 		AutoRespond:        d.Get("autorespond").(string),
@@ -126,7 +125,6 @@ func resourceGlesysEmailAccountCreate(ctx context.Context, d *schema.ResourceDat
 func resourceGlesysEmailAccountRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*glesys.Client)
 
-	log.Printf("[INFO] OK Prutt")
 	components := strings.Split(d.Id(), "@")
 	domain := components[1]
 	listParams := glesys.ListEmailsParams{Filter: d.Id()}
@@ -177,10 +175,6 @@ func resourceGlesysEmailAccountUpdate(ctx context.Context, d *schema.ResourceDat
 
 	if d.HasChange("autorespondmessage") {
 		params.AutoRespondMessage = d.Get("autorespondmessage").(string)
-	}
-
-	if d.HasChange("password") {
-		params.Password = d.Get("password").(string)
 	}
 
 	if d.HasChange("quotaingib") {
