@@ -19,16 +19,16 @@ func TestAccEmailAlias_basic(t *testing.T) {
 		Providers: testGlesysProviders,
 		Steps: []resource.TestStep{
 			{
-				Config: glesysEmailAliasSkeleton(newDomain, "goto = \""+rName+"@"+newDomain+"\""),
+				Config: glesysEmailAliasSkeleton(newDomain, fmt.Sprintf("goto = \"%s@%s\"", rName, newDomain)),
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr(name, "emailalias", "alice@"+newDomain),
-					resource.TestCheckResourceAttr(name, "goto", rName+"@"+newDomain),
+					resource.TestCheckResourceAttr(name, "emailalias", fmt.Sprintf("alice@%s", newDomain)),
+					resource.TestCheckResourceAttr(name, "goto", fmt.Sprintf("%s@%s", rName, newDomain)),
 				),
 			},
 			{
-				Config: glesysEmailAliasSkeleton(newDomain, "goto = \"kurt@"+newDomain+"\""),
+				Config: glesysEmailAliasSkeleton(newDomain, fmt.Sprintf("goto = \"kurt@%s\"", newDomain)),
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr(name, "goto", "kurt@"+newDomain),
+					resource.TestCheckResourceAttr(name, "goto", fmt.Sprintf("kurt@%s", newDomain)),
 				),
 			},
 		},
@@ -36,17 +36,6 @@ func TestAccEmailAlias_basic(t *testing.T) {
 }
 
 func glesysEmailAliasSkeleton(domain string, s string) string {
-	return fmt.Sprintf(
-		`resource "glesys_dnsdomain" "test" {
-			name = "%s"
-		}
-
-		resource "glesys_emailalias" "test" {
-			emailalias = "alice@${glesys_dnsdomain.test.name}"
-			%s
-		}`, domain, s)
-}
-func glesysEmailAliasUpdate(domain string, s string) string {
 	return fmt.Sprintf(
 		`resource "glesys_dnsdomain" "test" {
 			name = "%s"
