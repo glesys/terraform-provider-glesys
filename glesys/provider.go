@@ -38,6 +38,7 @@ func Provider() *schema.Provider {
 			"glesys_dnsdomain":                resourceGlesysDNSDomain(),
 			"glesys_dnsdomain_record":         resourceGlesysDNSDomainRecord(),
 			"glesys_emailaccount":             resourceGlesysEmailAccount(),
+			"glesys_emailalias":               resourceGlesysEmailAlias(),
 			"glesys_loadbalancer":             resourceGlesysLoadBalancer(),
 			"glesys_loadbalancer_backend":     resourceGlesysLoadBalancerBackend(),
 			"glesys_loadbalancer_frontend":    resourceGlesysLoadBalancerFrontend(),
