@@ -46,7 +46,6 @@ func glesysEmailAccountSkeleton(domain string, s string) string {
 
 		resource "glesys_emailaccount" "test" {
 			emailaccount = "alice@${glesys_dnsdomain.test.name}"
-			password     = "HunterPassword"
 			%s
 		}`, domain, s)
 }
