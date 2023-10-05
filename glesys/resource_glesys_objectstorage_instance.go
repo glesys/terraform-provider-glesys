@@ -19,26 +19,32 @@ func resourceGlesysObjectStorageInstance() *schema.Resource {
 			StateContext: schema.ImportStatePassthroughContext,
 		},
 
+		Description: "ObjectStorage Instance Resource.",
 		Schema: map[string]*schema.Schema{
 			"datacenter": {
-				Type:     schema.TypeString,
-				Required: true,
+				Description: "ObjectStorage location.",
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 			"description": {
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: "ObjectStorage Description.",
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"created": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Description: "ObjectStorage created timestamp.",
+				Type:        schema.TypeString,
+				Computed:    true,
 			},
 			"accesskey": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Description: "ObjectStorage default access key.",
+				Type:        schema.TypeString,
+				Computed:    true,
 			},
 			"secretkey": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Description: "ObjectStorage default secret key.",
+				Type:        schema.TypeString,
+				Computed:    true,
 			},
 		},
 	}
