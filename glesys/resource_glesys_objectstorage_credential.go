@@ -14,28 +14,34 @@ func resourceGlesysObjectStorageCredential() *schema.Resource {
 		ReadContext:   resourceGlesysObjectStorageCredentialRead,
 		DeleteContext: resourceGlesysObjectStorageCredentialDelete,
 
+		Description: "ObjectStorage Credentials.",
 		Schema: map[string]*schema.Schema{
 			"instanceid": {
-				Type:     schema.TypeString,
-				Required: true,
-				ForceNew: true,
+				Description: "Associated ObjectStorage instance.",
+				Type:        schema.TypeString,
+				Required:    true,
+				ForceNew:    true,
 			},
 			"accesskey": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Description: "ObjectStorage credential access key.",
+				Type:        schema.TypeString,
+				Computed:    true,
 			},
 			"secretkey": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Description: "ObjectStorage credential secret key.",
+				Type:        schema.TypeString,
+				Computed:    true,
 			},
 			"created": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Description: "ObjectStorage credential created timestamp.",
+				Type:        schema.TypeString,
+				Computed:    true,
 			},
 			"description": {
-				Type:     schema.TypeString,
-				Optional: true,
-				ForceNew: true,
+				Description: "ObjectStorage credential description.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				ForceNew:    true,
 			},
 		},
 	}
