@@ -61,7 +61,7 @@ func resourceGlesysLoadBalancerTarget() *schema.Resource {
 			"targetip": {
 				Description: "Target IP.",
 				Type:        schema.TypeString,
-				Optional:    true,
+				Required:    true,
 			},
 
 			"weight": {
