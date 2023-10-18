@@ -45,6 +45,37 @@ resource "glesys_server" "kvm" {
   }
 }
 
+# KVM with backups_schedule
+
+resource "glesys_server" "kvm" {
+  datacenter = "Stockholm"
+  memory     = 1024
+  storage    = 20
+  cpu        = 1
+  bandwidth  = 100
+
+  hostname = "www1"
+
+  platform = "KVM"
+  template = "debian-11"
+
+  user {
+    username = "alice"
+    publickeys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINOCh8br7CwZDMGmINyJgBip943QXgkf7XdXrDMJf5Dl alice@example.com",
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOfN4dBsS2p1UX+DP6RicdxAYCCeRK8mzCldCS0W9A+5 alice@ws.example.com"
+    ]
+    password = "hunter4!"
+  }
+  backups_schedule {
+    frequency = "daily"
+    retention = 7
+  }
+  backups_schedule {
+    frequency = "weekly"
+    retention = 4
+  }
+}
 # Advanced example using variables
 # Set some variables
 variable "datacenter" {
@@ -154,6 +185,7 @@ Examples can be found in the [GleSYS API - Cloud config documentation](https://g
 
 ### Optional
 
+- `backups_schedule` (Block Set) KVM Server backup schedule definition. (see [below for nested schema](#nestedblock--backups_schedule))
 - `campaigncode` (String) Campaigncode used during creation for possible discount
 - `cloudconfig` (String) Cloudconfig used to provision server using a provided cloud-config mustache template.
 - `cloudconfigparams` (Map of String) Cloudconfigparams is used to provide additional parameters to the template in `cloudconfig` using a map. This can be set using a Terraform Local Value.
@@ -173,6 +205,14 @@ Examples can be found in the [GleSYS API - Cloud config documentation](https://g
 - `islocked` (Boolean) Server locked state
 - `isrunning` (Boolean) Server running state
 - `network_adapters` (List of Object) Network adapters associated with the server. `glesys_networkadapter` (see [below for nested schema](#nestedatt--network_adapters))
+
+<a id="nestedblock--backups_schedule"></a>
+### Nested Schema for `backups_schedule`
+
+Required:
+
+- `frequency` (String)
+- `retention` (Number)
 
 
 <a id="nestedblock--user"></a>

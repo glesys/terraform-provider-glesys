@@ -11,6 +11,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/retry"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 )
 
 func resourceGlesysServer() *schema.Resource {
@@ -194,6 +195,25 @@ func resourceGlesysServer() *schema.Resource {
 					},
 				},
 			},
+
+			"backups_schedule": {
+				Type:        schema.TypeSet,
+				Optional:    true,
+				Description: "KVM Server backup schedule definition.",
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"frequency": {
+							Type:         schema.TypeString,
+							Required:     true,
+							ValidateFunc: validation.StringInSlice([]string{"daily", "weekly"}, false),
+						},
+						"retention": {
+							Type:     schema.TypeInt,
+							Required: true,
+						},
+					},
+				},
+			},
 		},
 	}
 }
@@ -220,6 +240,22 @@ func expandUsers(config []interface{}) ([]glesys.User, error) {
 	}
 
 	return users, nil
+}
+
+func expandBackupSchedules(config []interface{}) ([]glesys.ServerBackupSchedule, error) {
+	schedules := make([]glesys.ServerBackupSchedule, 0, len(config))
+
+	for _, rawSchedule := range config {
+		schedule := rawSchedule.(map[string]interface{})
+
+		s := glesys.ServerBackupSchedule{
+			Frequency:            schedule["frequency"].(string),
+			Numberofimagestokeep: schedule["retention"].(int),
+		}
+
+		schedules = append(schedules, s)
+	}
+	return schedules, nil
 }
 
 func buildServerParamStruct(d *schema.ResourceData) *glesys.CreateServerParams {
@@ -251,6 +287,12 @@ func resourceGlesysServerCreate(ctx context.Context, d *schema.ResourceData, m i
 
 	// Setup server parameters
 	srv := buildServerParamStruct(d)
+
+	backupsList, err := expandBackupSchedules(d.Get("backups_schedule").(*schema.Set).List())
+	if err != nil {
+		return diag.Errorf("Error when expanding backup schedules: %v", err)
+	}
+	srv.Backup = backupsList
 
 	// Setup users for server creation
 	usersList, err := expandUsers(d.Get("user").(*schema.Set).List())
@@ -329,6 +371,19 @@ func resourceGlesysServerRead(ctx context.Context, d *schema.ResourceData, m int
 	}
 	d.Set("extra_disks", diskIDs)
 
+	var backupSchedules []map[string]interface{}
+	for _, bs := range srv.Backup.Schedules {
+		schedule := map[string]interface{}{
+			"frequency": bs.Frequency,
+			"retention": bs.Numberofimagestokeep,
+		}
+		backupSchedules = append(backupSchedules, schedule)
+	}
+
+	if err := d.Set("backups_schedule", backupSchedules); err != nil {
+		return diag.Errorf("unable to set backups_schedule, read value %v", err)
+	}
+
 	var adapters []map[string]interface{}
 	netAdapters, _ := client.Servers.NetworkAdapters(ctx, d.Id())
 	for _, v := range *netAdapters {
@@ -373,6 +428,13 @@ func resourceGlesysServerUpdate(ctx context.Context, d *schema.ResourceData, m i
 	}
 	if d.HasChange("storage") {
 		opts.Storage = d.Get("storage").(int)
+	}
+	if d.HasChange("backups_schedule") {
+		backupsList, err := expandBackupSchedules(d.Get("backups_schedule").(*schema.Set).List())
+		if err != nil {
+			diag.Errorf("Error updating backups_schedule: %s", err)
+		}
+		opts.Backup = backupsList
 	}
 	_, err := client.Servers.Edit(ctx, d.Id(), opts)
 	if err != nil {

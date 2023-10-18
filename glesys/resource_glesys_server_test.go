@@ -76,6 +76,30 @@ func TestAccServerVMware_basic(t *testing.T) {
 	})
 }
 
+func TestAccServerKVM_BackupSchedule(t *testing.T) {
+	rName := acctest.RandomWithPrefix("tf-srv-kvm")
+
+	name := "glesys_server.test"
+	resource.UnitTest(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testGlesysProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccGlesysServerBase_KVM_BackupSchedule(rName),
+				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttr(name, "hostname", rName),
+					resource.TestCheckResourceAttr(name, "datacenter", "Falkenberg"),
+					resource.TestCheckResourceAttr(name, "platform", "KVM"),
+					resource.TestCheckResourceAttr(name, "backups_schedule.0.frequency", "daily"),
+					resource.TestCheckResourceAttr(name, "backups_schedule.0.retention", "3"),
+					resource.TestCheckResourceAttrSet(name, "ipv4_address"),
+					resource.TestCheckResourceAttrSet(name, "ipv6_address"),
+				),
+			},
+		},
+	})
+}
+
 func testAccGlesysServerBase_VMware(name string) string {
 	return fmt.Sprintf(`
 		resource "glesys_server" "test" {
@@ -92,6 +116,31 @@ func testAccGlesysServerBase_VMware(name string) string {
 		          username   = "acctestuser"
 		          publickeys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINOCh8br7CwZDMGmINyJgBip943QXgkf7XdXrDMJf5Dl acctestuser@example-host"]
 			  password   = "hunter123!"
+			}
+		} `, name)
+}
+
+func testAccGlesysServerBase_KVM_BackupSchedule(name string) string {
+	return fmt.Sprintf(`
+		resource "glesys_server" "test" {
+			hostname   = "%s"
+			datacenter = "Falkenberg"
+			platform   = "KVM"
+			bandwidth  = 100
+			cpu        = 1
+			memory     = 1024
+			storage    = 10
+			template   = "Debian 12 (Bookworm)"
+
+			user {
+		          username   = "acctestuser"
+		          publickeys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINOCh8br7CwZDMGmINyJgBip943QXgkf7XdXrDMJf5Dl acctestuser@example-host"]
+			  password   = "hunter123!"
+			}
+
+			backups_schedule {
+			  frequency = "daily"
+		          retention = 3
 			}
 		} `, name)
 }
