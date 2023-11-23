@@ -5,6 +5,20 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 
+## [0.10.0] - 2023-11-23
+### Changed
+- Update docs for network resources.
+- Update docs for networkadapter resources.
+- `glesys_emailaccount` API no longer accept user defined passwords.
+- `glesys_loadbalancer_target` requires `targetip` attribute.
+- Fix links to API documentation (@stemid)
+- Bump glesys-go to v8
+
+### Added
+- Add `glesys_emailalias`
+- Add docs for `glesys_objectstorage_*`
+- Add docs for `glesys_ip`
+
 ## [0.9.0] - 2023-05-03
 ### Changed
 - Update context in API calls.
