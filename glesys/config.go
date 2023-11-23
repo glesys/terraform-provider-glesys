@@ -1,7 +1,7 @@
 package glesys
 
 import (
-	"github.com/glesys/glesys-go/v6"
+	"github.com/glesys/glesys-go/v8"
 )
 
 // Config - Provider configuration
