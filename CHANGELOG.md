@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 
+## [0.10.1] - 2023-11-23
+### Changed
+- Updated the minimum go version to 1.20
+
 ## [0.10.0] - 2023-11-23
 ### Changed
 - Update docs for network resources.
