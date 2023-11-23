@@ -16,12 +16,12 @@ Create a LoadBalancer Target for a `glesys_loadbalancer_backend`.
 - `loadbalancerid` (String) LoadBalancer ID.
 - `name` (String) Target name.
 - `port` (Number) Target port to connect to.
+- `targetip` (String) Target IP.
 - `weight` (Number) Target weight. `1-256`. Higher weight gets more requests.
 
 ### Optional
 
 - `enabled` (Boolean) Enable or disable Target. `true`, `false`
-- `targetip` (String) Target IP.
 
 ### Read-Only
 
