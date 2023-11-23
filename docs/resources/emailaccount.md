@@ -36,7 +36,6 @@ resource "glesys_emailaccount" "alice" {
 - `antivirus` (String) Email Account enable Antivirus. `yes/no`
 - `autorespond` (String) Email Account Autoresponse. `yes/no`
 - `autorespondmessage` (String) Email Account Autoresponse message.
-- `password` (String) Email Account password
 - `quotaingib` (Number) Email Account Quota (GiB)
 - `rejectspam` (String) Email Account Reject spam setting. `yes/no`
 
@@ -47,6 +46,7 @@ resource "glesys_emailaccount" "alice" {
 - `displayname` (String) Email Account displayname
 - `id` (String) The ID of this resource.
 - `modified` (String) Email Account modification date
+- `password` (String) Email Account password
 ## Import
 Import is supported using the following syntax:
 ```shell
