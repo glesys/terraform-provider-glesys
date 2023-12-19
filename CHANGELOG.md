@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 
+## [0.10.2] - 2023-12-19
+### Changed
+- Update github actions dependencies
+- Update golang.org/x/crypto dependencies
+
 ## [0.10.1] - 2023-11-23
 ### Changed
 - Updated the minimum go version to 1.20
