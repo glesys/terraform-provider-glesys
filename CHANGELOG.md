@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 
+## [0.10.3] - 2024-01-09
+### Changed
+- Update dependencies with high vulnerability rating
+- Update terraform-plugin-sdk/v2 dependency
+
 ## [0.10.2] - 2023-12-19
 ### Changed
 - Update github actions dependencies
