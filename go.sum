@@ -21,8 +21,8 @@ github.com/emirpasic/gods v1.18.1 h1:FXtiHYKDGKCW2KzwZKx0iC0PQmdlorYgdFG9jPXJ1Bc
 github.com/fatih/color v1.13.0/go.mod h1:kLAiJbzzSOZDVNGyDpeOxJ47H46qBXwg5ILebYFFOfk=
 github.com/fatih/color v1.16.0 h1:zmkK9Ngbjj+K0yRhTVONQh1p/HknKYSlNT+vZCzyokM=
 github.com/fatih/color v1.16.0/go.mod h1:fL2Sau1YI5c0pdGEVCbKQbLXB6edEj1ZgiY4NijnWvE=
-github.com/glesys/glesys-go/v8 v8.0.0 h1:No+XJZpEAh3TRqAaJfWJm/44kfrud4SH7Hus8D4pzkc=
-github.com/glesys/glesys-go/v8 v8.0.0/go.mod h1:SJ3SN9JeIziS+tX4ENdsONmJxTkdBEwI+gs4gkwARDE=
+github.com/glesys/glesys-go/v8 v8.1.0 h1:+GFQ4R3mxgwss4TPDofQH513axaHjtuf9Dk9uPQxQxw=
+github.com/glesys/glesys-go/v8 v8.1.0/go.mod h1:SJ3SN9JeIziS+tX4ENdsONmJxTkdBEwI+gs4gkwARDE=
 github.com/go-git/gcfg v1.5.1-0.20230307220236-3a3c6141e376 h1:+zs/tPmkDkHx3U66DAb0lQFJrpS6731Oaa12ikc+DiI=
 github.com/go-git/go-billy/v5 v5.5.0 h1:yEY4yhzCDuMGSv83oGxiBotRzhwhNr8VZyphhiu+mTU=
 github.com/go-git/go-git/v5 v5.10.1 h1:tu8/D8i+TWxgKpzQ3Vc43e+kkhXqtsZCKI/egajKnxk=
