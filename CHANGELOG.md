@@ -5,6 +5,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 
+## [0.11.0] - 2024-01-24
+### Added
+- Resource `glesys_server_disk` for managing extra disks in the VMware platform.
+
+### Changed
+- Update glesys-go to v8.1.0
+- Add 'extra_disks' attribute to `glesys_server`
+
 ## [0.10.3] - 2024-01-09
 ### Changed
 - Update dependencies with high vulnerability rating
