@@ -130,6 +130,13 @@ func resourceGlesysServer() *schema.Resource {
 				ForceNew:    true,
 			},
 
+			"extra_disks": {
+				Description: "Disks associated with the server. Use `glesys_server_disk` resource to manage these.",
+				Type:        schema.TypeList,
+				Computed:    true,
+				Elem:        &schema.Schema{Type: schema.TypeString},
+			},
+
 			"user": {
 				Type:     schema.TypeSet,
 				Optional: true,
@@ -281,6 +288,11 @@ func resourceGlesysServerRead(ctx context.Context, d *schema.ResourceData, m int
 	d.Set("isrunning", srv.IsRunning)
 	d.Set("storage", srv.Storage)
 	d.Set("template", getTemplate(d.Get("template").(string), srv))
+	var diskIDs []string
+	for _, d := range srv.AdditionalDisks {
+		diskIDs = append(diskIDs, d.ID)
+	}
+	d.Set("extra_disks", diskIDs)
 
 	d.SetConnInfo(map[string]string{
 		"type": "ssh",
