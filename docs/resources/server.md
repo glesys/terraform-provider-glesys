@@ -168,6 +168,7 @@ Examples can be found in the [GleSYS API - Cloud config documentation](https://g
 
 ### Read-Only
 
+- `extra_disks` (List of String) Disks associated with the server. Use `glesys_server_disk` resource to manage these.
 - `id` (String) The ID of this resource.
 - `islocked` (Boolean) Server locked state
 - `isrunning` (Boolean) Server running state
