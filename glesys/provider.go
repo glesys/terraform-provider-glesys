@@ -46,6 +46,7 @@ func Provider() *schema.Provider {
 			"glesys_network":                  resourceGlesysNetwork(),
 			"glesys_networkadapter":           resourceGlesysNetworkAdapter(),
 			"glesys_server":                   resourceGlesysServer(),
+			"glesys_server_disk":              resourceGlesysServerDisk(),
 			"glesys_objectstorage_instance":   resourceGlesysObjectStorageInstance(),
 			"glesys_objectstorage_credential": resourceGlesysObjectStorageCredential(),
 			"glesys_ip":                       resourceGlesysIP(),
