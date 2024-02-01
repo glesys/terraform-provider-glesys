@@ -23,13 +23,6 @@ variable "storage" {
   description = "Default storage"
 }
 
-variable "platform" {
-  default = {
-    Falkenberg = "OpenVZ"
-    Stockholm  = "VMware"
-  }
-}
-
 variable "region" {
   default = {
     "0" = "Falkenberg"

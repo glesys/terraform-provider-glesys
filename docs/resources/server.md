@@ -73,7 +73,7 @@ variable "storage" {
 
 variable "platform" {
   default = {
-    Falkenberg = "OpenVZ"
+    Falkenberg = "KVM"
     Stockholm  = "VMware"
   }
 }
