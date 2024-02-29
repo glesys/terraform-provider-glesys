@@ -1,6 +1,8 @@
 module github.com/glesys/terraform-provider-glesys
 
-go 1.20
+go 1.21
+
+toolchain go1.21.7
 
 require (
 	github.com/glesys/glesys-go/v8 v8.1.0
