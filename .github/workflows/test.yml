@@ -29,7 +29,7 @@ jobs:
     strategy:
       matrix:
         go:
-          - 1.20.x
+          - 1.22.x
           - 1.21.x
 
     name: Go ${{ matrix.go }} Build
@@ -52,7 +52,7 @@ jobs:
     strategy:
       matrix:
         go:
-          - 1.20.x
+          - 1.22.x
           - 1.21.x
 
     runs-on: ubuntu-latest
