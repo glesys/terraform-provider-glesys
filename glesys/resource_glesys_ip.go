@@ -2,7 +2,9 @@ package glesys
 
 import (
 	"context"
+	"math/rand"
 	"strings"
+	"time"
 
 	"github.com/glesys/glesys-go/v8"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -141,8 +143,10 @@ func resourceGlesysIPCreate(ctx context.Context, d *schema.ResourceData, m inter
 			return diag.Errorf("Error listing available IPs: %v", err)
 		}
 
-		// Select the first available ip address for reservation
-		address = (*ips)[0].Address
+		// Select a random available ip address for reservation
+		r := rand.New(rand.NewSource(time.Now().UTC().UnixNano()))
+
+		address = (*ips)[r.Intn(len(*ips))].Address
 	}
 
 	ip, err := client.IPs.Reserve(ctx, address)
