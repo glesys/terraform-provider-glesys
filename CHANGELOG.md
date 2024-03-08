@@ -5,6 +5,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 
+## [0.11.1] - 2024-03-08
+### Changed
+- Fix possible race condition when creating multiple `glesys_ip` resources.
+- Remove OpenVZ examples
+- Bump github.com/hashicorp/terraform-plugin-sdk/v2 from 2.32.0 to 2.33.0
+- Bump go version in tests
+
 ## [0.11.0] - 2024-01-24
 ### Added
 - Resource `glesys_server_disk` for managing extra disks in the VMware platform.
