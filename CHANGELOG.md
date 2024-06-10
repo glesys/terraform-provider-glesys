@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 
+## [0.11.3] - 2024-06-10
+### Changed
+- Fix goreleaser config
+
 ## [0.11.2] - 2024-06-10
 ### Changed
 - Bump dependencies
