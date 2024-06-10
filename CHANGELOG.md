@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 
+## [0.11.2] - 2024-06-10
+### Changed
+- Bump dependencies
+
 ## [0.11.1] - 2024-03-08
 ### Changed
 - Fix possible race condition when creating multiple `glesys_ip` resources.
