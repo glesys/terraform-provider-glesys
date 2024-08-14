@@ -3,7 +3,7 @@
 ## intro
 
 This is a early stage implementation for using Terraform and the GleSYS API.
-Please see https://github.com/glesys/glesys-go and https://github.com/GleSYS/API/wiki/API-Documentation for more information.
+Please see [GleSYS Go](https://github.com/glesys/glesys-go)  and [GleSYS API documentation](https://github.com/GleSYS/API-docs/wiki/API-Documentation) for more information.
 
 ## Installation
 
