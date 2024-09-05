@@ -5,12 +5,12 @@ go 1.21
 toolchain go1.21.7
 
 require (
-	github.com/glesys/glesys-go/v8 v8.1.0
+	github.com/glesys/glesys-go/v8 v8.2.0
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.34.0
 )
 
 require (
-	dario.cat/mergo v1.0.0 // indirect
+	dario.cat/mergo v1.0.1 // indirect
 	github.com/ProtonMail/go-crypto v1.1.0-alpha.2 // indirect
 	github.com/agext/levenshtein v1.2.3 // indirect
 	github.com/apparentlymart/go-textseg/v15 v15.0.0 // indirect
