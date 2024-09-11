@@ -172,6 +172,8 @@ Examples can be found in the [GleSYS API - Cloud config documentation](https://g
 - `id` (String) The ID of this resource.
 - `islocked` (Boolean) Server locked state
 - `isrunning` (Boolean) Server running state
+- `network_adapters` (List of Object) Network adapters associated with the server. `glesys_networkadapter` (see [below for nested schema](#nestedatt--network_adapters))
+
 
 <a id="nestedblock--user"></a>
 ### Nested Schema for `user`
@@ -181,6 +183,18 @@ Required:
 - `password` (String)
 - `publickeys` (List of String) User SSH key(s), as a list. '["ssh-rsa abc...", "ssh-rsa foo..."]'
 - `username` (String)
+
+
+<a id="nestedatt--network_adapters"></a>
+### Nested Schema for `network_adapters`
+
+Read-Only:
+
+- `adaptertype` (String)
+- `bandwidth` (Number)
+- `id` (String)
+- `name` (String)
+- `networkid` (String)
 ## Import
 Import is supported using the following syntax:
 ```shell
