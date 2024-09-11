@@ -26,12 +26,12 @@ resource "glesys_networkadapter" "example" {
 
 - `adaptertype` (String) `VMXNET 3` (default) or `E1000`
 - `bandwidth` (Number) adapter bandwidth
+- `name` (String) Network Adapter name
 - `networkid` (String) Network ID to connect to. Defaults to `internet`.
 
 ### Read-Only
 
 - `id` (String) The ID of this resource.
-- `name` (String) Network Adapter name
 ## Import
 Import is supported using the following syntax:
 ```shell
