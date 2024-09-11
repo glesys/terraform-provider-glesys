@@ -30,7 +30,7 @@ jobs:
       matrix:
         go:
           - 1.22.x
-          - 1.21.x
+          - 1.23.x
 
     name: Go ${{ matrix.go }} Build
     steps:
@@ -53,7 +53,7 @@ jobs:
       matrix:
         go:
           - 1.22.x
-          - 1.21.x
+          - 1.23.x
 
     runs-on: ubuntu-latest
     steps:
