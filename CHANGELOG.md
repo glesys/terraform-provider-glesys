@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
+## [0.11.4] -
+### Added
+- `glesys_server` - `networkadapter` attribute listing attached NICS.
+- `glesys_networkadapter` - Added Importer function.
 
 ## [0.11.3] - 2024-06-10
 ### Changed
