@@ -14,6 +14,9 @@ func resourceGlesysNetworkAdapter() *schema.Resource {
 		ReadContext:   resourceGlesysNetworkAdapterRead,
 		UpdateContext: resourceGlesysNetworkAdapterUpdate,
 		DeleteContext: resourceGlesysNetworkAdapterDelete,
+		Importer: &schema.ResourceImporter{
+			StateContext: schema.ImportStatePassthroughContext,
+		},
 
 		Description: "Create a networkadapter attached to a VMware server.",
 
