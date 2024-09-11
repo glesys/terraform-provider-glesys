@@ -37,6 +37,7 @@ func resourceGlesysNetworkAdapter() *schema.Resource {
 				Description: "Network Adapter name",
 				Type:        schema.TypeString,
 				Computed:    true,
+				Optional:    true,
 			},
 			"networkid": {
 				Description: "Network ID to connect to. Defaults to `internet`.",
@@ -59,6 +60,7 @@ func resourceGlesysNetworkAdapterCreate(ctx context.Context, d *schema.ResourceD
 	params := glesys.CreateNetworkAdapterParams{
 		AdapterType: d.Get("adaptertype").(string),
 		Bandwidth:   d.Get("bandwidth").(int),
+		Name:        d.Get("name").(string),
 		NetworkID:   d.Get("networkid").(string),
 		ServerID:    d.Get("serverid").(string),
 	}
@@ -101,6 +103,9 @@ func resourceGlesysNetworkAdapterUpdate(ctx context.Context, d *schema.ResourceD
 	// }
 	if d.HasChange("bandwidth") {
 		params.Bandwidth = d.Get("bandwidth").(int)
+	}
+	if d.HasChange("name") {
+		params.Name = d.Get("name").(string)
 	}
 	if d.HasChange("networkid") {
 		params.NetworkID = d.Get("networkid").(string)
