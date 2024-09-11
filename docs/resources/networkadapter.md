@@ -8,7 +8,8 @@ description: |-
 Create a networkadapter attached to a VMware server.
 ## Example Usage
 ```terraform
-resource "glesys_networkadapter" "netadapter2" {
+resource "glesys_networkadapter" "example" {
+  name = "My Adapter"
   serverid = "wps123456"
   networkid = "vl123456"
   bandwidth = 200
@@ -31,4 +32,10 @@ resource "glesys_networkadapter" "netadapter2" {
 
 - `id` (String) The ID of this resource.
 - `name` (String) Network Adapter name
-
+## Import
+Import is supported using the following syntax:
+```shell
+# glesys_networkadapter Import
+# terraform import <resource>.<id> <remote-id>
+$ terraform import glesys_networkadapter.example d570cd5e-1e46-452d-a038-513805d6126c
+```
