@@ -137,6 +137,41 @@ func resourceGlesysServer() *schema.Resource {
 				Elem:        &schema.Schema{Type: schema.TypeString},
 			},
 
+			"network_adapters": {
+				Description: "Network adapters associated with the server. `glesys_networkadapter`",
+				Type:        schema.TypeList,
+				Computed:    true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"id": {
+							Description: "Networkadapter ID.",
+							Computed:    true,
+							Type:        schema.TypeString,
+						},
+						"adaptertype": {
+							Description: "`VMXNET 3` (default) or `E1000`",
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"bandwidth": {
+							Description: "adapter bandwidth",
+							Type:        schema.TypeInt,
+							Computed:    true,
+						},
+						"name": {
+							Description: "Network Adapter name",
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"networkid": {
+							Description: "Network ID to connect to. Defaults to `internet`.",
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+					},
+				},
+			},
+
 			"user": {
 				Type:     schema.TypeSet,
 				Optional: true,
@@ -293,6 +328,23 @@ func resourceGlesysServerRead(ctx context.Context, d *schema.ResourceData, m int
 		diskIDs = append(diskIDs, d.ID)
 	}
 	d.Set("extra_disks", diskIDs)
+
+	var adapters []map[string]interface{}
+	netAdapters, _ := client.Servers.NetworkAdapters(ctx, d.Id())
+	for _, v := range *netAdapters {
+		n := map[string]interface{}{
+			"id":          v.ID,
+			"adaptertype": v.AdapterType,
+			"bandwidth":   v.Bandwidth,
+			"name":        v.Name,
+			"networkid":   v.NetworkID,
+		}
+		adapters = append(adapters, n)
+	}
+
+	if err := d.Set("network_adapters", adapters); err != nil {
+		return diag.Errorf("unable to set network_adapters, read value %v", err)
+	}
 
 	d.SetConnInfo(map[string]string{
 		"type": "ssh",
