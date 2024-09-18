@@ -50,6 +50,8 @@ func Provider() *schema.Provider {
 			"glesys_server_disk":              resourceGlesysServerDisk(),
 			"glesys_objectstorage_instance":   resourceGlesysObjectStorageInstance(),
 			"glesys_objectstorage_credential": resourceGlesysObjectStorageCredential(),
+			"glesys_privatenetwork":           resourceGlesysPrivateNetwork(),
+			"glesys_privatenetwork_segment":   resourceGlesysPrivateNetworkSegment(),
 			"glesys_ip":                       resourceGlesysIP(),
 		},
 		// this will be used to configure the client to communicate with the API

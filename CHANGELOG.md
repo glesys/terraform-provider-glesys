@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - `glesys_server` - `networkadapter` attribute listing attached NICS.
 - `glesys_networkadapter` - Added Importer function.
+- `glesys_privatenetwork` - Manage PrivateNetwork resources.
+- `glesys_privatenetwork_segment` - Manage PrivateNetwork segments.
 
 ## [0.11.3] - 2024-06-10
 ### Changed
