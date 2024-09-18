@@ -38,5 +38,3 @@ output "domain_ttl" {
 - `refresh` (Number) refresh ttl of the domain.
 - `retry` (Number) retry ttl of the domain.
 - `ttl` (Number) ttl of the domain.
-
-
