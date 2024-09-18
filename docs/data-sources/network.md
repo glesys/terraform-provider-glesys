@@ -35,5 +35,3 @@ output "network_dc" {
 - `datacenter` (String) network datacenter.
 - `description` (String) network description.
 - `public` (String) network public, yes/no.
-
-
