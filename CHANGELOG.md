@@ -4,12 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
-## [0.11.4] -
+
+## [0.12.0] -
 ### Added
-- `glesys_server` - `networkadapter` attribute listing attached NICS.
-- `glesys_networkadapter` - Added Importer function.
 - `glesys_privatenetwork` - Manage PrivateNetwork resources.
 - `glesys_privatenetwork_segment` - Manage PrivateNetwork segments.
+
+### Changed
+- `glesys_networkadapter` - Added Importer function.
+- `glesys_server` - `networkadapter` attribute listing attached NICS.
 
 ## [0.11.3] - 2024-06-10
 ### Changed
