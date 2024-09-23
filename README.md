@@ -16,7 +16,7 @@ terraform {
   required_providers {
     glesys = {
       source = "glesys/glesys"
-      # version = "0.5.0" # If you want to specify a certain release.
+      # version = "0.12.0" # If you want to specify a certain release.
     }
   }
 }
@@ -38,7 +38,7 @@ Use environment variables for example.
 ## Local development
 ### Debian requirements
 
-- golang >= 1.15
+- golang >= 1.22
 - git
 - make
 - terraform # Fetch the latest version from https://www.terraform.io/downloads
