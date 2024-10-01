@@ -53,6 +53,12 @@ func resourceGlesysServerDisk() *schema.Resource {
 				Type:        schema.TypeInt,
 				Computed:    true,
 			},
+			"type": {
+				Description: "Disk type [gold|silver]",
+				Type:        schema.TypeString,
+				Optional:    true,
+				ForceNew:    true,
+			},
 		},
 	}
 }
@@ -81,6 +87,7 @@ func resourceGlesysServerDiskCreate(ctx context.Context, d *schema.ResourceData,
 		Name:      d.Get("name").(string),
 		SizeInGIB: d.Get("size").(int),
 		ServerID:  d.Get("serverid").(string),
+		Type:      d.Get("type").(string),
 	}
 
 	// Wait for server to be running && !islocked
@@ -140,6 +147,7 @@ func resourceGlesysServerDiskRead(ctx context.Context, d *schema.ResourceData, m
 			d.Set("name", n.Name)
 			d.Set("size", n.SizeInGIB)
 			d.Set("scsiid", n.SCSIID)
+			d.Set("type", n.Type)
 		}
 	}
 

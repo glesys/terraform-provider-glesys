@@ -47,6 +47,7 @@ resource "glesys_server_disk" "data" {
 ### Optional
 
 - `name` (String) Disk descriptive name.
+- `type` (String) Disk type [gold|silver]
 
 ### Read-Only
 
