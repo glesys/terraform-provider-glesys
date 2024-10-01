@@ -5,7 +5,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 
-## [0.12.0] -
+## [0.13.0] -
+### Added
+### Changed
+- `glesys_server_disk` - Added `Type` attribute.
+
+## [0.12.0] - 2024-09-23
 ### Added
 - `glesys_privatenetwork` - Manage PrivateNetwork resources.
 - `glesys_privatenetwork_segment` - Manage PrivateNetwork segments.
