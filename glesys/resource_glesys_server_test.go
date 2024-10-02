@@ -1,9 +1,12 @@
 package glesys
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/glesys/glesys-go/v8"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 )
 
 func Test_getTemplate(t *testing.T) {
@@ -49,4 +52,46 @@ func Test_getTemplate(t *testing.T) {
 			}
 		})
 	}
+}
+
+func TestAccServerVMware_basic(t *testing.T) {
+	rName := acctest.RandomWithPrefix("tf-srv-vmw")
+
+	name := "glesys_server.test"
+	resource.UnitTest(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testGlesysProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccGlesysServerBase_VMware(rName),
+				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttr(name, "hostname", rName),
+					resource.TestCheckResourceAttr(name, "datacenter", "Falkenberg"),
+					resource.TestCheckResourceAttr(name, "platform", "VMware"),
+					resource.TestCheckResourceAttrSet(name, "ipv4_address"),
+					resource.TestCheckResourceAttrSet(name, "ipv6_address"),
+				),
+			},
+		},
+	})
+}
+
+func testAccGlesysServerBase_VMware(name string) string {
+	return fmt.Sprintf(`
+		resource "glesys_server" "test" {
+			hostname   = "%s"
+			datacenter = "Falkenberg"
+			platform   = "VMware"
+			bandwidth  = 100
+			cpu        = 1
+			memory     = 1024
+			storage    = 10
+			template   = "Debian 12 64-bit"
+
+			user {
+		          username   = "acctestuser"
+		          publickeys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINOCh8br7CwZDMGmINyJgBip943QXgkf7XdXrDMJf5Dl acctestuser@example-host"]
+			  password   = "hunter123!"
+			}
+		} `, name)
 }
