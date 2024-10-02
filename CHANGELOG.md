@@ -5,7 +5,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 
-## [0.13.0] -
+## [0.13.0] - 2024-10-02
 ### Added
 ### Changed
 - `glesys_server_disk` - Added `Type` attribute.
