@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 
+## [0.14.0] - 2024-11-06
+### Added
+### Changed
+- Support for KVM backups_schedules in `glesys_server`
+
 ## [0.13.0] - 2024-10-02
 ### Added
 ### Changed
