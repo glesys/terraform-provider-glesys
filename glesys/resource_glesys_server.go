@@ -420,6 +420,9 @@ func resourceGlesysServerUpdate(ctx context.Context, d *schema.ResourceData, m i
 	if d.HasChange("description") {
 		opts.Description = d.Get("description").(string)
 	}
+	if d.HasChange("bandwidth") {
+		opts.Bandwidth = d.Get("bandwidth").(int)
+	}
 	if d.HasChange("hostname") {
 		opts.Hostname = d.Get("hostname").(string)
 	}
