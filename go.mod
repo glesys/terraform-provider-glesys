@@ -6,7 +6,7 @@ toolchain go1.24.1
 
 require (
 	github.com/glesys/glesys-go/v8 v8.4.0
-	github.com/hashicorp/terraform-plugin-sdk/v2 v2.36.0
+	github.com/hashicorp/terraform-plugin-sdk/v2 v2.36.1
 )
 
 require (
