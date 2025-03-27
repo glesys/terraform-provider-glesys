@@ -63,7 +63,7 @@ func TestAccServerVMware_basic(t *testing.T) {
 		Providers: testGlesysProviders,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccGlesysServerBase_VMware(rName),
+				Config: testAccGlesysServerBaseVMware(rName),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(name, "hostname", rName),
 					resource.TestCheckResourceAttr(name, "datacenter", "Falkenberg"),
@@ -85,7 +85,7 @@ func TestAccServerKVM_BackupSchedule(t *testing.T) {
 		Providers: testGlesysProviders,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccGlesysServerBase_KVM_BackupSchedule(rName),
+				Config: testAccGlesysServerBaseKVMBackupSchedule(rName),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(name, "hostname", rName),
 					resource.TestCheckResourceAttr(name, "datacenter", "Falkenberg"),
@@ -100,7 +100,7 @@ func TestAccServerKVM_BackupSchedule(t *testing.T) {
 	})
 }
 
-func testAccGlesysServerBase_VMware(name string) string {
+func testAccGlesysServerBaseVMware(name string) string {
 	return fmt.Sprintf(`
 		resource "glesys_server" "test" {
 			hostname   = "%s"
@@ -120,7 +120,7 @@ func testAccGlesysServerBase_VMware(name string) string {
 		} `, name)
 }
 
-func testAccGlesysServerBase_KVM_BackupSchedule(name string) string {
+func testAccGlesysServerBaseKVMBackupSchedule(name string) string {
 	return fmt.Sprintf(`
 		resource "glesys_server" "test" {
 			hostname   = "%s"
