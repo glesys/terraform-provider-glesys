@@ -17,5 +17,6 @@ linters-settings:
     checks:
       - all
 
-max-issues-per-linter: 0
-max-same-issues: 0
+issues:
+  max-issues-per-linter: 0
+  max-same-issues: 0
