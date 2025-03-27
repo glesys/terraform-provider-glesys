@@ -18,7 +18,7 @@ func TestAccServerDiskVMware_basic(t *testing.T) {
 		Providers: testGlesysProviders,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccGlesysServerBase_VMware(sName) + testAccGlesysServerDisk_VMware(rName),
+				Config: testAccGlesysServerBaseVMware(sName) + testAccGlesysServerDiskVMware(rName),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(name, "name", rName),
 					resource.TestCheckResourceAttr(name, "size", "20"),
@@ -29,7 +29,7 @@ func TestAccServerDiskVMware_basic(t *testing.T) {
 	})
 }
 
-func testAccGlesysServerDisk_VMware(name string) string {
+func testAccGlesysServerDiskVMware(name string) string {
 	return fmt.Sprintf(`
 		resource "glesys_server_disk" "test" {
 			serverid = glesys_server.test.id
