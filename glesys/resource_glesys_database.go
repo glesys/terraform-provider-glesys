@@ -107,7 +107,7 @@ func resourceGlesysDatabaseCreate(ctx context.Context, d *schema.ResourceData, m
 	// Set the Id to domain.ID
 	d.SetId(database.ID)
 	if _, err = waitForDatabaseAttribute(ctx, d, "true", []string{"false"}, "RUNNING", m); err != nil {
-		return diag.Errorf("error while waiting for Server (%s) to be started: %s", d.Id(), err)
+		return diag.Errorf("error while waiting for database (%s) to be started: %s", d.Id(), err)
 	}
 
 	return resourceGlesysDatabaseRead(ctx, d, m)
@@ -143,7 +143,7 @@ func updateAllowlist(ctx context.Context, d *schema.ResourceData, m interface{})
 	}
 
 	if _, err := waitForDatabaseAttribute(ctx, d, "true", []string{"false"}, "RUNNING", m); err != nil {
-		return diag.Errorf("error while waiting for Server (%s) to be started: %s", d.Id(), err)
+		return diag.Errorf("error while waiting for database (%s) to be started: %s", d.Id(), err)
 	}
 	return nil
 }
@@ -174,10 +174,7 @@ func resourceGlesysDatabaseRead(ctx context.Context, d *schema.ResourceData, m i
 	d.Set("status", database.Status)
 	d.Set("allowlist", database.Allowlist)
 	d.Set("connectionstring", connectionstring.ConnectionString)
-	d.Set("plan_key", database.Plan.Key)
-	d.Set("plan_cpucores", database.Plan.CpuCores)
-	d.Set("plan_memoryingb", database.Plan.MemoryInGib)
-	d.Set("plan_storageingb", database.Plan.StorageInGib)
+	d.Set("plankey", database.Plan.Key)
 	d.Set("maintenancewindow_durationinminutes", database.MaintenanceWindow.DurationInMinutes)
 	d.Set("maintenancewindow_starttime", database.MaintenanceWindow.StartTime)
 	d.Set("maintenancewindow_weekday", database.MaintenanceWindow.WeekDay)
@@ -203,7 +200,7 @@ func resourceGlesysDatabaseDelete(ctx context.Context, d *schema.ResourceData, m
 	return nil
 }
 
-// waitForServerAttribute
+// waitForDatabaseAttribute
 func waitForDatabaseAttribute(
 	ctx context.Context, d *schema.ResourceData, target string, pending []string, attribute string, m interface{}) (interface{}, error) {
 	stateConf := &retry.StateChangeConf{
@@ -220,7 +217,7 @@ func waitForDatabaseAttribute(
 func databaseStateRefresh(ctx context.Context, d *schema.ResourceData, m interface{}, attr string) retry.StateRefreshFunc {
 	client := m.(*glesys.Client)
 	return func() (interface{}, string, error) {
-		// check state of server
+		// check state of database
 		database, err := client.Databases.Details(ctx, d.Id())
 		if err != nil {
 			return nil, "", fmt.Errorf("error retrieving Database (%s): %s", d.Id(), err)
