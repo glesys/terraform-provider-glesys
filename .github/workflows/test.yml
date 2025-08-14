@@ -34,7 +34,7 @@ jobs:
 
     name: Go ${{ matrix.go }} Build
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: actions/setup-go@v5
         with:
           go-version: ${{ matrix.go }}
@@ -57,7 +57,7 @@ jobs:
 
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: actions/setup-go@v5
         with:
           go-version: ${{ matrix.go }}
