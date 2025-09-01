@@ -90,6 +90,9 @@ func resourceGlesysDatabaseCreate(ctx context.Context, d *schema.ResourceData, m
 	// Create a database in the Glesys platform
 	rawAllowlist := d.Get("allowlist").([]interface{})
 	allowlist, err := convertResourceDataToListOfStrings(rawAllowlist)
+	if err != nil {
+		return diag.FromErr(fmt.Errorf("failed to convert allowlist: %w", err))
+	}
 	params := glesys.CreateDatabaseParams{
 		Name:          d.Get("name").(string),
 		DataCenterKey: d.Get("datacenterkey").(string),
@@ -183,7 +186,6 @@ func resourceGlesysDatabaseRead(ctx context.Context, d *schema.ResourceData, m i
 }
 
 func resourceGlesysDatabaseUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-
 	updateAllowlist(ctx, d, m)
 
 	return nil
@@ -224,6 +226,5 @@ func databaseStateRefresh(ctx context.Context, d *schema.ResourceData, m interfa
 		}
 
 		return database, strconv.FormatBool(database.Status == attr), nil
-
 	}
 }
