@@ -161,9 +161,9 @@ func resourceGlesysDatabaseRead(ctx context.Context, d *schema.ResourceData, m i
 		return nil
 	}
 	connectionstring, err := client.Databases.ConnectionString(ctx, d.Id())
-	fmt.Println(connectionstring)
+
 	if err != nil {
-		diag.Errorf("database not found: %v", err)
+		diag.Errorf("could not get connectionstring: %v", err)
 		d.SetId("")
 		return nil
 	}
