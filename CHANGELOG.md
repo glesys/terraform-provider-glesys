@@ -5,6 +5,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 
+## [0.15.0] - 2025-10-03
+### Added
+- `glesys_database` resource added.
+### Changed
+- Bump various dependencies
+- Fix `bandwidth` attribute update in `glesys_server`
+
 ## [0.14.2] - 2025-02-06
 ### Added
 ### Changed
