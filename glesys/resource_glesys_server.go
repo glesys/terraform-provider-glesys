@@ -21,7 +21,7 @@ func resourceGlesysServer() *schema.Resource {
 		UpdateContext: resourceGlesysServerUpdate,
 		DeleteContext: resourceGlesysServerDelete,
 
-		Description: "Create a new GleSYS virtual server.",
+		Description: "Create a new Glesys virtual server.",
 
 		Importer: &schema.ResourceImporter{
 			StateContext: schema.ImportStatePassthroughContext,

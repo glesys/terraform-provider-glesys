@@ -18,7 +18,7 @@ func resourceGlesysDNSDomainRecord() *schema.Resource {
 		UpdateContext: resourceGlesysDNSDomainRecordUpdate,
 		DeleteContext: resourceGlesysDNSDomainRecordDelete,
 		Importer: &schema.ResourceImporter{
-			StateContext: resourceGleSYSRecordImport,
+			StateContext: resourceGlesysRecordImport,
 		},
 
 		Schema: map[string]*schema.Schema{
@@ -64,8 +64,8 @@ func resourceGlesysDNSDomainRecord() *schema.Resource {
 	}
 }
 
-// resourceGleSYSRecordImport - import records "domain.tld,123456"
-func resourceGleSYSRecordImport(ctx context.Context, d *schema.ResourceData, m interface{}) ([]*schema.ResourceData, error) {
+// resourceGlesysRecordImport - import records "domain.tld,123456"
+func resourceGlesysRecordImport(ctx context.Context, d *schema.ResourceData, m interface{}) ([]*schema.ResourceData, error) {
 	if strings.Contains(d.Id(), ",") {
 		s := strings.Split(d.Id(), ",")
 

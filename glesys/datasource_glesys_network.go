@@ -10,7 +10,7 @@ import (
 
 func dataSourceGlesysNetwork() *schema.Resource {
 	return &schema.Resource{
-		Description: "Get information about a Network associated with your GleSYS Project.",
+		Description: "Get information about a Network associated with your Glesys Project.",
 
 		ReadContext: dataSourceGlesysNetworkRead,
 		Schema: map[string]*schema.Schema{

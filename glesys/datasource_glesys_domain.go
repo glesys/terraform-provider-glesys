@@ -11,7 +11,7 @@ import (
 
 func dataSourceGlesysDNSDomain() *schema.Resource {
 	return &schema.Resource{
-		Description: "Get information about a DNS Domain associated with your GleSYS Project.",
+		Description: "Get information about a DNS Domain associated with your Glesys Project.",
 
 		ReadContext: dataSourceGlesysDomainRead,
 		Schema: map[string]*schema.Schema{
