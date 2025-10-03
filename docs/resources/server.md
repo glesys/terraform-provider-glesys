@@ -2,10 +2,10 @@
 page_title: "glesys_server Resource - terraform-provider-glesys"
 subcategory: ""
 description: |-
-  Create a new GleSYS virtual server.
+  Create a new Glesys virtual server.
 ---
 # glesys_server (Resource)
-Create a new GleSYS virtual server.
+Create a new Glesys virtual server.
 ## Example Usage
 ```terraform
 locals {

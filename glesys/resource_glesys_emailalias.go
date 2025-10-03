@@ -20,7 +20,7 @@ func resourceGlesysEmailAlias() *schema.Resource {
 			StateContext: schema.ImportStatePassthroughContext,
 		},
 
-		Description: "Create a GleSYS Email alias.",
+		Description: "Create a Glesys Email alias.",
 
 		Schema: map[string]*schema.Schema{
 			"emailalias": {

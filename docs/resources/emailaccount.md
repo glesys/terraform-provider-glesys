@@ -2,10 +2,10 @@
 page_title: "glesys_emailaccount Resource - terraform-provider-glesys"
 subcategory: ""
 description: |-
-  Create a GleSYS Email Account.
+  Create a Glesys Email Account.
 ---
 # glesys_emailaccount (Resource)
-Create a GleSYS Email Account.
+Create a Glesys Email Account.
 ## Example Usage
 ```terraform
 # Setup an email account

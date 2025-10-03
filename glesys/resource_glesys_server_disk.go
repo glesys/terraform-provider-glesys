@@ -23,7 +23,7 @@ func resourceGlesysServerDisk() *schema.Resource {
 		Description: "An additional disk associated with a `glesys_server`",
 
 		Importer: &schema.ResourceImporter{
-			StateContext: resourceGleSYSServerDiskImport,
+			StateContext: resourceGlesysServerDiskImport,
 		},
 
 		Schema: map[string]*schema.Schema{
@@ -63,8 +63,8 @@ func resourceGlesysServerDisk() *schema.Resource {
 	}
 }
 
-// resourceGleSYSServerDiskImport - import additional disks "wps12345,000000-1111-222-3333333"
-func resourceGleSYSServerDiskImport(ctx context.Context, d *schema.ResourceData, m interface{}) ([]*schema.ResourceData, error) {
+// resourceGlesysServerDiskImport - import additional disks "wps12345,000000-1111-222-3333333"
+func resourceGlesysServerDiskImport(ctx context.Context, d *schema.ResourceData, m interface{}) ([]*schema.ResourceData, error) {
 	if strings.Contains(d.Id(), ",") {
 		s := strings.Split(d.Id(), ",")
 

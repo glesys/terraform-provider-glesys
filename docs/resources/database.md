@@ -30,11 +30,11 @@ resource "glesys_database" "mydb" {
 
 ### Optional
 
-- `allowlist` (List of String) Update the allow list for a database instance list to be either a single IP address or a CIDR range.
+- `allowlist` (List of String) Update the allow list for a database instance list. The list can use single IP addresses or CIDR ranges.
 
 ### Read-Only
 
-- `connectionstring` (String) Connectionstring to access database
+- `connectionstring` (String) Connection string to access database
 - `fqdn` (String) Database FQDN
 - `id` (String) Database ID
 - `maintenancewindow_durationinminutes` (Number) Duration of database maintenance window (minutes).

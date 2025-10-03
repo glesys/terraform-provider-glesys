@@ -2,10 +2,10 @@
 page_title: "glesys_emailalias Resource - terraform-provider-glesys"
 subcategory: ""
 description: |-
-  Create a GleSYS Email alias.
+  Create a Glesys Email alias.
 ---
 # glesys_emailalias (Resource)
-Create a GleSYS Email alias.
+Create a Glesys Email alias.
 ## Example Usage
 ```terraform
 # Setup an email alias

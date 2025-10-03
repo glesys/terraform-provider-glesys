@@ -21,7 +21,7 @@ func resourceGlesysEmailAccount() *schema.Resource {
 			StateContext: schema.ImportStatePassthroughContext,
 		},
 
-		Description: "Create a GleSYS Email Account.",
+		Description: "Create a Glesys Email Account.",
 
 		Schema: map[string]*schema.Schema{
 			"emailaccount": {

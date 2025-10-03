@@ -25,7 +25,7 @@ func Provider() *schema.Provider {
 				Type:        schema.TypeString,
 				Required:    true,
 				DefaultFunc: schema.EnvDefaultFunc("GLESYS_API_URL", "https://api.glesys.com"),
-				Description: "The base URL to use for the GleSYS API requests. (Defaults to the value of the `GLESYS_API_URL` environment variable or `https://api.glesys.com` if unset.",
+				Description: "The base URL to use for the Glesys API requests. (Defaults to the value of the `GLESYS_API_URL` environment variable or `https://api.glesys.com` if unset.",
 			},
 		},
 
