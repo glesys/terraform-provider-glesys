@@ -184,7 +184,7 @@ func resourceGlesysServer() *schema.Resource {
 						},
 						"password": {
 							Type:     schema.TypeString,
-							Required: true,
+							Optional: true,
 						},
 						"publickeys": {
 							Description: "User SSH key(s), as a list. '[\"ssh-rsa abc...\", \"ssh-rsa foo...\"]'",
