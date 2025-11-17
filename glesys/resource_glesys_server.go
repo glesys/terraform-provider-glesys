@@ -138,6 +138,13 @@ func resourceGlesysServer() *schema.Resource {
 				Elem:        &schema.Schema{Type: schema.TypeString},
 			},
 
+			"primary_networkadapter_network": {
+				Description: "(VMware) Set the network for the primary network adapter.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				Computed:    true,
+			},
+
 			"network_adapters": {
 				Description: "Network adapters associated with the server. `glesys_networkadapter`",
 				Type:        schema.TypeList,
@@ -316,6 +323,16 @@ func resourceGlesysServerCreate(ctx context.Context, d *schema.ResourceData, m i
 	if _, err = waitForServerAttribute(ctx, d, "false", []string{"true"}, "islocked", m); err != nil {
 		return diag.Errorf("error while waiting for Server (%s) to be completed: %s", d.Id(), err)
 	}
+
+	// After the server is unlocked && running. Check if primary_networkadapter_network is set and update the adapter.
+	_, nic1netOK := d.GetOk("primary_networkadapter_network")
+	if nic1netOK {
+		err := setServerNetworkAdapter(ctx, d, client)
+		if err != nil {
+			return diag.Errorf("error while setting default adapter network: %s", err)
+		}
+	}
+
 	return resourceGlesysServerRead(ctx, d, m)
 }
 
@@ -394,6 +411,9 @@ func resourceGlesysServerRead(ctx context.Context, d *schema.ResourceData, m int
 			"name":        v.Name,
 			"networkid":   v.NetworkID,
 		}
+		if v.Name == "Network adapter 1" || v.IsPrimary {
+			d.Set("primary_networkadapter_network", v.NetworkID)
+		}
 		adapters = append(adapters, n)
 	}
 
@@ -444,7 +464,36 @@ func resourceGlesysServerUpdate(ctx context.Context, d *schema.ResourceData, m i
 		return diag.Errorf("Error updating instance: %s", err)
 	}
 
+	// Check if the setting for the primary network adapter has changed
+	if d.HasChange("primary_networkadapter_network") {
+		if err := setServerNetworkAdapter(ctx, d, client); err != nil {
+			return diag.Errorf("error while updating primary networkadapter network: %s", err)
+		}
+	}
+
 	return resourceGlesysServerRead(ctx, d, m)
+}
+
+func setServerNetworkAdapter(ctx context.Context, d *schema.ResourceData, client *glesys.Client) error {
+	netadapterparams := glesys.EditNetworkAdapterParams{}
+	var netadapterID string
+	// fetch current networkadapters
+	netAdapters, _ := client.Servers.NetworkAdapters(ctx, d.Id())
+	for _, v := range *netAdapters {
+		if v.Name == "Network adapter 1" || v.IsPrimary {
+			netadapterID = v.ID
+		}
+	}
+
+	log.Printf("[INFO]: setServerNetworkAdapter (%s) networkadapter found %s", d.Id(), netadapterID)
+	netadapterparams.NetworkID = d.Get("primary_networkadapter_network").(string)
+
+	_, err := client.NetworkAdapters.Edit(ctx, netadapterID, netadapterparams)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func resourceGlesysServerDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
