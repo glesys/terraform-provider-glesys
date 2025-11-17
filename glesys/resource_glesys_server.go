@@ -444,7 +444,7 @@ func resourceGlesysServerUpdate(ctx context.Context, d *schema.ResourceData, m i
 		return diag.Errorf("Error updating instance: %s", err)
 	}
 
-	return nil
+	return resourceGlesysServerRead(ctx, d, m)
 }
 
 func resourceGlesysServerDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -463,7 +463,7 @@ func resourceGlesysServerDelete(ctx context.Context, d *schema.ResourceData, m i
 		return diag.Errorf("Error deleting instance (%s): %s", d.Id(), err)
 	}
 
-	return nil
+	return resourceGlesysServerRead(ctx, d, m)
 }
 
 // waitForServerAttribute
