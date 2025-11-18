@@ -100,6 +100,28 @@ func TestAccServerKVM_BackupSchedule(t *testing.T) {
 	})
 }
 
+func TestAccServerVMware_PrimaryNetworkAdapterVLAN(t *testing.T) {
+	rName := acctest.RandomWithPrefix("tf-srv-vmw")
+	vlanDesc := acctest.RandomWithPrefix("tf-vmw-vl")
+
+	name := "glesys_server.vmware_vlan"
+	resource.UnitTest(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testGlesysProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccGlesysServerVMware_PrimaryOnVLAN(rName) + testAccGlesysNetwork(vlanDesc),
+				Check: resource.ComposeTestCheckFunc(
+					resource.TestCheckResourceAttr(name, "hostname", rName),
+					resource.TestCheckResourceAttr(name, "datacenter", "Falkenberg"),
+					resource.TestCheckResourceAttr(name, "platform", "VMware"),
+					resource.TestCheckResourceAttrSet(name, "primary_networkadapter_network"),
+				),
+			},
+		},
+	})
+}
+
 func testAccGlesysServerBaseVMware(name string) string {
 	return fmt.Sprintf(`
 		resource "glesys_server" "test" {
@@ -111,6 +133,28 @@ func testAccGlesysServerBaseVMware(name string) string {
 			memory     = 1024
 			storage    = 10
 			template   = "Debian 12 64-bit"
+
+			user {
+		          username   = "acctestuser"
+		          publickeys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINOCh8br7CwZDMGmINyJgBip943QXgkf7XdXrDMJf5Dl acctestuser@example-host"]
+			  password   = "hunter123!"
+			}
+		} `, name)
+}
+
+func testAccGlesysServerVMware_PrimaryOnVLAN(name string) string {
+	return fmt.Sprintf(`
+		resource "glesys_server" "vmware_vlan" {
+			hostname   = "%s"
+			datacenter = "Falkenberg"
+			platform   = "VMware"
+			bandwidth  = 100
+			cpu        = 1
+			memory     = 1024
+			storage    = 10
+			template   = "Debian 12 64-bit"
+
+			primary_networkadapter_network = glesys_network.test.id
 
 			user {
 		          username   = "acctestuser"
