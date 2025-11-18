@@ -110,7 +110,7 @@ func TestAccServerVMware_PrimaryNetworkAdapterVLAN(t *testing.T) {
 		Providers: testGlesysProviders,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccGlesysServerVMware_PrimaryOnVLAN(rName) + testAccGlesysNetwork(vlanDesc),
+				Config: testAccGlesysServerVMwarePrimaryOnVLAN(rName) + testAccGlesysNetwork(vlanDesc),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(name, "hostname", rName),
 					resource.TestCheckResourceAttr(name, "datacenter", "Falkenberg"),
@@ -142,7 +142,7 @@ func testAccGlesysServerBaseVMware(name string) string {
 		} `, name)
 }
 
-func testAccGlesysServerVMware_PrimaryOnVLAN(name string) string {
+func testAccGlesysServerVMwarePrimaryOnVLAN(name string) string {
 	return fmt.Sprintf(`
 		resource "glesys_server" "vmware_vlan" {
 			hostname   = "%s"
