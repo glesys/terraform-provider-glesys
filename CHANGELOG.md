@@ -5,9 +5,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 ### Added
-- `glesys_server` primary_networkadapter_network attribute
+### Changed
+
+## 0.16.0 - 2025-11-18
+### Added
+- `glesys_server` New primary_networkadapter_network attribute
+- `glesys_network` acctest
+- `glesys_server` acctest with primary_networkadapter_network on vlan
 ### Changed
 - Make users password optional in `glesys_server`
+- `glesys_server` refresh state on Update
 
 ## [0.15.0] - 2025-10-03
 ### Added

@@ -14,7 +14,7 @@ type Config struct {
 
 // Client - Setup new glesys client
 func (c *Config) Client() (*glesys.Client, error) {
-	client := glesys.NewClient(c.UserID, c.Token, "tf-glesys/0.15.0")
+	client := glesys.NewClient(c.UserID, c.Token, "tf-glesys/0.16.0")
 
 	err := client.SetBaseURL(c.APIEndpoint)
 	if err != nil {
