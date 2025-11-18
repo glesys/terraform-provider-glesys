@@ -5,6 +5,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 ### Added
+- `glesys_server` primary_networkadapter_network attribute
 ### Changed
 - Make users password optional in `glesys_server`
 
