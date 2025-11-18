@@ -512,7 +512,7 @@ func resourceGlesysServerDelete(ctx context.Context, d *schema.ResourceData, m i
 		return diag.Errorf("Error deleting instance (%s): %s", d.Id(), err)
 	}
 
-	return resourceGlesysServerRead(ctx, d, m)
+	return nil
 }
 
 // waitForServerAttribute
