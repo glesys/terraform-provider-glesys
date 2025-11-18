@@ -194,6 +194,7 @@ Examples can be found in the [GleSYS API - Cloud config documentation](https://g
 - `ipv6_address` (String) Server IPv6 address, set `none` to disable IP allocation
 - `password` (String) Server root password, VMware only
 - `platform` (String) Server virtualisation platform, `KVM` or `VMware`
+- `primary_networkadapter_network` (String) (VMware) Set the network for the primary network adapter.
 - `publickey` (String)
 - `template` (String) Server OS template
 - `user` (Block Set) (see [below for nested schema](#nestedblock--user))
