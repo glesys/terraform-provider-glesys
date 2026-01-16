@@ -31,6 +31,7 @@ func resourceGlesysObjectStorageCredential() *schema.Resource {
 				Description: "ObjectStorage credential secret key.",
 				Type:        schema.TypeString,
 				Computed:    true,
+				Sensitive:   true,
 			},
 			"created": {
 				Description: "ObjectStorage credential created timestamp.",

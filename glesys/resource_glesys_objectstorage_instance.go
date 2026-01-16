@@ -45,6 +45,7 @@ func resourceGlesysObjectStorageInstance() *schema.Resource {
 				Description: "ObjectStorage default secret key.",
 				Type:        schema.TypeString,
 				Computed:    true,
+				Sensitive:   true,
 			},
 		},
 	}
