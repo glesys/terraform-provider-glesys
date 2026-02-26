@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 ### Changed
 
+## 0.16.1 - 2026-02-26
+### Added
+### Changed
+- `glesys_objectstorage_instance` and `glesys_objectstorage_credential` `secretkey` marked as sensitive
+- Chore: bump dependencies and github actions
+
 ## 0.16.0 - 2025-11-18
 ### Added
 - `glesys_server` New primary_networkadapter_network attribute
