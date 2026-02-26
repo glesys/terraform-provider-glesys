@@ -23,5 +23,5 @@ ObjectStorage Credentials.
 - `accesskey` (String) ObjectStorage credential access key.
 - `created` (String) ObjectStorage credential created timestamp.
 - `id` (String) The ID of this resource.
-- `secretkey` (String) ObjectStorage credential secret key.
+- `secretkey` (String, Sensitive) ObjectStorage credential secret key.
 

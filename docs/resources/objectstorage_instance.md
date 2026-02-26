@@ -23,5 +23,5 @@ ObjectStorage Instance Resource.
 - `accesskey` (String) ObjectStorage default access key.
 - `created` (String) ObjectStorage created timestamp.
 - `id` (String) The ID of this resource.
-- `secretkey` (String) ObjectStorage default secret key.
+- `secretkey` (String, Sensitive) ObjectStorage default secret key.
 
