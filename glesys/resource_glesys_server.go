@@ -97,6 +97,7 @@ func resourceGlesysServer() *schema.Resource {
 				Description: "Server root password, VMware only",
 				Type:        schema.TypeString,
 				Optional:    true,
+				Sensitive:   true,
 			},
 			"platform": {
 				Description: "Server virtualisation platform, `KVM` or `VMware`",
@@ -190,8 +191,9 @@ func resourceGlesysServer() *schema.Resource {
 							Required: true,
 						},
 						"password": {
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:      schema.TypeString,
+							Optional:  true,
+							Sensitive: true,
 						},
 						"publickeys": {
 							Description: "User SSH key(s), as a list. '[\"ssh-rsa abc...\", \"ssh-rsa foo...\"]'",
