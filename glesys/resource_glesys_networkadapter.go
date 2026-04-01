@@ -65,6 +65,11 @@ func resourceGlesysNetworkAdapterCreate(ctx context.Context, d *schema.ResourceD
 		ServerID:    d.Get("serverid").(string),
 	}
 
+	// Wait for server: ServerID to be unlocked before creating adapters
+	if _, err := waitForServerLocked(ctx, params.ServerID, "false", []string{"true"}, "islocked", m); err != nil {
+		return diag.Errorf("networkadapter: error while waiting for Server (%s) to be completed: %s", params.ServerID, err)
+	}
+
 	networkadapter, err := client.NetworkAdapters.Create(ctx, params)
 	if err != nil {
 		return diag.Errorf("Error creating adapter: %s", err)
