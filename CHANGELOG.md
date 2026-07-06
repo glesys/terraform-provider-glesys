@@ -5,9 +5,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 ### Added
+### Changed
+
+## 0.17.0 - 2026-07-06
+### Added
 - Implement datasource `glesys_ip`
 ### Changed
 - glesys_server attribute `keepip` to control whether to keep or release IP from project on server delete.
+- glesys_networkadapter Wait for server to be unlocked before creating new adapters
+- glesys_server Make the root and user password values sensitive.
 
 ## 0.16.1 - 2026-02-26
 ### Added
