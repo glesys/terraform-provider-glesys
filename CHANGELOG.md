@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Implement datasource `glesys_ip`
 ### Changed
+- glesys_server attribute `keepip` to control whether to keep or release IP from project on server delete.
 
 ## 0.16.1 - 2026-02-26
 ### Added
