@@ -193,6 +193,7 @@ Examples can be found in the [GleSYS API - Cloud config documentation](https://g
 - `ipv4_address` (String) Server IPv4 address, set `none` to disable IP allocation
 - `ipv6_address` (String) Server IPv6 address, set `none` to disable IP allocation
 - `password` (String) Server root password, VMware only
+- `keepip` (Boolean) Used to set Keep IP when deleting server. If true, the IP(s) will still be reserved in your Glesys project after server deletion.
 - `platform` (String) Server virtualisation platform, `KVM` or `VMware`
 - `primary_networkadapter_network` (String) (VMware) Set the network for the primary network adapter.
 - `publickey` (String)

@@ -88,6 +88,12 @@ func resourceGlesysServer() *schema.Resource {
 				Optional:    true,
 				Computed:    true,
 			},
+			"keepip": {
+				Description: "Used to set Keep IP when deleting server. If true, the IP(s) will still be reserved in your Glesys project after server deletion.",
+				Default:     false,
+				Optional:    true,
+				Type:        schema.TypeBool,
+			},
 			"memory": {
 				Description: "Server RAM setting",
 				Type:        schema.TypeInt,
@@ -311,7 +317,6 @@ func resourceGlesysServerCreate(ctx context.Context, d *schema.ResourceData, m i
 	srv.Users = usersList
 
 	host, err := client.Servers.Create(ctx, *srv)
-
 	if err != nil {
 		return diag.Errorf("error creating server: %+v", err)
 	}
@@ -503,13 +508,11 @@ func resourceGlesysServerDelete(ctx context.Context, d *schema.ResourceData, m i
 
 	// Call waitForServerAttribute to make sure the server isn't locked before deleting it.
 	_, err := waitForServerAttribute(ctx, d, "false", []string{"true"}, "islocked", m)
-
 	if err != nil {
 		return diag.Errorf("Error waiting for server to be unlocked for destroy (%s): %s", d.Id(), err)
 	}
 	// destroy the server, don't keep the ip.
-	err = client.Servers.Destroy(ctx, d.Id(), glesys.DestroyServerParams{KeepIP: false})
-
+	err = client.Servers.Destroy(ctx, d.Id(), glesys.DestroyServerParams{KeepIP: d.Get("keepip").(bool)})
 	if err != nil {
 		return diag.Errorf("Error deleting instance (%s): %s", d.Id(), err)
 	}
