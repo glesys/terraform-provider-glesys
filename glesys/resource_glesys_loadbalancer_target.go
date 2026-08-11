@@ -113,30 +113,30 @@ func resourceGlesysLoadBalancerTargetRead(ctx context.Context, d *schema.Resourc
 	loadbalancerid := d.Get("loadbalancerid").(string)
 	lb, err := client.LoadBalancers.Details(ctx, loadbalancerid)
 	if err != nil {
-		diag.Errorf("loadbalancer not found: %s", err)
-		d.SetId("")
-		return nil
+		return diag.Errorf("loadbalancer not found: %s", err)
 	}
 
 	// iterate over all backends && targets of the loadbalancer
 	for _, n := range lb.BackendsList {
-		if n.Name == d.Get("backend").(string) {
-			for _, t := range n.Targets {
-				if t.Name == d.Get("name").(string) {
-					d.Set("enabled", t.Enabled)
-					d.Set("port", t.Port)
-					d.Set("status", t.Status)
-					d.Set("targetip", t.TargetIP)
-					d.Set("weight", t.Weight)
-				}
-			}
-		} else {
-			diag.Errorf("loadbalancer Target not found: %s", d.Get("name").(string))
-			d.SetId("")
-			return nil
+		if n.Name != d.Get("backend").(string) {
+			continue
 		}
+		for _, t := range n.Targets {
+			if t.Name == d.Get("name").(string) {
+				d.Set("enabled", t.Enabled)
+				d.Set("port", t.Port)
+				d.Set("status", t.Status)
+				d.Set("targetip", t.TargetIP)
+				d.Set("weight", t.Weight)
+				return nil
+			}
+		}
+		break
 	}
 
+	// Target no longer exists on the backend (or the backend itself is
+	// gone) - remove it from state instead of erroring.
+	d.SetId("")
 	return nil
 }
 
