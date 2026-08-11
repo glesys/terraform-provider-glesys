@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 ### Added
 ### Changed
+- Fix `glesys_loadbalancer_target` Read incorrectly clearing resource state (and causing "provider produced inconsistent result after apply") whenever the LoadBalancer had more than one backend.
+- Fix discarded error diagnostics on LoadBalancer Details lookup failures across `glesys_loadbalancer`, `glesys_loadbalancer_backend`, `glesys_loadbalancer_frontend`, and `glesys_loadbalancer_target`.
 
 ## 0.17.0 - 2026-07-06
 ### Added
