@@ -33,7 +33,7 @@ func TestAccLoadBalancerTarget_multiBackend(t *testing.T) {
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "name", targetName),
 					resource.TestCheckResourceAttr(resourceName, "backend", tcpBackendName),
-					resource.TestCheckResourceAttr(resourceName, "targetip", "172.16.0.10"),
+					resource.TestCheckResourceAttr(resourceName, "targetip", "192.0.2.1"),
 					resource.TestCheckResourceAttr(resourceName, "port", "8898"),
 					resource.TestCheckResourceAttrSet(resourceName, "status"),
 				),
@@ -67,7 +67,7 @@ func testAccGlesysLoadBalancerTargetMultiBackend(lbName, tcpBackendName, httpBac
 
 			name     = "%s"
 			port     = 8898
-			targetip = "172.16.0.10"
+			targetip = "192.0.2.1"
 			weight   = 15
 
 			depends_on = [glesys_loadbalancer_backend.http]
