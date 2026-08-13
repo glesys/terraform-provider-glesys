@@ -17,10 +17,10 @@ import (
 // With only a single backend, that bug can't reproduce - hence this test
 // deliberately creates two.
 func TestAccLoadBalancerTarget_multiBackend(t *testing.T) {
-	lbName := acctest.RandomWithPrefix("tf-acc-lb")
-	tcpBackendName := acctest.RandomWithPrefix("tf-acc-be-tcp")
-	httpBackendName := acctest.RandomWithPrefix("tf-acc-be-http")
-	targetName := acctest.RandomWithPrefix("tf-acc-target")
+	lbName := acctest.RandString(8)
+	tcpBackendName := acctest.RandString(8)
+	httpBackendName := acctest.RandString(8)
+	targetName := acctest.RandString(8)
 
 	resourceName := "glesys_loadbalancer_target.test"
 
