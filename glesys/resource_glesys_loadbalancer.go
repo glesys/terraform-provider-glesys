@@ -76,7 +76,9 @@ func resourceGlesysLoadBalancerRead(ctx context.Context, d *schema.ResourceData,
 
 	loadbalancer, err := client.LoadBalancers.Details(ctx, d.Id())
 	if err != nil {
-		return diag.Errorf("loadbalancer not found: %s", err)
+		diag.Errorf("loadbalancer not found: %s", err)
+		d.SetId("")
+		return nil
 	}
 
 	var ipAddresses []string

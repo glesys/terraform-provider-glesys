@@ -104,7 +104,9 @@ func resourceGlesysLoadBalancerBackendRead(ctx context.Context, d *schema.Resour
 	loadbalancerid := d.Get("loadbalancerid").(string)
 	lb, err := client.LoadBalancers.Details(ctx, loadbalancerid)
 	if err != nil {
-		return diag.Errorf("loadbalancer not found: %s", err)
+		diag.Errorf("loadbalancer not found: %s", err)
+		d.SetId("")
+		return nil
 	}
 
 	for _, n := range lb.BackendsList {
