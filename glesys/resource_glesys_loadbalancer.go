@@ -15,6 +15,9 @@ func resourceGlesysLoadBalancer() *schema.Resource {
 		ReadContext:   resourceGlesysLoadBalancerRead,
 		UpdateContext: resourceGlesysLoadBalancerUpdate,
 		DeleteContext: resourceGlesysLoadBalancerDelete,
+		Importer: &schema.ResourceImporter{
+			StateContext: schema.ImportStatePassthroughContext,
+		},
 
 		Description: "Create a LoadBalancer",
 

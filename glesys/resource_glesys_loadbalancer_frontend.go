@@ -15,6 +15,9 @@ func resourceGlesysLoadBalancerFrontend() *schema.Resource {
 		ReadContext:   resourceGlesysLoadBalancerFrontendRead,
 		UpdateContext: resourceGlesysLoadBalancerFrontendUpdate,
 		DeleteContext: resourceGlesysLoadBalancerFrontendDelete,
+		Importer: &schema.ResourceImporter{
+			StateContext: resourceGlesysLoadbalancerBeFeImport,
+		},
 
 		Description: "Create a LoadBalancer Frontend for a `glesys_loadbalancer`.",
 

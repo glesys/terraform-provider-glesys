@@ -27,4 +27,9 @@ Create a LoadBalancer Frontend for a `glesys_loadbalancer`.
 
 - `id` (String) The ID of this resource.
 - `status` (String) Frontend status.
-
+## Import
+Import is supported using the following syntax:
+```shell
+# glesys_loadbalancer_frontend Import
+$ terraform import glesys_loadbalancer_frontend.fe lb123456,frontend-www
+```
