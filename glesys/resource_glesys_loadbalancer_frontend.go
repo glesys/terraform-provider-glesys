@@ -2,6 +2,7 @@ package glesys
 
 import (
 	"context"
+	"log"
 
 	"github.com/glesys/glesys-go/v8"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -106,20 +107,31 @@ func resourceGlesysLoadBalancerFrontendRead(ctx context.Context, d *schema.Resou
 	loadbalancerid := d.Get("loadbalancerid").(string)
 	lb, err := client.LoadBalancers.Details(ctx, loadbalancerid)
 	if err != nil {
-		diag.Errorf("loadbalancer not found: %s", err)
+		log.Printf("LoadBalancer not found: %s", err)
 		d.SetId("")
 		return nil
 	}
 
+	frontendFound := false
 	for _, n := range lb.FrontendsList {
-		if n.Name == d.Get("name").(string) {
+		if n.Name != d.Get("name").(string) {
+			continue
+		} else {
 			d.Set("backend", n.Backend)
 			d.Set("clienttimeout", n.ClientTimeout)
 			d.Set("maxconnections", n.MaxConnections)
 			d.Set("port", n.Port)
 			d.Set("sslcertificate", n.SSLCertificate)
 			d.Set("status", n.Status)
+
+			frontendFound = true
 		}
+	}
+
+	if !frontendFound {
+		log.Printf("[ERR]: loadbalancer frontend (%s) not found", d.Id())
+		d.SetId("")
+		return nil
 	}
 
 	return nil
@@ -173,7 +185,7 @@ func resourceGlesysLoadBalancerFrontendDelete(ctx context.Context, d *schema.Res
 
 	err := client.LoadBalancers.RemoveFrontend(ctx, loadbalancerid, params)
 	if err != nil {
-		return diag.Errorf("Error deleting LoadBalancer Frontend: %s", err)
+		log.Printf("[ERR]: Error deleting LoadBalancer Frontend (%s): %s", d.Id(), err)
 	}
 
 	d.SetId("")

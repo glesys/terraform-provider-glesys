@@ -2,6 +2,7 @@ package glesys
 
 import (
 	"context"
+	"log"
 
 	"github.com/glesys/glesys-go/v8"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -104,13 +105,16 @@ func resourceGlesysLoadBalancerBackendRead(ctx context.Context, d *schema.Resour
 	loadbalancerid := d.Get("loadbalancerid").(string)
 	lb, err := client.LoadBalancers.Details(ctx, loadbalancerid)
 	if err != nil {
-		diag.Errorf("loadbalancer not found: %s", err)
+		log.Printf("[ERR]: loadbalancer not found: %s", err)
 		d.SetId("")
 		return nil
 	}
 
+	backendFound := false
 	for _, n := range lb.BackendsList {
-		if n.Name == d.Get("name").(string) {
+		if n.Name != d.Get("name").(string) {
+			continue
+		} else {
 			d.Set("mode", n.Mode)
 			d.Set("connecttimeout", n.ConnectTimeout)
 			d.Set("responsetimeout", n.ResponseTimeout)
@@ -121,7 +125,15 @@ func resourceGlesysLoadBalancerBackendRead(ctx context.Context, d *schema.Resour
 				targets = append(targets, t.Name)
 			}
 			d.Set("targets", targets)
+
+			backendFound = true
 		}
+	}
+
+	if !backendFound {
+		log.Printf("[ERR]: loadbalancer backend (%s) not found.", d.Id())
+		d.SetId("")
+		return nil
 	}
 
 	return nil
