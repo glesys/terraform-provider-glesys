@@ -2,6 +2,7 @@ package glesys
 
 import (
 	"context"
+	"log"
 
 	"github.com/glesys/glesys-go/v8"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -76,7 +77,7 @@ func resourceGlesysLoadBalancerRead(ctx context.Context, d *schema.ResourceData,
 
 	loadbalancer, err := client.LoadBalancers.Details(ctx, d.Id())
 	if err != nil {
-		diag.Errorf("loadbalancer not found: %s", err)
+		log.Printf("[ERR]: Error when fetching Loadbalancer status %s", err)
 		d.SetId("")
 		return nil
 	}
