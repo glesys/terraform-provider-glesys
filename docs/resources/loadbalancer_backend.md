@@ -27,4 +27,9 @@ LoadBalancer Backend for a glesys_loadbalancer
 - `id` (String) The ID of this resource.
 - `status` (String) Backend status. `UP` when targets are reachable and `DOWN` when no targets are reachable.
 - `targets` (List of String) Backend targets. Computed by LoadBalancer Targets setting the `backend` parameter.
-
+## Import
+Import is supported using the following syntax:
+```shell
+# glesys_loadbalancer_backend Import
+$ terraform import glesys_loadbalancer_backend.be lb123456,http-backend-name
+```
