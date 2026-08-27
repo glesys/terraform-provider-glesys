@@ -10,8 +10,8 @@ import (
 func TestAccObjectStorageCredential_basic(t *testing.T) {
 	name := "glesys_objectstorage_credential.test"
 	resource.UnitTest(t, resource.TestCase{
-		PreCheck:  func() { testAccPreCheck(t) },
-		Providers: testGlesysProviders,
+		PreCheck:          func() { testAccPreCheck(t) },
+		ProviderFactories: testGlesysAccProviderFactories,
 		Steps: []resource.TestStep{
 			{
 				Config: glesysObjectStorageSkeleton(""),

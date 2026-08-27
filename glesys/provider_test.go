@@ -16,13 +16,21 @@ import (
 
 const testNamePrefix = "tf-acc-test-"
 
-var testGlesysProvider *schema.Provider
-var testGlesysProviders map[string]*schema.Provider
+var (
+	testGlesysProvider             *schema.Provider
+	testGlesysProviders            map[string]*schema.Provider
+	testGlesysAccProviderFactories map[string]func() (*schema.Provider, error)
+)
 
 func init() {
 	testGlesysProvider = Provider()
 	testGlesysProviders = map[string]*schema.Provider{
 		"glesys": testGlesysProvider,
+	}
+	testGlesysAccProviderFactories = map[string]func() (*schema.Provider, error){
+		"glesys": func() (*schema.Provider, error) {
+			return Provider(), nil
+		},
 	}
 }
 
@@ -33,7 +41,7 @@ func TestProvider(t *testing.T) {
 }
 
 func TestProvider_impl(t *testing.T) {
-	var _ = Provider()
+	_ = Provider()
 }
 
 func TestProviderURLOverride(t *testing.T) {

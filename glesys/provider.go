@@ -1,6 +1,9 @@
 package glesys
 
 import (
+	"context"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
@@ -57,15 +60,21 @@ func Provider() *schema.Provider {
 			"glesys_ip":                       resourceGlesysIP(),
 		},
 		// this will be used to configure the client to communicate with the API
-		ConfigureFunc: providerConfigure,
+		ConfigureContextFunc: providerContextConfigure,
 	}
 }
 
-func providerConfigure(d *schema.ResourceData) (interface{}, error) {
+func providerContextConfigure(ctx context.Context, d *schema.ResourceData) (interface{}, diag.Diagnostics) {
 	config := Config{
 		UserID:      d.Get("userid").(string),
 		Token:       d.Get("token").(string),
 		APIEndpoint: d.Get("api_endpoint").(string),
 	}
-	return config.Client()
+
+	client, err := config.Client()
+	if err != nil {
+		return nil, diag.FromErr(err)
+	}
+
+	return client, nil
 }

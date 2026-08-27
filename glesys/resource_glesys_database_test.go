@@ -10,8 +10,8 @@ func TestAccGlesysDatabase_basic(t *testing.T) {
 	resourceName := "glesys_database.test"
 
 	resource.Test(t, resource.TestCase{
-		PreCheck:  func() { testAccPreCheck(t) },
-		Providers: testGlesysProviders,
+		PreCheck:          func() { testAccPreCheck(t) },
+		ProviderFactories: testGlesysAccProviderFactories,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccGlesysDatabaseConfig(),

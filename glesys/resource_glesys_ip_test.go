@@ -14,9 +14,9 @@ import (
 func TestAccIP_basic(t *testing.T) {
 	name := "glesys_ip.test"
 	resource.UnitTest(t, resource.TestCase{
-		PreCheck:     func() { testAccPreCheck(t) },
-		Providers:    testGlesysProviders,
-		CheckDestroy: testAccIPResourceDestroy,
+		PreCheck:          func() { testAccPreCheck(t) },
+		ProviderFactories: testGlesysAccProviderFactories,
+		CheckDestroy:      testAccIPResourceDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: `resource "glesys_ip" "test" {
@@ -50,9 +50,9 @@ func TestAccIP_basic(t *testing.T) {
 func TestAccIP_updatePTR(t *testing.T) {
 	name := "glesys_ip.test"
 	resource.UnitTest(t, resource.TestCase{
-		PreCheck:     func() { testAccPreCheck(t) },
-		Providers:    testGlesysProviders,
-		CheckDestroy: testAccIPResourceDestroy,
+		PreCheck:          func() { testAccPreCheck(t) },
+		ProviderFactories: testGlesysAccProviderFactories,
+		CheckDestroy:      testAccIPResourceDestroy,
 		Steps: []resource.TestStep{
 			{
 				Config: `resource "glesys_ip" "test" {

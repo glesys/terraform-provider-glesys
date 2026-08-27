@@ -13,8 +13,8 @@ func TestAccPrivateNetwork_basic(t *testing.T) {
 	rName := acctest.RandomWithPrefix("tf-gle-pn")
 	name := "glesys_privatenetwork.test"
 	resource.UnitTest(t, resource.TestCase{
-		PreCheck:  func() { testAccPreCheck(t) },
-		Providers: testGlesysProviders,
+		PreCheck:          func() { testAccPreCheck(t) },
+		ProviderFactories: testGlesysAccProviderFactories,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccGlesysPrivateNetworkBase(rName),
@@ -35,8 +35,8 @@ func TestAccPrivateNetworkUpdate(t *testing.T) {
 	newName := acctest.RandomWithPrefix("tf-pn-edit-upd")
 	name := "glesys_privatenetwork.test"
 	resource.UnitTest(t, resource.TestCase{
-		PreCheck:  func() { testAccPreCheck(t) },
-		Providers: testGlesysProviders,
+		PreCheck:          func() { testAccPreCheck(t) },
+		ProviderFactories: testGlesysAccProviderFactories,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccGlesysPrivateNetworkBase(rName),
