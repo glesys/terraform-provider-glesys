@@ -9,8 +9,8 @@ import (
 func TestAccObjectStorageInstance_basic(t *testing.T) {
 	name := "glesys_objectstorage_instance.test"
 	resource.UnitTest(t, resource.TestCase{
-		PreCheck:  func() { testAccPreCheck(t) },
-		Providers: testGlesysProviders,
+		PreCheck:          func() { testAccPreCheck(t) },
+		ProviderFactories: testGlesysAccProviderFactories,
 		Steps: []resource.TestStep{
 			{
 				Config: `resource "glesys_objectstorage_instance" "test" {
@@ -40,8 +40,8 @@ func TestAccObjectStorageInstance_basic(t *testing.T) {
 func TestAccObjectStorageInstance_updateDescription(t *testing.T) {
 	name := "glesys_objectstorage_instance.test"
 	resource.UnitTest(t, resource.TestCase{
-		PreCheck:  func() { testAccPreCheck(t) },
-		Providers: testGlesysProviders,
+		PreCheck:          func() { testAccPreCheck(t) },
+		ProviderFactories: testGlesysAccProviderFactories,
 		Steps: []resource.TestStep{
 			{
 				Config: `resource "glesys_objectstorage_instance" "test" {

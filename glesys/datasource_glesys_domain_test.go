@@ -13,8 +13,8 @@ func TestAccDataSourceGlesysDNSDomain_Basic(t *testing.T) {
 	dataName := "data.glesys_dnsdomain.exampledata"
 	resName := "glesys_dnsdomain.example"
 	resource.UnitTest(t, resource.TestCase{
-		PreCheck:  func() { testAccPreCheck(t) },
-		Providers: testGlesysProviders,
+		PreCheck:          func() { testAccPreCheck(t) },
+		ProviderFactories: testGlesysAccProviderFactories,
 		Steps: []resource.TestStep{
 			{
 				Config: glesysResourceDNSDomainSkeleton(domainName) + glesysDataSourceDNSDomainSkeleton(),

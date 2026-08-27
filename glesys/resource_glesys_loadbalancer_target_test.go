@@ -25,8 +25,8 @@ func TestAccLoadBalancerTarget_multiBackend(t *testing.T) {
 	resourceName := "glesys_loadbalancer_target.test"
 
 	resource.UnitTest(t, resource.TestCase{
-		PreCheck:  func() { testAccPreCheck(t) },
-		Providers: testGlesysProviders,
+		PreCheck:          func() { testAccPreCheck(t) },
+		ProviderFactories: testGlesysAccProviderFactories,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccGlesysLoadBalancerTargetMultiBackend(lbName, tcpBackendName, httpBackendName, targetName),

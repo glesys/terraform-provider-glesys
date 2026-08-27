@@ -13,8 +13,8 @@ func TestAccGlesysNetwork_basic(t *testing.T) {
 
 	name := "glesys_network.test"
 	resource.UnitTest(t, resource.TestCase{
-		PreCheck:  func() { testAccPreCheck(t) },
-		Providers: testGlesysProviders,
+		PreCheck:          func() { testAccPreCheck(t) },
+		ProviderFactories: testGlesysAccProviderFactories,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccGlesysNetwork(rName),

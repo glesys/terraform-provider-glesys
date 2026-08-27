@@ -59,8 +59,8 @@ func TestAccServerVMware_basic(t *testing.T) {
 
 	name := "glesys_server.test"
 	resource.UnitTest(t, resource.TestCase{
-		PreCheck:  func() { testAccPreCheck(t) },
-		Providers: testGlesysProviders,
+		PreCheck:          func() { testAccPreCheck(t) },
+		ProviderFactories: testGlesysAccProviderFactories,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccGlesysServerBaseVMware(rName),
@@ -81,8 +81,8 @@ func TestAccServerKVM_BackupSchedule(t *testing.T) {
 
 	name := "glesys_server.test"
 	resource.UnitTest(t, resource.TestCase{
-		PreCheck:  func() { testAccPreCheck(t) },
-		Providers: testGlesysProviders,
+		PreCheck:          func() { testAccPreCheck(t) },
+		ProviderFactories: testGlesysAccProviderFactories,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccGlesysServerBaseKVMBackupSchedule(rName),
@@ -106,8 +106,8 @@ func TestAccServerVMware_PrimaryNetworkAdapterVLAN(t *testing.T) {
 
 	name := "glesys_server.vmware_vlan"
 	resource.UnitTest(t, resource.TestCase{
-		PreCheck:  func() { testAccPreCheck(t) },
-		Providers: testGlesysProviders,
+		PreCheck:          func() { testAccPreCheck(t) },
+		ProviderFactories: testGlesysAccProviderFactories,
 		Steps: []resource.TestStep{
 			{
 				Config: testAccGlesysServerVMwarePrimaryOnVLAN(rName) + testAccGlesysNetwork(vlanDesc),

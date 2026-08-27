@@ -15,8 +15,8 @@ func TestAccEmailAlias_basic(t *testing.T) {
 	rName := acctest.RandString(6)
 	name := "glesys_emailalias.test"
 	resource.UnitTest(t, resource.TestCase{
-		PreCheck:  func() { testAccPreCheck(t) },
-		Providers: testGlesysProviders,
+		PreCheck:          func() { testAccPreCheck(t) },
+		ProviderFactories: testGlesysAccProviderFactories,
 		Steps: []resource.TestStep{
 			{
 				Config: glesysEmailAliasSkeleton(newDomain, fmt.Sprintf("goto = \"%s@%s\"", rName, newDomain)),
