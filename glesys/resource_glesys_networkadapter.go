@@ -49,6 +49,7 @@ func resourceGlesysNetworkAdapter() *schema.Resource {
 				Description: "Server ID to connect the adapter to",
 				Type:        schema.TypeString,
 				Required:    true,
+				ForceNew:    true,
 			},
 		},
 	}
