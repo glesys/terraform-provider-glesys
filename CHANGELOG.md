@@ -5,11 +5,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 ### Added
+### Changed
+
+## 0.18.0 - 2026-09-03
+### Added
 - `glesys_loadbalancer` - Add import functions for lb/lb_frontend/lb_backend.
 ### Changed
 - `glesys_loadbalancer_backend` - fix read of multible backends on one Loadbalancer.
 - `glesys_loadbalancer` - Fix error messages when creating/editing lb and frontend / backend resources.
 - `glesys_loadbalancer` - update docs with import examples.
+- `glesys_networkadapter` - ForceNew on serverid change.
 
 ## 0.17.0 - 2026-07-06
 ### Added
