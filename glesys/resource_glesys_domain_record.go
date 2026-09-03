@@ -84,12 +84,36 @@ func resourceGlesysRecordImport(ctx context.Context, d *schema.ResourceData, m i
 func resourceGlesysDNSDomainRecordCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*glesys.Client)
 
+	domain := strings.ToLower(d.Get("domain").(string)) // Normalize domain
+	host := d.Get("host").(string)
+	recType := d.Get("type").(string)
+	data := d.Get("data").(string)
+	ttl := d.Get("ttl").(int)
+
+	// 1. List existing records for the domain
+	records, err := client.DNSDomains.ListRecords(ctx, domain)
+	if err != nil {
+		return diag.FromErr(fmt.Errorf("error listing records for domain %s: %w", domain, err))
+	}
+
+	// 2. Check for existing matching record
+	for _, rec := range *records {
+		if rec.Host == host && rec.Type == recType && rec.Data == data {
+			// record with same host/type/data found
+			if rec.TTL != ttl {
+				return diag.Errorf("record with host %s, type %s and data %s already exists with different TTL %d", host, recType, data, rec.TTL)
+			}
+			d.SetId(strconv.Itoa(rec.RecordID))
+			return resourceGlesysDNSDomainRecordRead(ctx, d, m)
+		}
+	}
+
 	params := glesys.AddRecordParams{
-		Data:       d.Get("data").(string),
-		DomainName: d.Get("domain").(string),
-		Host:       d.Get("host").(string),
-		Type:       d.Get("type").(string),
-		TTL:        d.Get("ttl").(int),
+		Data:       data,
+		DomainName: domain,
+		Host:       host,
+		Type:       recType,
+		TTL:        ttl,
 	}
 
 	record, err := client.DNSDomains.AddRecord(ctx, params)
@@ -173,7 +197,7 @@ func resourceGlesysDNSDomainRecordDelete(ctx context.Context, d *schema.Resource
 
 	err := client.DNSDomains.DeleteRecord(ctx, recordID)
 	if err != nil {
-		if strings.Contains(err.Error(), "HTTP error: 404") {
+		if strings.Contains(err.Error(), "HTTP error: 404") || strings.Contains(err.Error(), "HTTP error: 422") {
 			d.SetId("")
 			return nil
 		} else {
