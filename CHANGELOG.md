@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 ### Added
 ### Changed
+- `glesys_objectstorage_instance` - fix `accesskey` being replaced on read by a credential added later (for example by the object browser in Glesys Cloud), which paired it with the original `secretkey`.
 
 ## 0.18.0 - 2026-09-03
 ### Added

@@ -83,16 +83,40 @@ func resourceGlesysObjectStorageInstanceRead(ctx context.Context, d *schema.Reso
 	d.Set("description", instance.Description)
 	d.Set("created", instance.Created)
 
-	creds := instance.Credentials
-	if len(creds) > 0 {
-		d.Set("accesskey", creds[0].AccessKey)
+	if cred, ok := trackedObjectStorageCredential(instance.Credentials, d.Get("accesskey").(string)); ok {
+		d.Set("accesskey", cred.AccessKey)
 		_, secretkeyIsSet := d.GetOk("secretkey")
 		if !secretkeyIsSet {
-			d.Set("secretkey", creds[0].SecretKey)
+			d.Set("secretkey", cred.SecretKey)
 		}
 	}
 
 	return nil
+}
+
+// trackedObjectStorageCredential returns the credential that the accesskey and
+// secretkey attributes track. In observed responses the details call lists
+// newer credentials first and omits secret keys, so the secret key in state is
+// the one stored when the instance was created. A credential added later, for
+// example by the object browser in Glesys Cloud, must not replace the access
+// key in state: that would pair its access key with the original secret key.
+// The credential whose access key is already in state is kept. Without one (a
+// new or imported instance, or the tracked credential was deleted) the first
+// credential is used, as before; after a deletion the stored secret key no
+// longer matches, which this function cannot repair because no secret key is
+// returned.
+func trackedObjectStorageCredential(creds []glesys.ObjectStorageCredential, accessKey string) (glesys.ObjectStorageCredential, bool) {
+	if len(creds) == 0 {
+		return glesys.ObjectStorageCredential{}, false
+	}
+	if accessKey != "" {
+		for _, c := range creds {
+			if c.AccessKey == accessKey {
+				return c, true
+			}
+		}
+	}
+	return creds[0], true
 }
 
 func resourceGlesysObjectStorageInstanceUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
