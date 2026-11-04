@@ -4,10 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
+
+## 0.19.0 - 2026-11-04
 ### Added
 - `glesys_blockstorage` - Implement BlockStorage resource.
 ### Changed
 - Bump glesys-go dependency
+- glesys_server - Bandwidth updates are now handled on glesys_networkadapter instead.
 
 ## 0.18.0 - 2026-09-03
 ### Added
