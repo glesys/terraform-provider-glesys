@@ -448,7 +448,7 @@ func resourceGlesysServerUpdate(ctx context.Context, d *schema.ResourceData, m i
 		opts.Description = d.Get("description").(string)
 	}
 	if d.HasChange("bandwidth") {
-		opts.Bandwidth = d.Get("bandwidth").(int)
+		return diag.Errorf("Updating server bandwidth needs to be done using `glesys_networkadapter`.")
 	}
 	if d.HasChange("hostname") {
 		opts.Hostname = d.Get("hostname").(string)
