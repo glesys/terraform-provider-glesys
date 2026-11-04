@@ -164,6 +164,26 @@ func testAccGlesysServerVMwarePrimaryOnVLAN(name string) string {
 		} `, name)
 }
 
+func testAccGlesysServerBaseKVM(name string) string {
+	return fmt.Sprintf(`
+		resource "glesys_server" "test" {
+			hostname   = "%s"
+			datacenter = "Falkenberg"
+			platform   = "KVM"
+			bandwidth  = 100
+			cpu        = 1
+			memory     = 1024
+			storage    = 10
+			template   = "Debian 13 (Trixie)"
+
+			user {
+		          username   = "acctestuser"
+		          publickeys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINOCh8br7CwZDMGmINyJgBip943QXgkf7XdXrDMJf5Dl acctestuser@example-host"]
+			  password   = "hunter123!"
+			}
+		} `, name)
+}
+
 func testAccGlesysServerBaseKVMBackupSchedule(name string) string {
 	return fmt.Sprintf(`
 		resource "glesys_server" "test" {
