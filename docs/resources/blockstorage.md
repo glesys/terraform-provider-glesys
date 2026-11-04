@@ -2,10 +2,10 @@
 page_title: "glesys_blockstorage Resource - terraform-provider-glesys"
 subcategory: ""
 description: |-
-  Block storage volume.
+  BlockStorage volume.
 ---
 # glesys_blockstorage (Resource)
-Block storage volume.
+BlockStorage volume.
 ## Example Usage
 ```terraform
 resource "glesys_blockstorage" "datadisk" {
@@ -23,7 +23,7 @@ resource "glesys_blockstorage" "datadisk" {
 
 - `datacenter` (String) Volume location.
 - `name` (String) Volume descriptive name.
-- `size` (Number) Volume size in GIB.
+- `size` (Number) Volume size in GiB.
 
 ### Optional
 
