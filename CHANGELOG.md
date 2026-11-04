@@ -5,7 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 ### Added
+- `glesys_blockstorage` - Implement BlockStorage resource.
 ### Changed
+- Bump glesys-go dependency
 
 ## 0.18.0 - 2026-09-03
 ### Added
